@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Council of AI · AG-UI Glass Overlay</title>
+<style>
+  /* ─── GLASS OVERLAY — 3-sidebar AG-UI, floats over any page ─── */
+  :root {
+    --glass-alpha: 0.72;        /* ← the ONE transparency knob (0.1–0.95) */
+    --glass-blur: 18px;
+    --accent: #39d98a;
+    --accent2: #7ec8ff;
+    --gold: #e0c074;
+    --panel-bg: rgba(10, 16, 32, var(--glass-alpha));
+    --panel-border: rgba(120, 150, 200, 0.35);
+    --text: #dfe6f0;
+    --muted: #8fa3c0;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: transparent; }
+
+  /* ─── The floating Colosseum badge (gamification entry) ─── */
+  #coa-badge {
+    position: fixed; right: 18px; bottom: 18px; z-index: 2147483000;
+    width: 54px; height: 54px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(224,192,116,0.9), rgba(120,60,20,0.85));
+    border: 2px solid rgba(224,192,116,0.7); color: #fff;
+    font-size: 26px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    transition: transform 0.2s, box-shadow 0.2s; user-select: none;
+  }
+  #coa-badge:hover { transform: scale(1.08); box-shadow: 0 10px 32px rgba(224,192,116,0.4); }
+  #coa-badge .pulse { position: absolute; inset: -6px; border-radius: 50%; border: 2px solid rgba(224,192,116,0.5); animation: coaPulse 2s infinite; }
+  @keyframes coaPulse { 0% { transform: scale(0.9); opacity: 1 } 100% { transform: scale(1.4); opacity: 0 } }
+
+  /* ─── The glass overlay shell ─── */
+  #coa-overlay {
+    position: fixed; inset: 0; z-index: 2147482999; display: none;
+    background: rgba(4, 8, 16, calc(var(--glass-alpha) * 0.55));
+    backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur));
+    color: var(--text); font-size: 13px;
+  }
+  #coa-overlay.open { display: flex; flex-direction: column; }
+
+  /* 3-sidebar grid: LEFT nav · CENTER arena · RIGHT AG-UI chat */
+  #coa-grid {
+    flex: 1; display: grid; grid-template-columns: 200px 1fr 320px;
+    gap: 10px; padding: 12px; min-height: 0;
+  }
+  .coa-col {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 14px; backdrop-filter: blur(var(--glass-blur));
+    display: flex; flex-direction: column; min-height: 0; overflow: hidden;
+  }
+  .coa-col h3 {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--accent2); padding: 10px 12px 6px; border-bottom: 1px solid var(--panel-border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .coa-scroll { flex: 1; overflow-y: auto; padding: 8px 10px; }
+
+  /* LEFT nav */
+  #coa-nav button {
+    display: flex; width: 100%; align-items: center; gap: 8px;
+    background: transparent; border: none; color: var(--text); text-align: left;
+    padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 13px;
+  }
+  #coa-nav button:hover { background: rgba(120,150,200,0.15); }
+  #coa-nav button.active { background: rgba(57,217,138,0.15); color: var(--accent); font-weight: 600; }
+  #coa-nav .cnt { margin-left: auto; color: var(--muted); font-size: 11px; font-family: var(--mono); }
+
+  /* CENTER arena */
+  #coa-arena { position: relative; }
+  #coa-ticker {
+    font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--accent);
+    text-align: center; padding: 10px 0 2px; letter-spacing: 0.03em;
+  }
+  #coa-ticker small { display: block; font-size: 10px; color: var(--muted); font-weight: 400; letter-spacing: 0.15em; }
+  #coa-scoreline { display: flex; justify-content: center; gap: 14px; padding: 6px 0 12px; font-size: 12px; }
+  #coa-scoreline .h { color: var(--accent2); font-weight: 700; }
+  #coa-scoreline .a { color: var(--gold); font-weight: 700; }
+  #coa-duels { font-family: var(--mono); font-size: 11px; }
+  #coa-duels .duel { padding: 4px 0; border-bottom: 1px dashed rgba(120,150,200,0.2); color: var(--muted); }
+  #coa-duels .duel b { color: var(--text); }
+  #coa-agents { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+  #coa-agents .agent { padding: 2px 0; display: flex; gap: 6px; }
+  #coa-agents .agent .k { color: var(--accent2); }
+
+  /* RIGHT chat */
+  #coa-chat { display: flex; flex-direction: column; }
+  #coa-messages { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .msg { padding: 8px 10px; border-radius: 10px; max-width: 92%; font-size: 12px; line-height: 1.45; }
+  .msg.user { align-self: flex-end; background: rgba(57,217,138,0.18); border: 1px solid rgba(57,217,138,0.35); }
+  .msg.agui { align-self: flex-start; background: rgba(126,200,255,0.12); border: 1px solid rgba(126,200,255,0.3); }
+  .msg.agui pre { font-family: var(--mono); font-size: 10px; white-space: pre-wrap; margin-top: 6px; color: var(--muted); }
+  #coa-input-row { display: flex; gap: 6px; padding: 10px; border-top: 1px solid var(--panel-border); }
+  #coa-input {
+    flex: 1; background: rgba(10,16,32,0.9); border: 1px solid var(--panel-border);
+    color: var(--text); border-radius: 10px; padding: 9px 12px; font-size: 13px; outline: none;
+  }
+  #coa-send { background: var(--accent); border: none; color: #04101c; font-weight: 700; border-radius: 10px; padding: 0 16px; cursor: pointer; font-size: 13px; }
+
+  /* TOP bar: title + transparency slider */
+  #coa-top {
+    display: flex; align-items: center; gap: 12px; padding: 8px 14px;
+    background: var(--panel-bg); border-bottom: 1px solid var(--panel-border);
+    backdrop-filter: blur(var(--glass-blur));
+  }
+  #coa-top .title { font-weight: 800; letter-spacing: 0.3px; }
+  #coa-top .sub { color: var(--muted); font-size: 11px; font-style: italic; }
+  #coa-top .spacer { flex: 1; }
+  #coa-top label { font-size: 10px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  #coa-alpha { width: 90px; accent-color: var(--accent); }
+  #coa-close { background: rgba(255,93,93,0.15); border: 1px solid rgba(255,93,93,0.4); color: #ff9d9d; border-radius: 8px; padding: 4px 10px; cursor: pointer; font-size: 12px; }
+
+  @media (max-width: 900px) { #coa-grid { grid-template-columns: 150px 1fr; } .coa-col.chat { grid-column: 1 / -1; } }
+  #coa-playboard { display: grid; gap: 6px; padding: 12px; background: var(--panel-border); border-radius: 10px; }
+  #coa-playboard .prow { display: grid; grid-auto-flow: column; gap: 6px; }
+  #coa-playboard .pcell { width: 34px; height: 34px; background: var(--panel); border: 1px solid var(--panel-border); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; cursor: pointer; color: var(--muted); }
+  #coa-playboard .pcell.X { color: var(--accent); background: rgba(57,217,138,0.12); border-color: rgba(57,217,138,0.4); }
+  #coa-playboard .pcell.O { color: #f0a500; background: rgba(240,165,0,0.10); border-color: rgba(240,165,0,0.4); }
+  #coa-playboard .pcell:hover { border-color: var(--accent); }
+  #coa-gamesmenu { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; padding: 10px; }
+  #coa-gamesmenu .gcard { background: var(--panel); border: 1px solid var(--panel-border); border-radius: 10px; padding: 12px; cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
+  #coa-gamesmenu .gcard:hover { border-color: var(--accent); }
+  #coa-gamesmenu .gcard b { font-size: 14px; }
+  #coa-gamesmenu .gcard small { color: var(--muted); font-size: 11px; line-height: 1.3; }
+  #coa-gamesmenu .gcard .ax { color: var(--accent); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  #coa-gamesmenu .gcard .btns { display: flex; gap: 6px; margin-top: 6px; }
+  #coa-gamesmenu .gcard button { flex: 1; font-size: 11px; padding: 4px 6px; background: rgba(120,150,200,0.12); border: 1px solid var(--panel-border); border-radius: 6px; color: var(--text); cursor: pointer; }
+  #coa-gamesmenu .gcard button:hover { background: rgba(57,217,138,0.15); }
+  #coa-cattabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 10px; }
+  #coa-cattabs .cat { font-size: 11px; padding: 5px 9px; background: rgba(120,150,200,0.12); border: 1px solid var(--panel-border); border-radius: 16px; color: var(--text); cursor: pointer; }
+  #coa-cattabs .cat:hover { background: rgba(57,217,138,0.18); border-color: var(--accent); }
+</style>
+
+</head>
+<body>
+  <div id="coa-badge" title="Council of AI · AG-UI Arena">⚔️<span class="pulse"></span></div>
+
+  <div id="coa-overlay">
+    <div id="coa-top">
+      <span class="title">⚔️ Council of AI · Colosseum</span>
+      <span class="sub" id="coa-conn">connecting…</span>
+      <span class="spacer"></span>
+      <label>glass <input id="coa-alpha" type="range" min="0.15" max="0.95" step="0.01" value="0.72"></label>
+      <button id="coa-close">✕ close</button>
+    </div>
+    <div id="coa-grid">
+      <div class="coa-col" id="coa-nav-wrap">
+        <h3>Navigator</h3>
+        <div class="coa-scroll" id="coa-nav">
+          <button data-view="arena" class="active">⚔️ Arena</button>
+          <button data-view="office">🏢 Office <span class="cnt" id="cnt-office">…</span></button>
+          <button data-view="games">🎮 Games <span class="cnt" id="cnt-games">…</span></button>
+          <button data-view="board">📊 Board <span class="cnt" id="cnt-board">…</span></button>
+          <button data-view="leaderboard">🏆 Leaderboard <span class="cnt" id="cnt-lb">…</span></button>
+          <button data-view="cross">🌐 The Cross</button>
+          <button data-view="jail">🛡️ Jail <span class="cnt" id="cnt-jail">…</span></button>
+          <button data-view="verify">🔎 Verify</button>
+        </div>
+      </div>
+      <div class="coa-col" id="coa-arena">
+        <h3>Live Arena <span id="coa-live" style="color:var(--accent)">●</span></h3>
+        <div class="coa-scroll">
+          <div id="coa-ticker"><span id="coa-round">0</span><small>ARENA TICKS</small></div>
+          <div id="coa-scoreline"><span>👤 <span class="h" id="coa-humans">0</span></span><span style="color:var(--muted)">vs</span><span>🤖 <span class="a" id="coa-ais">0</span></span></div>
+          <div id="coa-playboard" style="display:none"></div>
+          <div id="coa-gamesmenu" style="display:none"></div>
+          <div id="coa-cattabs" style="display:none"></div>
+          <div id="coa-duels"></div>
+          <div id="coa-agents"></div>
+        </div>
+      </div>
+      <div class="coa-col chat" id="coa-chat">
+        <h3>AG-UI · talk to the council</h3>
+        <div id="coa-messages"></div>
+        <div id="coa-input-row">
+          <input id="coa-input" placeholder="ask anything — e.g. 'spawn an AI in meok and run the jail axis'">
+          <button id="coa-send">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function () {
+  'use strict'
+  const AGUI = 'http://127.0.0.1:4191'
+  const SIM = 'http://127.0.0.1:4190'
+  const $ = s => document.querySelector(s)
+
+  /* ─── state ─── */
+  let round = 0, running = false, humans = 0, ais = 0
+  const duels = [], agents = new Map()
+
+  /* ─── badge + overlay open/close ─── */
+  $('#coa-badge').addEventListener('click', () => { $('#coa-overlay').classList.add('open') })
+  $('#coa-close').addEventListener('click', () => { $('#coa-overlay').classList.remove('open') })
+
+  /* ─── transparency slider (the easy glass knob) ─── */
+  $('#coa-alpha').addEventListener('input', e => {
+    document.documentElement.style.setProperty('--glass-alpha', e.target.value)
+  })
+
+  /* ─── poll the sim scene ─── */
+  async function poll() {
+    try {
+      const r = await fetch(SIM + '/sim/scene')
+      const d = await r.json()
+      round = d.round; running = d.running
+      $('#coa-round').textContent = Number(round).toLocaleString()
+      $('#coa-live').style.color = running ? '#39d98a' : '#e0c074'
+      agents.clear(); let h = 0, a = 0
+      for (const ag of d.agents) { agents.set(ag.id, ag); if (ag.kind === 'human') h++; else a++ }
+      humans = h; ais = a
+      $('#coa-humans').textContent = h; $('#coa-ais').textContent = a
+      renderAgents()
+      $('#coa-conn').textContent = running ? '● live' : '● paused'
+      $('#coa-conn').style.color = running ? '#39d98a' : '#e0c074'
+      // duels
+      $('#coa-duels').innerHTML = (d.duels || []).slice(-8).reverse().map(x =>
+        `<div class="duel">r${x.round} <b>${x.axis}</b> → ${x.winner.slice(0, 14)}</div>`).join('')
+    } catch { $('#coa-conn').textContent = '○ offline'; $('#coa-conn').style.color = '#ff5d5d' }
+  }
+  function renderAgents() {
+    $('#coa-agents').innerHTML = [...agents.values()].slice(0, 40).map(a =>
+      `<div class="agent"><span class="k">${a.kind === 'human' ? '👤' : '🤖'}</span> ${a.name} <span style="color:var(--muted)">· ${a.clan}</span> <span style="margin-left:auto">${Math.round(a.score)}</span></div>`).join('')
+  }
+
+  /* ─── AG-UI SSE stream (live events from the gateway) ─── */
+  function connectSSE() {
+    const es = new EventSource(AGUI + '/agui/stream')
+    es.onopen = () => { $('#coa-conn').textContent = '● live (AG-UI)'; $('#coa-conn').style.color = '#39d98a' }
+    es.onmessage = e => {
+      try {
+        const ev = JSON.parse(e.data)
+        if (ev.type === 'sim.card' || ev.customType === 'sim.card') {
+          addMsg('agui', '🃏 card emitted: ' + (ev.data?.path || ev.path || '').split('/').pop())
+        }
+      } catch { /* non-JSON keepalive */ }
+    }
+    es.onerror = () => { /* reconnect handled by EventSource */ }
+  }
+
+  /* ─── nav views ─── */
+  $('#coa-nav').addEventListener('click', async e => {
+    const btn = e.target.closest('button'); if (!btn) return
+    document.querySelectorAll('#coa-nav button').forEach(b => b.classList.remove('active'))
+    btn.classList.add('active')
+    const view = btn.dataset.view
+    if (view === 'board') { const d = await (await fetch(SIM + '/../').catch(() => null)) }
+    if (view === 'cross') { try { const c = await (await fetch(AGUI + '/cross')).json(); addMsg('agui', 'THE CROSS:\n' + (c.benchmarks || []).map(b => `${b.benchmark}: human ${b.human} · fleet ${b.fleet_measured ?? 'UNMEASURED'}`).join('\n')) } catch { addMsg('agui', 'cross not built yet') } }
+    if (view === 'jail') { try { const j = await (await fetch(AGUI + '/jail')).json(); addMsg('agui', `JAIL (containment, measured floor): ${j.model} = ${Math.round(j.score * 100)}% · ${j.refused_attacks}/${j.attacks} attacks refused · ${j.items} items · control ${j.control_correct ? 'correct' : 'wrong'}\n${j.bank}`) } catch { addMsg('agui', 'jail measurement not yet produced') } }
+    if (view === 'office') {
+      try {
+        const a = await (await fetch(AGUI + '/arena/leaderboard')).json()
+        document.getElementById('cnt-office').textContent = a.runs
+        const top = (a.leaderboard || []).slice(0, 5)
+        addMsg('agui', '🏢 MUNDER DIFFLIN OFFICE ARENA (' + a.runs + ' runs, headless coordination benchmark):\n' + top.map(r => `seed ${String(r.seed).padEnd(5)} ${(r.composite * 100).toFixed(1).padStart(5)}%  ` + Object.entries(r.axes || {}).map(([k, v]) => `${k}=${v}`).join(' ')).join('\n') + '\n\nopening the office floor visual…')
+        window.open(AGUI + '/arena', '_blank')
+      } catch { addMsg('agui', 'office arena not yet generated') }
+    }
+    if (view === 'games') {
+      renderGamesMenu()
+      try {
+        const g = await (await fetch(AGUI + '/games')).json()
+        addMsg('agui', '🎮 SELF-HOSTED GAMES (signed replays, deterministic):\n' + Object.entries(g.games || {}).map(([k, v]) => `${k}: ${v.title} — agents [${v.agents.join(', ')}]`).join('\n') + '\n\nclick a card, or say "play connect_four" (vs AI) / "play connectx" (AI vs AI)')
+      } catch { addMsg('agui', 'games service unreachable') }
+    }
+    if (view === 'leaderboard') {
+      try {
+        const lb = await (await fetch(AGUI + '/leaderboard')).json()
+        const rows = (lb.rows || [])
+        // per-category tabs: group by benchmark (source), sort each by measured value desc
+        const cats = {}
+        for (const r of rows) { const c = r.benchmark || r.source || 'other'; if (r.value === undefined) continue; (cats[c] = cats[c] || []).push(r) }
+        const catNames = Object.keys(cats).sort()
+        const tabEl = document.getElementById('coa-cattabs')
+        addMsg('agui', `🏆 LEADERBOARD (${lb.counts?.total_rows ?? rows.length} rows — ${lb.counts?.ours_measured ?? 0} MEASURED · ${lb.counts?.reported_baselines ?? 0} REPORTED · ${lb.counts?.external_openrouter ?? 0} EXTERNAL, never blended).\nCategorized tabs below — click to switch benchmark.`)
+        if (tabEl) {
+          tabEl.style.display = 'flex'; tabEl.innerHTML = ''
+          catNames.slice(0, 12).forEach(c => {
+            const b = document.createElement('button'); b.textContent = c; b.className = 'cat'
+            b.onclick = () => { const top = (cats[c] || []).sort((a, b2) => b2.value - a.value).slice(0, 6); addMsg('agui', `📊 ${c}: ` + top.map(r => `${(r.value * 100).toFixed(1)}%  ${r.model}`).join(' · ')) }
+            tabEl.appendChild(b)
+          })
+        }
+      } catch (e) { addMsg('agui', 'leaderboard not yet synthesized: ' + e.message) }
+    }
+  })
+
+  /* ─── chat: talk to the council (prompt → AG-UI/sim action) ─── */
+  let gameSession = null, currentPlayGame = null
+  function board(rows) { return Array.isArray(rows) ? rows.join('\n') : String(rows) }
+  function renderBoard(rows) {
+    const el = document.getElementById('coa-playboard')
+    if (!el || !Array.isArray(rows)) return
+    el.style.display = 'grid'
+    el.innerHTML = ''
+    const rowsArr = rows.map(r => String(r).split(' ').filter(Boolean))
+    rowsArr.forEach((row, ri) => {
+      const prow = document.createElement('div'); prow.className = 'prow'
+      row.forEach((cell, ci) => {
+        const pc = document.createElement('div'); pc.className = 'pcell ' + (cell === 'X' ? 'X' : cell === 'O' ? 'O' : '')
+        pc.textContent = cell === '.' ? '' : cell
+        // connect_four: clicking any cell in a column drops there; tic_tac_toe: exact cell (board is top-down, so row*cols+col)
+        const move = currentPlayGame === 'connect_four' ? ci : ri * 3 + ci
+        pc.title = 'play ' + move
+        pc.onclick = () => sendMove(move)
+        prow.appendChild(pc)
+      })
+      el.appendChild(prow)
+    })
+  }
+  async function sendMove(n) {
+    if (!gameSession || !currentPlayGame) { addMsg('agui', 'start a game first: say "play connect_four" or "play tic_tac_toe"'); return }
+    const r = await fetch(AGUI + '/games/play', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ game: currentPlayGame, session: gameSession, move: n }) })
+    const d = await r.json()
+    if (d.error) { addMsg('agui', 'illegal move: ' + d.error); return }
+    gameSession = d.session; currentPlayGame = d.game
+    renderBoard(d.board)
+    if (d.status === 'human_win') addMsg('agui', `🏆 YOU WIN (${d.axis})!\n${board(d.board)}`)
+    else if (d.status === 'ai_win') addMsg('agui', `🤖 AI wins. Say "play ${d.game}" to rematch.\n${board(d.board)}`)
+    else if (d.status === 'draw') addMsg('agui', `🤝 Draw.\n${board(d.board)}`)
+    else addMsg('agui', `🎮 ${d.game} — you moved ${n}\n${board(d.board)}`)
+  }
+  async function startGame(game) {
+    const turnBased = (game === 'connect_four' || game === 'tic_tac_toe')
+    if (turnBased) {
+      const d = await (await fetch(AGUI + '/games/play', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ game }) })).json()
+      if (d.session) { gameSession = d.session; currentPlayGame = game; addMsg('agui', `🎮 YOU vs AI — ${game} (axis: ${d.axis}). You are X, AI is O. UNSEALED.\n` + board(d.board)); renderBoard(d.board) }
+      else addMsg('agui', JSON.stringify(d).slice(0, 300))
+    } else {
+      const g = await (await fetch(AGUI + '/games')).json()
+      const agents = (g.games?.[game]?.agents) || []
+      const d = await (await fetch(AGUI + '/games/run', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ game, agents }) })).json()
+      if (d.receipt) addMsg('agui', `🎮 ${game} AI-vs-AI → ${d.receipt.winner} won\nsigned ${String(d.receipt.body_sha256 || '').slice(0, 12)}… (${d.receipt.sig_b64 ? 'ed25519 ✓' : 'UNSIGNED'})`)
+      else if (d.error) addMsg('agui', 'game error: ' + d.error)
+      else addMsg('agui', JSON.stringify(d).slice(0, 300))
+    }
+  }
+  async function renderGamesMenu() {
+    const el = document.getElementById('coa-gamesmenu')
+    if (!el) return
+    try {
+      const g = await (await fetch(AGUI + '/games')).json()
+      const games = g.games || {}
+      el.style.display = 'grid'; el.innerHTML = ''
+      document.getElementById('cnt-games').textContent = Object.keys(games).length
+      for (const [k, v] of Object.entries(games)) {
+        const turnBased = (k === 'connect_four' || k === 'tic_tac_toe')
+        const card = document.createElement('div'); card.className = 'gcard'
+        card.innerHTML = `<b>${v.title || k}</b><span class="ax">${v.gspc?.axis || 'axis'}</span><small>${(v.note || '').slice(0, 70)}</small>`
+        const btns = document.createElement('div'); btns.className = 'btns'
+        const b1 = document.createElement('button'); b1.textContent = turnBased ? '▶ vs AI' : '▶ run AI'; b1.onclick = () => startGame(k)
+        btns.appendChild(b1)
+        if (!turnBased) { const b2 = document.createElement('button'); b2.textContent = 'axis'; b2.onclick = () => addMsg('agui', `${k}: ${v.gspc?.axis} · agents [${(v.agents || []).join(', ')}]`) ; btns.appendChild(b2) }
+        card.appendChild(btns)
+        card.onclick = () => startGame(k)
+        el.appendChild(card)
+      }
+      // Human-vs-AI baseline (unsealed aggregate)
+      try {
+        const hva = await (await fetch(AGUI + '/games/human-vs-ai')).json()
+        const profs = (hva.profiles || []).filter(p => p.trials > 0)
+        if (profs.length) {
+          const p = document.createElement('div'); p.className = 'gcard'; p.style.gridColumn = '1 / -1'; p.style.cursor = 'default'
+          p.innerHTML = `<b>🧠 Human-vs-AI baseline</b><small>aggregate of UNSEALED human sessions — human play is not deterministic, never signed</small>` + profs.map(x => `<small style="color:var(--text)">${x.game}: ${x.trials} sessions — human ${(x.human_win_rate*100).toFixed(0)}% · AI ${(x.ai_win_rate*100).toFixed(0)}% · avg quality ${x.avg_human_quality ?? '—'}</small>`).join('')
+          el.appendChild(p)
+        }
+      } catch {}
+    } catch (e) { el.textContent = 'games service unreachable' }
+  }
+  function addMsg(who, text) {
+    const m = document.createElement('div'); m.className = 'msg ' + who
+    const isJson = text.trim().startsWith('{') || text.trim().startsWith('[')
+    m.innerHTML = isJson ? '<pre>' + text + '</pre>' : text.replace(/\n/g, '<br>')
+    $('#coa-messages').appendChild(m); $('#coa-messages').scrollTop = 1e9
+  }
+  async function handlePrompt(p) {
+    addMsg('user', p)
+    const low = p.toLowerCase()
+    try {
+      if (/spawn/.test(low)) {
+        const kind = /human/.test(low) ? 'human' : 'ai'
+        const clan = (p.match(/in ([\w-]+)/) || [])[1] || undefined
+        const r = await fetch(SIM + '/sim/control', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'spawn', kind, clan }) })
+        addMsg('agui', `spawned ${kind}${clan ? ' in ' + clan : ''}`)
+      } else if (/jail/.test(low)) {
+        const j = await (await fetch(AGUI + '/jail')).json()
+        addMsg('agui', JSON.stringify(j, null, 2))
+      } else if (/step/.test(low)) {
+        await fetch(SIM + '/sim/control', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'step', count: 10 }) })
+        addMsg('agui', 'stepped 10 ticks')
+      } else if (/pause/.test(low)) {
+        await fetch(SIM + '/sim/control', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'pause' }) })
+        addMsg('agui', 'paused')
+      } else if (/resume|go|start/.test(low)) {
+        await fetch(SIM + '/sim/control', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ action: 'resume' }) })
+        addMsg('agui', 'resumed')
+      } else if (/^play (connect_four|tic_tac_toe)/i.test(low) || (/play (connect_four|tic_tac_toe)/i.test(low) && /(vs|against|human)/i.test(low))) {
+        const game = (p.match(/play (connect_four|tic_tac_toe)/i) || [])[1]
+        const r = await fetch(AGUI + '/games/play', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ game }) })
+        const d = await r.json()
+        if (d.session) { gameSession = d.session; currentPlayGame = game; addMsg('agui', `🎮 YOU vs AI — ${game} (axis: ${d.axis}). You are X, AI is O. UNSEALED (human play isn't deterministic, never signed).\n${board(d.board)}`); renderBoard(d.board); } else addMsg('agui', JSON.stringify(d).slice(0, 300))
+      } else if (/^move /i.test(low) && gameSession) {
+        const m = Number((p.match(/\d+/) || [])[0])
+        await sendMove(m)
+      } else if (/play (connectx|rps|halite)/.test(low)) {
+        const game = (p.match(/play (connectx|rps|halite)/) || [])[1]
+        const g = await (await fetch(AGUI + '/games')).json()
+        const agents = (g.games?.[game]?.agents) || []
+        const a = (p.match(/(?:vs|against) ([\w-]+)/) || [])[1] || agents[0]
+        const b = agents[1] || undefined
+        const r = await fetch(AGUI + '/games/run', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ game, agents: [a, b].filter(Boolean) }) })
+        const d = await r.json()
+        if (d.receipt) addMsg('agui', `🎮 ${game} run: ${d.receipt.agents?.join(' vs ') || a + ' vs ' + b} → winner ${d.receipt.winner}\nsigned ${String(d.receipt.body_sha256 || '').slice(0, 12)}… (${d.receipt.sig_b64 ? 'ed25519 ✓' : 'UNSIGNED'})`)
+        else if (d.error) addMsg('agui', 'game error: ' + d.error)
+        else addMsg('agui', JSON.stringify(d, null, 2).slice(0, 400))
+      } else if (/leaderboard/.test(low)) {
+        const lb = await (await fetch(AGUI + '/leaderboard')).json()
+        const top = (lb.rows || []).filter(r => r.source === 'OURS-MEASURED' && r.value !== undefined).sort((a, b) => b.value - a.value).slice(0, 6)
+        addMsg('agui', '🏆 OUR MEASURED LEADERBOARD:\n' + top.map(r => `${(r.value * 100).toFixed(1)}%  ${r.model}`).join('\n'))
+      } else if (/register|benchmark rating|swe-bench|mmlu|gpqa|arc-agi/.test(low)) {
+        // Signed benchmark-quality register (deterministic predicates, no LLM-judge).
+        try {
+          const reg = await (await fetch(AGUI + '/register')).json()
+          const recs = (reg.records || []).slice(0, 5)
+          addMsg('agui', '📐 SIGNED BENCHMARK REGISTER (measured-current-state, not certification, unsolicited):\n' + recs.map(r => `• ${r.benchmark}`).join('\n') + '\n\nask "rate <benchmark>" for the deterministic predicates')
+        } catch { addMsg('agui', 'register not reachable') }
+      } else if (/rate (swe-bench|mmlu|gpqa|chatbot|arc-agi)/.test(low)) {
+        const id = (p.match(/rate ([\w-]+)/) || [])[1]
+        const ids = { 'swe-bench': 'swe-bench-verified', 'mmlu': 'mmlu', 'gpqa': 'gpqa', 'chatbot': 'chatbot-arena', 'arc-agi': 'arc-agi' }
+        try {
+          const r = await (await fetch(AGUI + '/register/' + (ids[id] || id))).json()
+          const flags = Object.entries(r.predicates || {}).filter(([, v]) => v.value === 'flagged' || v.value === 'no').map(([k, v]) => `${k}: ${v.value}`)
+          addMsg('agui', `📐 ${r.name} — ${r.record_type} (not_a_certification:${r.not_a_certification})\nflagged: ${flags.length ? flags.join(', ') : 'none'}\nremediation: ${r.remediation ?? '—'}`)
+        } catch { addMsg('agui', 'record not found') }
+      } else if (/compliance|insurance/.test(low)) {
+        try {
+          const c = await (await fetch(AGUI + '/compliance')).json()
+          addMsg('agui', '🏦 COMPLIANCE TIERS (measurement, never certification):\n' + (c.tiers || []).map(t => `${t.tier.padEnd(9)} ${(t.score * 100).toFixed(1)}%  ${t.model}`).join('\n'))
+        } catch { addMsg('agui', 'compliance view not yet derived') }
+      } else if (/industr/.test(low)) {
+        addMsg('agui', '🏭 One instrument, every industry — the same GSPC board applies to insurance, health, finance, transport, retail, education, energy and government. Each sector sees the same 14-slot instrument: measured where evidence exists, honestly UNMEASURED where it does not. (Full sector pages: councilof.ai/industries/*)')
+      } else if (/board|gspc/.test(low)) {
+        const b = await (await fetch('https://councilof.ai/api/gspc')).json()
+        addMsg('agui', 'live board: ' + (b.axes || b.measured_on ? JSON.stringify(b).slice(0, 400) : 'see board'))
+      } else if (/verify/.test(low)) {
+        const hash = (p.match(/verify ([a-f0-9]+)/) || [])[1]
+        const r = await fetch(AGUI + '/lookup/' + (hash || ''))
+        addMsg('agui', r.ok ? await r.text() : 'card not found')
+      } else if (/status|summary/.test(low)) {
+        addMsg('agui', `tick ${Number(round).toLocaleString()} · ${humans} humans vs ${ais} AIs · running ${running}`)
+      } else if (/^(what|who|how|which|explain|define)\b/.test(low) || /(^|\s)(eu ai act|gspc|sovereign|measurement|obligation|risk level|regulation|benchmark|framework|legal|compliance)\b/.test(low)) {
+        // OOWM routing — domain router (law/benchmark/sovereignty -> model+RAG), with task fallback.
+        addMsg('agui', '🔀 routing via OOWM domain gateway… (may take ~30-60s on the fleet)')
+        try {
+          const r = await (await fetch(AGUI + '/oowm', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ query: p }) })).json()
+          const d = r.domain || r.route || '?'
+          const m = r.model || ''
+          addMsg('agui', `🔀 OOWM → ${d} → ${m}\n${r.content || r.note || '(no answer yet — fleet warming)'}`)
+        } catch (e) { addMsg('agui', 'OOWM route error: ' + e) }
+      } else {
+        addMsg('agui', `I hear you: "${p}" — try: spawn an AI in meok · run the jail axis · board · verify <hash> · pause · resume`)
+      }
+    } catch (err) { addMsg('agui', 'error: ' + err.message) }
+  }
+  $('#coa-send').addEventListener('click', () => { const v = $('#coa-input').value.trim(); if (v) { handlePrompt(v); $('#coa-input').value = '' } })
+  $('#coa-input').addEventListener('keydown', e => { if (e.key === 'Enter') { const v = e.target.value.trim(); if (v) { handlePrompt(v); e.target.value = '' } } })
+
+  /* ─── boot ─── */
+  addMsg('agui', '⚔️ Colosseum AG-UI ready. Ask me anything, or use the Navigator.')
+  poll(); setInterval(poll, 2000)
+  connectSSE()
+
+  // ─── TASK ROUTING: ?task=<key>&prompt=<text> preloads the right conversation.
+  // Any page/button can deep-link: <a href="http://127.0.0.1:4191/overlay?task=leaderboard">
+  // or data-agui-task="leaderboard" → opens the overlay with that prompt queued.
+  const TASKS = {
+    leaderboard: '🏆 Show me the live leaderboard — top measured models, humans vs AI, and the cross-synthesis across all benchmarks.',
+    board: '📊 Show me the live GSPC board — which axes are measured, the accuracies, and what stays honestly UNMEASURED.',
+    jail: '🛡️ Run the jail axis — the 14-of-14 adversarial bank, what the best model refuses and where it slips.',
+    games: '🎮 Show me the self-hosted games (connectx, rps, halite, OpenSpiel) — deterministic, signed replays.',
+    cross: '🌐 Show me The Cross — human baselines vs our measured fleet across benchmarks (MMLU, GPQA, ARC, GAIA, MATH, SWE-bench).',
+    verify: '🔎 Help me verify a measurement card — paste a hash or I will show the latest signed card.',
+    spawn: '⚔️ Spawn an AI agent into the arena and tell me what it does.',
+    insurance: '🏦 Show me the insurance picture — who is compliant, who is not, on measured evidence (the compliance tiers view).',
+    compliance: '🏦 Show the compliance tiers — leading / improving / watch / at-risk on our measured GSPC evidence.',
+    industries: '🏭 Show the one-instrument-every-industry map — how the same GSPC instrument applies to insurance, health, finance, transport, energy and more.',
+    humans: '👤 Show me the human baselines section — how humans compare to AI across the benchmarks we measure.',
+  };
+  const params = new URLSearchParams(window.location.search);
+  const task = params.get('task');
+  if (task && TASKS[task]) {
+    setTimeout(() => handlePrompt(TASKS[task]), 400);
+  } else if (params.get('prompt')) {
+    setTimeout(() => handlePrompt(params.get('prompt')), 400);
+  }
+  // Expose a global so any page can route: window.openAguiTask('leaderboard')
+  window.openAguiTask = (k) => {
+    if (TASKS[k]) { handlePrompt(TASKS[k]); $('#coa-overlay').classList.add('open'); }
+  };
+})()
+</script>
+</body>
+</html>
