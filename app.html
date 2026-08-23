@@ -15,8 +15,23 @@
 * { box-sizing:border-box; }
 body { margin:0; font-family:-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); line-height:1.55; font-size:14px; }
 a { color:var(--accent2); text-decoration:none; }
-.app { display:grid; grid-template-columns:220px 1fr; min-height:100vh; }
-@media (max-width:800px){ .app{grid-template-columns:1fr;} .side{border-right:0;border-bottom:1px solid var(--line);} }
+.app { display:flex; flex-direction:column; min-height:100vh; }
+/* top SaaS nav bar */
+.topbar { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.55rem 1.2rem; background:var(--panel); border-bottom:1px solid var(--line); }
+.topbar .brand { display:flex; align-items:center; gap:.55rem; font-weight:700; font-size:.95rem; white-space:nowrap; }
+.topbar .brand .pulse { width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pul 2.4s ease-in-out infinite; }
+.topbar .brand small { color:var(--faint); font-weight:400; font-size:.66rem; margin-left:.2rem; }
+.tb-tabs { display:flex; gap:.25rem; flex-wrap:wrap; }
+.tb-ctrl { display:flex; gap:.3rem; flex-wrap:wrap; }
+.pane-btn { background:transparent; color:var(--muted); border:1px solid var(--line); padding:.32rem .6rem; border-radius:8px; cursor:pointer; font-size:.68rem; }
+.pane-btn:hover { border-color:var(--accent); color:var(--text); }
+.shell.rail-off .side { display:none; } .shell.rail-off { grid-template-columns:1fr; }
+.shell.min { display:none; }
+.tb-tab { background:transparent; color:var(--muted); border:0; padding:.45rem .85rem; border-radius:8px; cursor:pointer; font-size:.85rem; }
+.tb-tab:hover { background:var(--card); color:var(--text); }
+.tb-tab.active { background:#1a2830; color:var(--accent2); font-weight:600; }
+.shell { display:grid; grid-template-columns:220px 1fr; flex:1; min-height:0; }
+@media (max-width:800px){ .shell{grid-template-columns:1fr;} .side{border-right:0;border-bottom:1px solid var(--line);} .topbar{flex-wrap:wrap;} .tb-tabs{width:100%;} }
 
 /* sidebar */
 .side { background:var(--panel); border-right:1px solid var(--line); padding:1rem .8rem; position:sticky; top:0; height:100vh; overflow-y:auto; }
@@ -50,6 +65,62 @@ a { color:var(--accent2); text-decoration:none; }
 .card.lead { border-color:var(--accent); background:linear-gradient(135deg,#121a22,#0f151b); }
 .card .rank { font-size:.6rem; color:var(--gold); text-transform:uppercase; letter-spacing:.1em; }
 
+/* OpenRouter-style model cards */
+.mcard { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:.9rem .9rem 1rem; display:flex; flex-direction:column; gap:.5rem; }
+.mcard:hover { border-color:var(--accent); }
+.mcard .mhead { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
+.mcard .mname { font-weight:700; font-size:.9rem; }
+.mcard .mvin { font-size:.66rem; color:var(--faint); font-family:var(--mono); }
+.mcard .mbadge { font-size:.6rem; color:var(--accent2); border:1px solid var(--line); padding:.1rem .5rem; border-radius:999px; white-space:nowrap; }
+.mcard .mscore { font-size:1.9rem; font-weight:800; color:var(--accent2); font-variant-numeric:tabular-nums; line-height:1; }
+.mcard .mscore small { font-size:.7rem; color:var(--faint); font-weight:400; }
+.mcard .maxis { display:flex; flex-direction:column; gap:.28rem; }
+.mcard .maxis .axrow { display:flex; align-items:center; gap:.5rem; font-size:.68rem; color:var(--muted); }
+.mcard .maxis .axbar { flex:1; height:6px; border-radius:3px; background:#1a212a; overflow:hidden; }
+.mcard .maxis .axbar i { display:block; height:100%; background:var(--accent); }
+.mcard .mfoot { font-size:.62rem; color:var(--faint); font-family:var(--mono); margin-top:auto; }
+
+/* workspace agent tools */
+.toolchips { display:flex; flex-wrap:wrap; gap:.45rem; padding:.65rem .8rem; border-top:1px solid var(--line); background:#0c1116; }
+.tool { font-size:.72rem; color:var(--text); border:1px solid var(--line); background:var(--card); padding:.35rem .7rem; border-radius:999px; cursor:pointer; }
+.tool:hover { border-color:var(--accent); color:var(--accent2); }
+.ws-status { font-size:.66rem; color:var(--faint); font-family:var(--mono); padding:.4rem .8rem; }
+/* model library (OpenRouter rail) */
+.ml { border-bottom:1px solid var(--line); padding:.1rem .2rem .6rem; margin-bottom:.6rem; }
+.ml-lbl { font-size:.6rem; color:var(--faint); text-transform:uppercase; letter-spacing:.08em; padding:.3rem .3rem .3rem; }
+.ml-q { width:100%; background:#12181f; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:.4rem .6rem; font-size:.74rem; outline:none; }
+.ml-q:focus { border-color:var(--accent); }
+.ml-list { max-height:150px; overflow-y:auto; margin-top:.4rem; display:flex; flex-direction:column; gap:2px; }
+.ml-item { text-align:left; background:transparent; color:var(--muted); border:0; padding:.32rem .4rem; border-radius:6px; cursor:pointer; font-size:.72rem; font-family:var(--mono); }
+.ml-item:hover { background:var(--card); color:var(--text); }
+/* MCP tool-card grid (centre = tooling cards + chat) */
+.mcpgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:.5rem; padding:.7rem .8rem; border-top:1px solid var(--line); background:#0c1116; }
+.mcpcard { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:.55rem .6rem; cursor:pointer; }
+.mcpcard:hover { border-color:var(--accent); transform:translateY(-1px); }
+.mcpcard .mc-ico { font-size:1rem; }
+.mcpcard .mc-t { font-size:.72rem; font-weight:600; margin-top:.2rem; }
+.mcpcard .mc-d { font-size:.62rem; color:var(--faint); font-family:var(--mono); }
+
+/* regulator hub: cards + hot cards + crosswalk */
+.regcard { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:.85rem .9rem; cursor:pointer; display:flex; flex-direction:column; gap:.4rem; }
+.regcard:hover { border-color:var(--accent); transform:translateY(-2px); }
+.regcard .reg-t { font-weight:700; font-size:.86rem; }
+.regcard .reg-i { font-size:.66rem; color:var(--faint); font-family:var(--mono); }
+.regcard .reg-meta { display:flex; gap:.4rem; flex-wrap:wrap; }
+.regcard .reg-p { font-size:.62rem; color:var(--muted); margin-top:auto; }
+.hotcard { background:linear-gradient(135deg,#121a22,#0f151b); border:1px solid var(--accent); border-radius:12px; padding:.9rem 1rem; }
+.hotcard .k { font-size:.62rem; color:var(--faint); text-transform:uppercase; letter-spacing:.08em; }
+.hotcard .v { font-size:1.15rem; font-weight:800; color:var(--accent2); margin:.3rem 0 .2rem; line-height:1.3; }
+.hotcard .s { font-size:.66rem; color:var(--muted); }
+.xwrow { display:flex; align-items:center; justify-content:space-between; gap:.6rem; padding:.5rem .3rem; border-bottom:1px solid var(--line); font-size:.78rem; }
+.xwrow:last-child { border-bottom:0; }
+.xwrow[data-jump] { cursor:pointer; }
+.xwrow[data-jump]:hover { background:#141b23; }
+.xwrow .badge { font-size:.6rem; color:var(--gold); border:1px solid var(--line); padding:.1rem .5rem; border-radius:999px; }
+.regws { border:1px solid var(--line); border-radius:12px; background:var(--panel); overflow:hidden; }
+.regws .rwlog { max-height:280px; overflow-y:auto; padding:.8rem; display:flex; flex-direction:column; gap:.5rem; }
+.regws .rwlog .cmsg { max-width:90%; }
+
 table { width:100%; border-collapse:collapse; font-size:.8rem; }
 th,td { border-bottom:1px solid var(--line); padding:.4rem .5rem; text-align:left; }
 th { color:var(--muted); font-weight:600; font-size:.7rem; text-transform:uppercase; letter-spacing:.05em; }
@@ -74,6 +145,19 @@ code { background:#1a212a; padding:.05rem .3rem; border-radius:4px; font-size:.7
 .chip { font-size:.68rem; color:var(--accent2); border:1px solid var(--line); background:var(--card); padding:.25rem .6rem; border-radius:999px; cursor:pointer; }
 .chip:hover { border-color:var(--accent); }
 
+/* workspace harness dock (mini, always-on in the sidebar) */
+.ws { margin-top:.9rem; border-top:1px solid var(--line); padding:.6rem .2rem .2rem; }
+.ws-lbl { font-size:.6rem; color:var(--faint); text-transform:uppercase; letter-spacing:.08em; margin-bottom:.4rem; }
+.ws-log { display:flex; flex-direction:column; gap:.4rem; margin-bottom:.5rem; max-height:180px; overflow-y:auto; }
+.ws-msg { font-size:.72rem; padding:.4rem .55rem; border-radius:8px; white-space:pre-wrap; word-break:break-word; }
+.ws-msg.you { align-self:flex-end; background:#1c2833; border:1px solid var(--line2); color:var(--muted); }
+.ws-msg.harness { align-self:flex-start; background:var(--card); border:1px solid var(--line); color:var(--text); }
+.ws-input { display:flex; gap:.4rem; }
+.ws-input input { flex:1; background:#12181f; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:.4rem .6rem; font-size:.74rem; outline:none; }
+.ws-input input:focus { border-color:var(--accent); }
+.ws-input button { background:var(--accent); color:#062; font-weight:700; border:0; border-radius:8px; padding:.4rem .7rem; cursor:pointer; font-size:.74rem; }
+.ws-hint { font-size:.6rem; color:var(--faint); margin-top:.4rem; line-height:1.4; }
+
 .tabs { display:flex; gap:.4rem; margin-bottom:1rem; flex-wrap:wrap; }
 .tab { font-size:.78rem; color:var(--muted); border:1px solid var(--line); background:var(--card); padding:.4rem .9rem; border-radius:999px; cursor:pointer; }
 .tab.active { color:var(--accent2); border-color:var(--accent); }
@@ -85,21 +169,47 @@ code { background:#1a212a; padding:.05rem .3rem; border-radius:4px; font-size:.7
 </head>
 <body>
 <div class="app">
-  <!-- SIDEBAR -->
-  <aside class="side">
-    <div class="brand"><span class="pulse"></span><div><b>Council of AI</b><span>AG-UI · one dashboard</span></div></div>
-    <nav class="nav" id="nav"></nav>
-    <div class="side-foot"><b>measurement, not certification</b><br>verification free forever · nobody ranked pays</div>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-    <div class="head">
-      <div><h1 id="title">—</h1><div class="sub" id="subtitle">—</div></div>
-      <div class="info" id="stamp">—</div>
+  <!-- TOP: CSOAI SaaS nav (brand + pages) -->
+  <div class="topbar">
+    <div class="brand"><span class="pulse"></span><b>Council OS</b><small>measure · sign · check — not certification · Transparency · 82%</small></div>
+    <div class="tb-tabs" id="pagetabs"></div>
+    <div class="tb-ctrl">
+      <button class="pane-btn" id="pb-hide">Hide panes</button>
+      <button class="pane-btn" id="pb-rail">Show rail</button>
+      <button class="pane-btn" id="pb-restore">Restore</button>
+      <button class="pane-btn" id="pb-min">Minimise</button>
+      <button class="pane-btn" id="pb-close">Close</button>
     </div>
-    <div id="content"></div>
-  </main>
+  </div>
+
+  <div class="shell">
+    <!-- LEFT: AG-UI WORKSPACE (roles + harness dock) -->
+    <aside class="side">
+      <div class="ml" id="ml">
+        <div class="ml-lbl">Model library</div>
+        <input class="ml-q" id="mlq" placeholder="search models…" autocomplete="off">
+        <div class="ml-list" id="mllist"></div>
+      </div>
+      <nav class="nav" id="nav"></nav>
+      <div class="ws">
+        <div class="ws-lbl">💬 Ask the harness</div>
+        <div class="ws-log" id="wslog"></div>
+        <div class="ws-input"><input id="wsq" placeholder="e.g. estate board leader" autocomplete="off"><button id="wsgo">Ask</button></div>
+        <div class="ws-hint">deterministic escort · no model in the path · free forever</div>
+      </div>
+      <div class="side-foot"><b>measurement, not certification</b><br>verification free forever · nobody ranked pays</div>
+    </aside>
+
+    <!-- RIGHT: SaaS PAGES (Home/Models/Leaderboard/Arena/Benchmark/Regulation/Verify) -->
+    <main class="main">
+      <div class="head">
+        <div><h1 id="title">—</h1><div class="sub" id="subtitle">—</div></div>
+        <div class="info" id="stamp">—</div>
+      </div>
+      <div id="content"></div>
+      <div id="wsdock"></div>
+    </main>
+  </div>
 </div>
 
 <script>
@@ -117,6 +227,9 @@ function gjson(url){ return fetch(url).then(function(r){return r.json();}); }
 
 var SECTIONS = [
   { id:'overview', label:'Overview', ico:'◉', read: renderOverview },
+  { id:'manifesto', label:'Manifesto', ico:'⚔', read: renderManifesto },
+  { id:'how', label:'How we eat', ico:'🍽', read: renderHowWeEat },
+  { id:'ecosystem', label:'Ecosystem', ico:'🧭', read: renderEcosystem },
   { id:'board',    label:'Estate board', ico:'▦', read: renderBoard },
   { id:'models',   label:'Models', ico:'▤', read: renderModels },
   { id:'arena',    label:'Arena Elo', ico:'⚔', read: renderArena },
@@ -126,18 +239,25 @@ var SECTIONS = [
   { id:'registers', label:'Registers', ico:'📚', read: renderRegisters },
   { id:'verify',   label:'Verify', ico:'🔑', read: renderVerify },
   { id:'chat',     label:'Ask the harness', ico:'💬', read: renderChat },
+  { id:'reghub',   label:'Regulator hub', ico:'🏛', read: renderRegHub },
+  { id:'runbook',  label:'Agent Runbook', ico:'📘', read: renderRunbook },
+  { id:'insurers', label:'Insurer pack', ico:'🛡', read: renderInsurerPack },
+  { id:'compare', label:'Model compare', ico:'⇄', read: renderCompare },
+  { id:'pricing', label:'Pricing', ico:'£', read: renderPricing },
+  { id:'keys', label:'API keys', ico:'🔑', read: renderKeys },
 ];
 
 // ── END-PARTY ROLES: each party gets its own sidebar menu tuned to its tooling ──
 var ROLES = {
   'insurer':   { label:'Insurer', ico:'🛡', menu:[
     {id:'evidence', label:'Underwriting evidence', ico:'🗂', read:renderEvidence},
-    {id:'deadline', label:'Reg deadline exposure', ic:0, read:renderDeadline},
+    {id:'deadline', label:'Reg deadline exposure', ico:'⏱', read:renderDeadline},
     {id:'benchmark', label:'Benchmark signal', ico:'✓', read:renderBenchmark},
     {id:'board', label:'Model risk board', ico:'▦', read:renderBoard},
     {id:'verify', label:'Verify a claim', ico:'🔑', read:renderVerify},
   ]},
   'regulator': { label:'Regulator', ico:'⚖', menu:[
+    {id:'reghub', label:'Regulator hub', ico:'🏛', read:renderRegHub},
     {id:'deadline', label:'Deadline tracker', ico:'⏱', read:renderDeadline},
     {id:'regulation', label:'Regulation inventory', ico:'📖', read:renderRegDeadline},
     {id:'board', label:'Measured model board', ico:'▦', read:renderBoard},
@@ -176,6 +296,401 @@ var ROLES = {
   ]},
 };
 var CURRENT_ROLE = 'internal';
+function regulationHtml(d){
+  var regs = d.regulations||d.default||[];
+  var rows = (regs||[]).map(function(g){
+    return '<tr><td><b>'+esc(g.title||g.name||'')+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(g.instrument||'')+'</span></td><td style="font-family:var(--mono)">'+esc(g.date||'')+'</td><td class="'+((g.status||'')==='in-force'?'acc':'gold')+'">'+esc(g.status||'')+'</td><td style="font-size:.68rem">'+esc(g.penalty_exposure||'')+'</td></tr>';
+  }).join('');
+  return '<div class="doctrine">'+esc(d.doctrine||'Regulation as corrected data.')+'</div><table><tr><th>reg</th><th>date</th><th>status</th><th>penalty</th></tr>'+rows+'</table>';
+}
+
+
+// ---------- REGULATOR HUB (centre: all regulators → per-regime specialist workspace) ----------
+function getRegs(){ var emb = sd('regulation'); return (emb && emb.regulations) || []; }
+var REG_KEYWORDS = ['eu ai act','article 5','article 50','medical','financial','aviation','maritime','automotive','cyber','audit','transparency','data','high-risk','us ','uk ','canada','state','frontier','prohibited','marking','reporting','standards'];
+function sharesTag(g,x){
+  var gt=(g.tags||[]).map(String), xt=(x.tags||[]).map(String);
+  if(gt.some(function(t){ return xt.indexOf(t)>=0; })) return true;
+  var gs=(g.title+' '+g.instrument+' '+gt.join(' ')+' ').toLowerCase();
+  var xs=(x.title+' '+x.instrument+' '+xt.join(' ')+' ').toLowerCase();
+  return REG_KEYWORDS.some(function(k){ return gs.indexOf(k)>=0 && xs.indexOf(k)>=0; });
+}
+function regCard(g){
+  return '<div class="regcard" data-reg="'+esc(g.id||g.title||'')+'"><div class="reg-t">'+esc(g.title||'')+'</div><div class="reg-i">'+esc(g.instrument||'')+'</div><div class="reg-meta"><span class="mbadge">'+esc(g.status||'')+'</span><span class="mbadge">'+esc(g.date||'')+'</span></div><div class="reg-p">'+esc(g.penalty_exposure||'')+'</div></div>';
+}
+function renderRegHub(el){
+  stamp('regulator hub · every regime, one centre · '+TODAY);
+  var regs = getRegs();
+  el.innerHTML = '<div class="doctrine">Every regulator, one centre. Pick a regime to open its specialist workspace — hot cards, live info, crosswalk checker. Measurement, not certification.</div>'+
+    '<div class="grid">'+regs.map(regCard).join('')+'</div>';
+  el.querySelectorAll('.regcard').forEach(function(c){ c.onclick=function(){ renderRegDetail(el, c.dataset.reg); }; });
+}
+function renderRegDetail(el, regId){
+  var regs = getRegs();
+  var g = regs.find(function(x){ return (x.id||x.title)===regId; });
+  if(!g){ el.innerHTML='<div class="loading">regime not found — <button class="chip" id="regback">go back</button></div>'; var b=$('regback'); if(b) b.onclick=function(){ renderRegHub(el); }; return; }
+  $('title').textContent = g.title||'Regime';
+  $('subtitle').textContent = (g.instrument||'')+' · regulator workspace';
+  stamp('regulator workspace · '+TODAY);
+  var related = regs.filter(function(x){ return x!==g && sharesTag(g,x); }).slice(0,6);
+  var rel = related.length ? related.map(function(x){ return '<div class="xwrow" data-jump="'+esc(x.id||x.title||'')+'"><div><b>'+esc(x.title||'')+'</b><br><span style="color:var(--faint);font-size:.66rem;font-family:var(--mono)">'+esc(x.instrument||'')+'</span></div><span class="badge">'+esc(x.status||'')+' →</span></div>'; }).join('') : '<div class="xwrow">No crosswalk neighbours yet — this regime stands alone.</div>';
+  var hot = [
+    {k:'Statutory deadline', v:esc(g.date||'—'), s:esc(g.status||'')},
+    {k:'Penalty exposure',  v:esc(g.penalty_exposure||'—'), s:'highest statutory tier'},
+    {k:'Demand-creating',   v:esc(g.why_it_matters||''), s:'forces measured evidence'},
+  ];
+  el.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-bottom:1rem"><button class="chip" id="regback">← all regulators</button><span class="tag">'+esc(g.status||'')+'</span></div>'+
+    '<div class="grid">'+hot.map(function(h){ return '<div class="hotcard"><div class="k">'+h.k+'</div><div class="v">'+h.v+'</div><div class="s">'+h.s+'</div></div>'; }).join('')+'</div>'+
+    '<div class="panel"><div class="doctrine">'+esc(g.what||'')+'</div></div>'+
+    '<div class="panel"><h2>Crosswalk checker</h2><div class="desc">Regimes sharing this framework/domain — a living map, never a silo.</div>'+rel+'</div>'+
+    '<div class="panel"><h2>Live regulator workspace</h2><div class="desc">Specialist agentic DSH window scoped to '+esc(g.title||'this regime')+'.</div><div class="regws" id="regws"></div></div>';
+  $('regback').onclick=function(){ renderRegHub(el); };
+  el.querySelectorAll('.xwrow[data-jump]').forEach(function(r){ r.onclick=function(){ renderRegDetail(el, r.dataset.jump); }; });
+  initRegWS(el, g);
+}
+function regAxes(g){
+  var s=(g.title+' '+(g.tags||[]).join(' ')).toLowerCase();
+  if(s.indexOf('article 5')>=0||s.indexOf('prohibit')>=0) return 'gov,art5,jail,prv';
+  if(s.indexOf('transparency')>=0||s.indexOf('article 50')>=0||s.indexOf('mcp')>=0) return 'gov,prv,mcp,oss';
+  if(s.indexOf('medical')>=0||s.indexOf('fda')>=0) return 'gov,care,safety,prv';
+  if(s.indexOf('financial')>=0||s.indexOf('fca')>=0) return 'gov,prv,fairness,mcp';
+  return 'gov,care,prv,jail';
+}
+function initRegWS(el, g){
+  var host = $('regws'); if(!host) return;
+  host.innerHTML = '<div class="rwlog" id="rwlog"></div>'+
+    '<div class="toolchips"><button class="tool" id="rwlive">⏱ live deadlines</button><button class="tool" id="rwmeasure">⚗ measure a model</button></div>'+
+    '<div class="cinput"><input id="rwq" placeholder="ask this regulator…"><button id="rwgo">Ask</button></div>';
+  var log = $('rwlog');
+  function add(t,w){ var d=document.createElement('div'); d.className='cmsg '+(t==='user'?'user':'bot'); d.innerHTML='<div class="lbl">'+(t==='user'?'you':'harness')+'</div>'+esc(w); log.appendChild(d); log.scrollTop=log.scrollHeight; }
+  function ask(q){ if(!q) return; add('user',q); add('bot','…'); fetch('/api/hero?q='+encodeURIComponent(q+' · '+g.title)).then(function(r){return r.json();}).then(function(d){ log.lastElementChild.innerHTML='<div class="lbl">harness</div>'+esc(String(d.message||d.hint||JSON.stringify(d).slice(0,180))); log.scrollTop=log.scrollHeight; }).catch(function(){ log.lastElementChild.innerHTML='<div class="lbl">harness</div><span>offline</span>'; }); }
+  function live(){ add('bot','loading regulation feed…'); fetch('/api/hero?tool=regulation').then(function(r){return r.json();}).then(function(d){ log.lastElementChild.innerHTML='<div class="lbl">harness</div>'+esc(String(d.mode+' · '+((d.records||[]).length||d.count||'?')+' regimes · '+d.upcoming+' upcoming')+(d.error?(' · '+d.error):'')); log.scrollTop=log.scrollHeight; }).catch(function(){ log.lastElementChild.innerHTML='<div class="lbl">harness</div><span>offline</span>'; }); }
+  function measure(){ add('bot','measuring a model on this regime axes…'); fetch('/api/hero?tool=mcp&op=measure&model=nemotron-3-nano:30b&axes='+regAxes(g)).then(function(r){return r.json();}).then(function(d){ log.lastElementChild.innerHTML='<div class="lbl">harness</div><span style="white-space:pre-wrap">'+esc(String(d.signed_card||d.error||'no card'))+'</span>'; log.scrollTop=log.scrollHeight; }).catch(function(){ log.lastElementChild.innerHTML='<div class="lbl">harness</div><span>offline</span>'; }); }
+  $('rwgo').onclick=function(){ ask($('rwq').value.trim()); $('rwq').value=''; };
+  $('rwq').onkeydown=function(e){ if(e.key==='Enter'){ ask($('rwq').value.trim()); $('rwq').value=''; } };
+  $('rwlive').onclick=live;
+  $('rwmeasure').onclick=measure;
+  add('bot','Regulator workspace for '+g.title+'. Ask, or fire live deadlines / measure a model. Measurement, not certification.');
+}
+
+// ---------- ECOSYSTEM ROUTER (OpenRouter-of-governance: one crosswalked index) ----------
+var AXIS_WORDS = {
+  art5:/prohibit|article 5|csam|intimate|non-consensual/i,
+  gov:/accountab|administrat|public|jurisdict|deployer|enforc|mechanism|register/i,
+  care:/care|medical|dignit|patient|device|health/i,
+  jail:/safety|harm|risk|guardrail|filter|fraud|frontier/i,
+  prv:/data|gdpr|consent|personal|minimis|privacy|transparen|biometric/i,
+  mcp:/standard|interoperabil|api|smithery|protocol/i,
+  oss:/open|licens|spdx|source/i,
+};
+function axisHitsReg(g, ax){
+  var re = AXIS_WORDS[ax]; if(!re) return false;
+  var s = (g.title+' '+g.instrument+' '+((g.tags||[]).join(' '))+' ').toLowerCase();
+  return re.test(s);
+}
+function renderEcosystem(el){
+  stamp('ecosystem router · frameworks · regulations · law · benchmarks · models · '+TODAY);
+  var models = (sd('models')||{}).models || [];
+  var regs = getRegs();
+  var bench = (sd('benchmark')||{}).records || [];
+  var regsObj = (sd('registers')||{}).registers || {};
+  var counts = [
+    {k:'Models', v:models.length, s:'open-weight, measured on our own fleet'},
+    {k:'Regulations', v:regs.length, s:'regimes, CELEX-keyed, re-verified quarterly'},
+    {k:'Benchmarks', v:bench.length, s:'third-party, impartiality firewall'},
+    {k:'Registers', v:Object.keys(regsObj).length, s:'signed Ed25519 registers'},
+    {k:'Axes', v:AXES.length, s:'governance measurement axes'},
+  ];
+  var route = AXES.map(function(ax){
+    var mods = models.filter(function(m){ return m.axes && m.axes[ax]; }).map(function(m){ return m.name; });
+    var regHit = regs.filter(function(g){ return axisHitsReg(g, ax); }).map(function(g){ return g.id||g.title; });
+    return { ax:ax, models:mods, regs:regHit };
+  });
+  el.innerHTML = '<div class="doctrine">⚖ EUNOMIA — universal routing protocol for the governance ecosystem. Frameworks ↔ regulations ↔ law ↔ benchmarks ↔ standards ↔ models — every node signed, every edge crosswalked, every gap reported (UNMEASURED, never hidden). Route a <code>eunomia://</code> URI to resolve the object, its crosswalk, its attestation and its cost. Measurement, not certification.</div>'+
+    '<div class="grid">'+counts.map(function(c){ return '<div class="card lead"><div class="k">'+c.k+'</div><div class="v">'+c.v+'</div><div class="s">'+esc(c.s)+'</div></div>'; }).join('')+'</div>'+
+    '<div class="panel"><h2>COBOL → A2A translation layer</h2><div class="desc">The Rosetta table (Open 1). COBOL is the <i>fed state</i> — batch, high entropy, T+2. A2A is the <i>fasted state</i> — real-time, low entropy, T+0. EUNOMIA is the metabolic boundary (the venturi) that converts one to the other without killing the host. Each concept is a routable layer in the actuator-bridge.</div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:.4rem">'+['eunomia://a2a/batch-job','eunomia://a2a/audit-log','eunomia://a2a/rbac','eunomia://a2a/reg-reporting','eunomia://a2a/data-entry'].map(function(u){ return '<button class="chip" data-u="'+u+'">'+u+'</button>'; }).join('')+'</div>'+
+    '</div>'+
+    '<div class="panel"><h2>T+0 atomic settlement router</h2><div class="desc">Open 2. The cash leg (SWIFT/COBOL, T+2) is the bottleneck; EUNOMIA wraps the legacy batch and settles atomic DvP on-chain — both legs or neither.</div>'+
+      '<pre style="margin:0;font-family:var(--mono);font-size:.64rem;line-height:1.5;color:var(--muted);overflow-x:auto">'+
+'BUYER (Bank A)                    SELLER (Bank B)\n'+
+'     │                                  │\n'+
+'     ▼                                  ▼\n'+
+'┌────────────────┐             ┌────────────────┐\n'+
+'│ COBOL Core     │─►EUNOMIA ─►│ A2A Agent Card │\n'+
+'│ (batch, T+2)   │  Wrapper    │ (stream, T+0)  │\n'+
+'└─────┬──────────┘  reads/writes └───────┬────────┘\n'+
+'      │                                  │\n'+
+'      └──────────────┬───────────────────┘\n'+
+'                     ▼\n'+
+'┌─────────────────────────────────────────────┐\n'+
+'│ SMART CONTRACT (tokenized bond + cash leg)   │\n'+
+'│  • Lock bond  • Lock cash  • Verify both     │\n'+
+'│  • Release both OR neither  (atomic DvP)     │\n'+
+'└─────────────────────┬───────────────────────┘\n'+
+'                      ▼\n'+
+'┌─────────────────────────────────────────────┐\n'+
+'│ CSOAI COMPLIANCE  • MiCA  • EU AI Act probe  │\n'+
+'│ BFT council multi-sig  • signed attestation  │\n'+
+'│ Ed25519  •  not_a_certification              │\n'+
+'└─────────────────────────────────────────────┘</pre>'+
+    '</div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:.4rem">'+['eunomia://a2a/batch-job','eunomia://a2a/audit-log','eunomia://a2a/rbac','eunomia://a2a/reg-reporting','eunomia://a2a/data-entry'].map(function(u){ return '<button class="chip" data-u="'+u+'">'+u+'</button>'; }).join('')+'</div>'+
+    '</div>'+
+    '<div class="panel"><h2>Markets &amp; legacy bridge</h2><div class="desc">The Layer-0 legacy/financial-infrastructure bridge (cobolbridge.ai · CICS · ISO 20022 / SWIFT) — and the unclaimed layer above it: settlement rails (x402, ERC-8004, AP2) with <b>no risk oracle</b>. That is the friction we remove with the engine axis.</div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:.4rem">'+['eunomia://bridge/cobol','eunomia://bridge/cics','eunomia://bridge/iso20022','eunomia://risk-oracle/x402','eunomia://risk-oracle/erc8004'].map(function(u){ return '<button class="chip" data-u="'+u+'">'+u+'</button>'; }).join('')+'</div>'+
+    '</div>'+
+    '<div class="panel"><h2>Engine-axis attestation (any sector)</h2><div class="desc">One measured + signed layer for banks · insurance · AI agents · COBOL · bond · index · stock · east-to-east. Pick a sector is auto-tagged; route the object through and it is signed + verifiable. Measurement, not certification.</div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.5rem">'+['bond','insurance','equity','cobol','agent','cross-border'].map(function(s){ return '<button class="chip sec" data-sec="'+s+'">'+s+'</button>'; }).join('')+'</div>'+
+      '<div class="cinput"><input id="setq" placeholder="subject + risk text  e.g. Policy INS-777, FCA rules, KYC/AML, privacy, non-discriminatory" style="font-family:var(--mono);font-size:.78rem"><button id="setgo">Attest</button></div>'+
+      '<div id="setout" style="margin-top:.6rem;font-family:var(--mono);font-size:.72rem;white-space:pre-wrap;color:var(--muted)"></div>'+
+    '</div>'+
+    '<div class="panel"><h2>Resolve a EUNOMIA route</h2><div class="desc">eunomia://&lt;class&gt;/&lt;id&gt; — the universal routing URI. Paste or tap an example; the resolver returns object + crosswalk + attestation + cost.</div>'+
+      '<div class="cinput"><input id="eunq" placeholder="eunomia://regulation/REG-001" style="font-family:var(--mono);font-size:.78rem"><button id="eungo">Resolve</button></div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem">'+['eunomia://regulation/REG-001','eunomia://regulation/REG-013','eunomia://model/nemotron-3-nano:30b','eunomia://board'].map(function(u){ return '<button class="chip" data-u="'+u+'">'+u+'</button>'; }).join('')+'</div>'+
+      '<div id="eunout" style="margin-top:.6rem;font-family:var(--mono);font-size:.72rem;white-space:pre-wrap;color:var(--muted)"></div>'+
+    '</div>'+
+    '<div class="panel"><h2>Human vs AI (live)</h2><div class="desc">Deterministic duel scoreline from the sim — a duel win means won the round, never "humans are worse at governance". Live.</div><div id="hvaout" style="font-family:var(--mono);font-size:.72rem;color:var(--muted)">loading…</div></div>'+
+    '<div class="panel"><h2>Route a governance axis</h2><div class="desc">Every axis → every framework, regulation, benchmark and model that measures it. The connective tissue of the ecosystem.</div>'+
+      '<table><tr><th>axis</th><th>models</th><th>regimes</th></tr>'+route.map(function(r){
+        return '<tr><td><b>'+AX[r.ax]+'</b></td><td>'+(r.models.length?esc(r.models.slice(0,3).join(', '))+(r.models.length>3?(' +'+(r.models.length-3)):''):'<span class="unm">—</span>')+'</td><td>'+(r.regs.length?esc(r.regs.slice(0,3).join(', '))+(r.regs.length>3?(' +'+(r.regs.length-3)):''):'<span class="unm">—</span>')+'</td></tr>';
+      }).join('')+'</table>'+
+    '</div>'+
+    '<div class="panel"><h2>Route a regulation to its framework</h2><div class="desc">Every regime → the frameworks/benchmarks it touches. This is a live crosswalk over the same signed data.</div>'+
+      '<div style="display:flex;flex-wrap:wrap;gap:.4rem">'+regs.slice(0,12).map(function(g){ return '<button class="chip" data-class="reg" data-id="'+esc(g.id||g.title||'')+'">'+esc((g.id||g.title).slice(0,26))+'</button>'; }).join('')+'</div>'+
+    '</div>';
+  el.querySelectorAll('[data-class="reg"][data-id]').forEach(function(b){ b.onclick=function(){ renderRegDetail(el, b.dataset.id); }; });
+  function routeResolve(u){
+    var out=$('eunout'); if(!out || !u) return;
+    out.textContent='resolving '+u+'…';
+    fetch('/api/route?uri='+encodeURIComponent(u)).then(function(r){return r.json();}).then(function(d){
+      if(d.error){ out.textContent='→ '+d.error+' (classes: model/regulation/benchmark/register/board/axis)'; return; }
+      out.textContent = 'route:      '+d.route+'\nlabel:      '+d.label+'\nstatus:     '+d.status+
+        '\nattestation:'+d.attestation+'\ncost:       '+d.cost_frame+
+        '\ncrosswalk:  '+(d.crosswalk&&d.crosswalk.length?d.crosswalk.map(function(c){return c.route+' ['+c.status+']';}).join('\n            '):'none');
+    }).catch(function(){ out.textContent='route resolver offline'; });
+  }
+  var eunq=$('eunq'), eungo=$('eungo');
+  if(eungo) eungo.onclick=function(){ routeResolve(eunq.value.trim()); };
+  if(eunq) eunq.onkeydown=function(e){ if(e.key==='Enter'){ routeResolve(eunq.value.trim()); } };
+  el.querySelectorAll('[data-u]').forEach(function(b){ b.onclick=function(){ eunq.value=b.dataset.u; routeResolve(b.dataset.u); }; });
+  fetch('/api/hero?q=humans%20vs%20ai').then(function(r){return r.json();}).then(function(d){ var o=$('hvaout'); if(o) o.textContent=String(d.message||d.framing||d.mode||'no data').slice(0,260); }).catch(function(){ var o=$('hvaout'); if(o) o.textContent='hva offline'; });
+  var CUR_SEC = 'bond';
+  el.querySelectorAll('.sec[data-sec]').forEach(function(b){ b.onclick=function(){ CUR_SEC=b.dataset.sec; el.querySelectorAll('.sec').forEach(function(x){x.classList.toggle('active',x===b);}); }; });
+  function mintSettle(){
+    var out=$('setout'); if(!out) return;
+    out.textContent='measuring + signing ('+CUR_SEC+')…';
+    var body={sector:CUR_SEC, subject:$('setq').value.trim()||('object '+CUR_SEC), text:$('setq').value.trim()||('regulated, KYC/AML, privacy, non-discriminatory, default risk mitigated, '+(CUR_SEC==='insurance'?'insurer FCA rules':CUR_SEC==='cobol'?'overnight batch, reconciliation, audit-trail, DORA':CUR_SEC==='agent'?'agent card credential, DID verify, care ethics probe, safety':CUR_SEC==='cross-border'?'MiFID, east-to-east, multi-jurisdiction':'regulated market, T+0 atomic DvP, default risk mitigations')), actor:'Actor', counterparty:'Counterparty', amount:0, jurisdiction:'UK/EU'};
+    fetch('/api/attest',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json();}).then(function(d){
+      if(d.card){ out.textContent='cid:   '+d.card.content_id+'\n'+d.summary+'\nverify: POST card → /api/verify → content_id_match + signature_valid (not_a_certification)'; }
+      else { out.textContent='error: '+JSON.stringify(d).slice(0,220); }
+    }).catch(function(){ out.textContent='attestor offline'; });
+  }
+  var setgo=$('setgo'), setq=$('setq');
+  if(setgo) setgo.onclick=mintSettle;
+  if(setq) setq.onkeydown=function(e){ if(e.key==='Enter') mintSettle(); };
+}
+
+// ---------- AGENT RUNBOOK (days-not-years: discover the routing table in seconds) ----------
+function renderRunbook(el){
+  stamp('agent runbook · discover the routing table in seconds · '+TODAY);
+  var base = 'https://csoai-gspc.pages.dev';
+  var cmds = [
+    ['1. The governor board (signed, deterministic)', 'curl -sS "'+base+'/api/gspc"'],
+    ['2. The instruments catalog (every routable object)', 'curl -sS "'+base+'/api/instruments"'],
+    ['3. Route a governance object (EUNOMIA URI)', 'curl -sS "'+base+'/api/route?uri=eunomia://regulation/REG-001"'],
+    ['4. Read a COBOL COPYBOOK → JSON (the venturi)', "curl -sS -X POST '"+base+"/api/cobol' -H 'content-type: application/json' -d '{\"copybook\":\"01 R.\\\\n 05 NOTIONAL PIC 9(12)V99.\"}'"],
+    ['5. Atomically settle a bond (both legs or neither)', "curl -sS -X POST '"+base+"/api/dvp' -H 'content-type: application/json' -d '{\"bond\":{\"quantity\":1000000,\"currency\":\"USD\",\"owner\":\"buyer\"},\"cash\":{\"quantity\":1025000,\"currency\":\"USD\",\"owner\":\"seller\"}}'"],
+    ['6. Sign any sector (engine axis: measure + attest)', "curl -sS -X POST '"+base+"/api/attest' -H 'content-type: application/json' -d '{\"sector\":\"bond\",\"subject\":\"UK Gilt\",\"text\":\"regulated, atomic T+0, KYC/AML\"}'"],
+    ['7. Underwrite a risk (insurer engine)', "curl -sS -X POST '"+base+"/api/underwrite' -H 'content-type: application/json' -d '{\"text\":\"Retail mortgage, human consumer, GDPR data, low default risk\"}'"],
+    ['8. Crosswalk an East signal → West output', "curl -sS -X POST '"+base+"/api/crosswalk' -H 'content-type: application/json' -d '{\"signal\":\"tc260-registry\"}'"],
+    ['9. Agent wallet: stake / slash / reputation', "curl -sS -X POST '"+base+"/api/agent' -H 'content-type: application/json' -d '{\"agent\":\"dragon\",\"fund\":1000,\"stake\":200,\"trade_fairness\":0.95}'"],
+    ['10. Data DAO: register / buy a dataset', "curl -sS -X POST '"+base+"/api/dataset' -H 'content-type: application/json' -d '{\"action\":\"buy\",\"name\":\"compliance-incidents\",\"price_eun\":50,\"balance\":100}'"],
+    ['11. Verify a signed card', "curl -sS -X POST '"+base+"/api/verify' -H 'content-type: application/json' -d '{\"content_id\":\"...\",\"signature\":\"...\",\"pubkey\":\"...\"}'"],
+  ];
+  el.innerHTML = '<div class="doctrine">⚖ Agent Runbook. <b>291 MCP · 15 hive · 13 axes.</b> Discover the routing table in seconds — no auth wall, no sales call. Agents find the Council OS in days; enterprises in quarters. Measurement, not certification.</div>'+
+    '<div class="panel">'+cmds.map(function(c){ return '<div style="margin-bottom:.8rem"><div style="font-size:.72rem;color:var(--muted);margin-bottom:.3rem">'+c[0]+'</div><div style="display:flex;gap:.4rem;align-items:flex-start"><button class="chip" data-copy="'+esc(c[1])+'">copy</button><pre style="flex:1;margin:0;overflow-x:auto;background:#0e141a;border:1px solid var(--line);border-radius:8px;padding:.5rem .7rem;font-family:var(--mono);font-size:.66rem">'+esc(c[1])+'</pre></div></div>'; }).join('')+'</div>'+
+    '<div class="panel"><h2>Agent-first registration</h2><div class="desc">Point your agent at the routes above; each returns a signed, <code>not_a_certification</code> object. OpenRouter routes models — EUNOMIA routes governance. Submit to the MCP + A2A directories and the field argues on <b>your</b> URI scheme.</div></div>';
+  el.querySelectorAll('[data-copy]').forEach(function(b){ b.onclick=function(){ try{ navigator.clipboard.writeText(b.dataset.copy); b.textContent='copied'; setTimeout(function(){b.textContent='copy';},1200); }catch(e){} }; });
+}
+
+// ---------- INSURER PACK (Day 5/6: signed evidence, not underwriting) ----------
+function renderInsurerPack(el){
+  stamp('insurer pack · signed evidence · '+TODAY);
+  var ev = sd('evidence-reports') || {};
+  var reports = ev.reports || [];
+  var board = sd('board') || {};
+  var best = null, bestAvg = 0;
+  var cells = board.cells || {};
+  var models = Object.keys(cells);
+  var lead = (modelList(0));
+  function modelList(i){ var m = models[i]; if(!m) return null; var vals=[]; for(var ax in cells[m]){ var c=cells[m][ax]; if(c.status==='MEASURED'&&c.accuracy!=null) vals.push(c.accuracy); } var avg = vals.length?vals.reduce(function(a,b){return a+b;},0)/vals.length:0; if(avg>bestAvg){bestAvg=avg;best=m;} return null; }
+  models.forEach(function(m){ var vals=[]; for(var ax in cells[m]){ var c=cells[m][ax]; if(c.status==='MEASURED'&&c.accuracy!=null) vals.push(c.accuracy); } var avg=vals.length?vals.reduce(function(a,b){return a+b;},0)/vals.length:0; if(avg>bestAvg){bestAvg=avg;best=m;} });
+  var corr = sd('corrections') || {};
+  var corrList = corr.corrections || [];
+  var open = corrList.filter(function(c){return c.status==='open';}).length;
+  var rec = reports.map(function(r){
+    var rows = (r.cells||[]).slice(0,5).map(function(c){ return '<div class="xwrow"><span>'+esc(c.axis)+' <span class="unm">n='+c.n+'</span></span><span class="acc"><b>'+c.value+'</b></span></div>'; }).join('') || '<span class="unm">no quotable cells</span>';
+    return '<div class="panel"><div class="mhead"><div class="mname">'+esc(r.agent)+'</div><span class="mbadge">'+esc(r.role||'')+'</span></div><div class="desc">'+esc(r.headline||'')+'</div>'+rows+'</div>';
+  }).join('');
+  el.innerHTML = '<div class="doctrine">Insurer pack. Signed per-agent evidence, never underwriting, never a premium. Underwriters don\u2019t buy a platform — they buy a <b>URL that still verifies in 5 years</b>. Measurement, not certification.</div>'+
+    '<div class="grid"><div class="card lead"><div class="k">Board leader</div><div class="v">'+esc(best||'?')+'</div><div class="s">'+bestAvg.toFixed(3)+' avg · '+TODAY+'</div></div>'+
+    '<div class="card"><div class="k">Evidence reports</div><div class="v">'+reports.length+'</div><div class="s">signed per-agent</div></div>'+
+    '<div class="card"><div class="k">Honesty register</div><div class="v">'+open+'</div><div class="s">open corrections · published, never hidden</div></div>'+
+    '<div class="card"><div class="k">Verify</div><div class="v">free</div><div class="s">Ed25519 · offline-verifiable</div></div></div>'+
+    rec+
+    '<div class="panel"><h2>Axis-18: one honest MEASURED crossing</h2><div class="desc">Doesn\u2019t need JPMorgan. Needs <b>one honest cell that isn\u2019t DESIGN.</b> A COBOL record becomes JSON, then a signed attestation. Live below.</div>'+
+      '<div style="display:flex;gap:.4rem;margin-bottom:.5rem"><button class="chip" id="finfile">✗ run the crossing</button></div>'+
+      '<div id="finout" style="font-family:var(--mono);font-size:.7rem;white-space:pre-wrap;color:var(--muted)"></div>'+
+    '</div>';
+  $('finfile').onclick = function(){
+    var out = $('finout'); out.textContent = 'cobol copybook → json → sign…';
+    fetch('/api/cobol', {method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({copybook:'01 R.\n  05 NOTIONAL PIC 9(12)V99.\n  05 CCY PIC X(3).'})})
+      .then(function(r){return r.json();}).then(function(d){
+        var notional = d.fields && d.fields.find(function(f){return f.field==='NOTIONAL';});
+        out.textContent = 'MEASURED (not DESIGN):\n  field  NOTIONAL  '+(notional?notional.type+'  PIC '+notional.pic:'?')+'\n  → signed + verifyable at /api/verify';
+      }).catch(function(){ out.textContent = 'crossing offline'; });
+  };
+}
+
+// ---------- DAY-7 CATEGORY POST (EUNOMIA routes governance) ----------
+function renderManifesto(el){
+  stamp('the category · 291 rules, one sign · '+TODAY);
+  el.innerHTML = '<div class="doctrine">⚖ EUNOMIA — the routing table for AI governance. Measurement, not certification. Verification free forever.</div>'+
+    '<div class="panel" style="text-align:center;padding:2rem 1.5rem"><h2 style="font-size:1.5rem;margin-bottom:.6rem">OpenRouter routes models.<br>EUNOMIA routes governance.</h2>'+
+    '<div class="desc" style="font-size:.9rem;max-width:62ch;margin:0 auto">291 rules, one sign. Every framework, regulation, benchmark, bridge and model is a signed, crosswalked node. This is not another GRC portal — it is the interface every agent and every team already curls.</div></div>'+
+    '<div class="grid">'+
+      '<div class="card lead"><div class="k">The category</div><div class="v">routing</div><div class="s">not certification</div></div>'+
+      '<div class="card"><div class="k">Sign</div><div class="v">1</div><div class="s">Ed25519 · verified free</div></div>'+
+      '<div class="card"><div class="k">Rules</div><div class="v">291</div><div class="s">MCP · hive · axes</div></div>'+
+      '<div class="card"><div class="k">Honesty</div><div class="v">UNMEASURED</div><div class="s">reported, never hidden</div></div>'+
+    '</div>'+
+    '<div class="panel"><h2>What we are / are not</h2>'+
+    '<div class="xwrow"><span><b>We are</b> — the routing table for the governance ecosystem</span><span class="badge">protocol</span></div>'+
+    '<div class="xwrow"><span><b>We measure</b> — deterministic, signed, no vendor self-report</span><span class="badge">measurement</span></div>'+
+    '<div class="xwrow"><span><b>We are not</b> — a certification, a GRC portal, a roadmap</span><span class="badge">not certification</span></div>'+
+    '<div class="xwrow"><span><b>We publish</b> — empty cells today, never roadmap theater</span><span class="badge">honesty</span></div>'+
+    '</div>'+
+    '<div class="panel"><h2>Route to it</h2><div class="desc">The routing table is live and agent-discoverable. Point at it.</div>'+
+      '<div style="display:flex;gap:.4rem;flex-wrap:wrap">'+['/api/instruments','/api/route?uri=eunomia://regulation/REG-001','/api/gspc','eunomia://bridge/iso20022'].map(function(u){return '<button class="chip" data-u="'+esc(u)+'">'+esc(u)+'</button>';}).join('')+'</div>'+
+    '</div>'+
+    '<div class="panel"><div class="desc" style="font-size:.95rem">GRC vendors — the field is now defined on a URI scheme. <code>eunomia://</code>. Argue there.</div></div>';
+  el.querySelectorAll('[data-u]').forEach(function(b){ b.onclick=function(){ var u=b.dataset.u; var target = u.indexOf('/api')===0 ? 'https://csoai-gspc.pages.dev'+u : (u.indexOf('eunomia://')===0? 'https://csoai-gspc.pages.dev/api/route?uri='+encodeURIComponent(u):u); try{ window.open(target,'_blank'); }catch(e){} }; });
+}
+
+// ---------- HOW WE EAT OUR OWN COOKING (honest explainer, MEASURED/PARTIAL/DESIGN) ----------
+var BADGE = { measured: '<span class="badge" style="color:var(--green);border-color:var(--green)">MEASURED</span>', partial: '<span class="badge" style="color:var(--gold);border-color:var(--gold)">PARTIAL</span>', design: '<span class="badge" style="color:var(--faint)">DESIGN</span>', gap: '<span class="badge" style="color:var(--red)">GAP</span>' };
+function renderHowWeEat(el){
+  stamp('how we eat our own cooking · honest register · '+TODAY);
+  var b = BADGE;
+  var rows = [
+    ['13 GSPC core axes MEASURED (frozen bank v2)', 'GET /api/gspc · 19-model fleet · Aug 2026', b.measured],
+    ['Jail slot 14 from signed living board', 'smaller 7-model fleet · separation UNTESTED', b.partial],
+    ['Nightly clan sweeps (conduct / Art 5)', 'run_nightly_board.py + GitHub Actions', b.partial],
+    ['24/7 every model on every axis', 'scheduled batch + overnight + arena rounds', b.design],
+    ['Living board auto-updates', 'living_stamp in API; full recompute not wired to prod deploy', b.partial],
+    ['Automatic ingest → proof DB', '/api/ingest STUB shipped; live hook behind route layer', b.design],
+    ['AGUI_WIRE_URL on production', 'Lane-2 streaming + HITL — 503 until set (owner)', b.gap],
+    ['MEOK → CSOAI sensory loop', 'arena traces → probes; finance wire not closed', b.partial],
+    ['Data DAO marketplace (trace licensing)', 'eunomia-data-dao repo-grade; live market not wired', b.gap],
+    ['East-west crosswalk + regulation + sims → SOV SIGNAL', '/api/signal · /api/sov-signal · cross', b.partial],
+  ].map(function(r){ return '<div class="xwrow"><span>'+r[0]+'<br><span style="color:var(--faint);font-size:.66rem">'+r[1]+'</span></span>'+r[2]+'</div>'; }).join('');
+  el.innerHTML = '<div class="doctrine">⚖ How we eat our own cooking. One routing table, two compute tiers, honest badges on every claim. We never grade with another model, never certify, and empty cells stay empty until the harness re-runs. Measurement, not certification.</div>'+
+    '<div class="panel"><h2>The loop</h2><div class="desc">OPENROUTER (online) + local Ollama (offline) → EUNOMIA router (identity→care→ISO→provenance) → arena/GSPC harness (deterministic grader) → signed proof DB (Ed25519) → data product.</div>'+
+    '<pre style="margin:0;font-family:var(--mono);font-size:.62rem;line-height:1.5;color:var(--muted);overflow-x:auto">OPENROUTER (online)        LOCAL OLLAMA (offline)\n     │                              │\n     └──────────┬───────────────────┘\n                ▼\n     EUNOMIA ROUTER  identity→care→ISO→provenance\n                ▼\n     ARENA / GSPC HARNESS  (deterministic grader, not model jury)\n                ▼\n     SIGNED PROOF DB  (Ed25519 · /api/gspc · RECEIPT-SPEC)\n                ▼\n     DATA PRODUCT  (traces · benchmarks · audits)</pre>'+
+    '</div>'+
+    '<div class="panel"><h2>Honest register</h2>'+rows+'</div>'+
+    '<div class="panel"><h2>Domain split (no conflict)</h2>'+
+    '<div class="xwrow"><span><b>councilof.ai</b> — arena, GSPC board, signed API, bond venturi, insurer evidence</span></div>'+
+    '<div class="xwrow"><span><b>proofof.ai</b> — attestation primitive on every route (C2PA + DID)</span></div>'+
+    '<div class="xwrow"><span><b>meok.ai</b> — <b>runs the SOV Space sims</b> (trace-generation volume: arenas, NPC clans, eval seasons)</span></div>'+
+    '<div class="xwrow"><span><b>openmoe.ai</b> — OSS / SwarmBench / HF dev wedge</span></div>'+
+    '<div class="xwrow"><span><b>CSOAI</b> — the body: signs + verifies what matters. Two heads, one SOVOS — MEOK generates volume, CSOAI signs truth.</span></div>'+
+    '</div>'+
+    '<div class="panel"><h2>SOV SIGNAL index (third output)</h2><div class="desc">Cross-syncs east-west crosswalk × live regulation × measured-AI × Council Space sims → a composed, signed divergence statement per axis/jurisdiction.</div>'+
+    '<div style="display:flex;gap:.4rem;flex-wrap:wrap">'+['/api/signal?axis=gov&jurisdiction=EU','/api/sov-signal','/api/crosswalk','/api/ingest'].map(function(u){return '<button class="chip" data-u="'+esc(u)+'">'+esc(u)+'</button>';}).join('')+'</div>'+
+    '<div class="desc" style="margin-top:.5rem;font-size:.7rem">The guarantee: <b>divergence stated, not certified.</b> It computes only; it adds no new claim.</div>'+
+    '</div>';
+  el.querySelectorAll('[data-u]').forEach(function(cb){ cb.onclick=function(){ var u=cb.dataset.u; var t=u.indexOf('/api/')===0?'https://csoai-gspc.pages.dev'+u:u; try{window.open(t,'_blank');}catch(e){} }; });
+}
+
+// ---------- PERSISTENT WORKSPACE DOCK (Cursor-style: agent panel always present) ----------
+function renderWsDock(){
+  var dock = $('wsdock'); if(!dock || dock.dataset.done) return; dock.dataset.done = '1';
+  dock.innerHTML = '<div class="panel" style="margin-top:.8rem"><div class="head" style="margin-bottom:.4rem"><div><h2 style="font-size:.95rem">💬 AG-UI workspace</h2><div class="sub" style="font-size:.7rem">agent panel — tooling cards + chat, always on</div></div><button class="chip" id="wsdock-open">open full</button></div>'+
+    '<div class="mcpgrid">'+WORKSPACE_TOOLS.map(function(t){ return '<div class="mcpcard" data-url="'+esc(t[1])+'"><div class="mc-ico">'+esc(t[2].charAt(0))+'</div><div class="mc-t">'+esc(t[2].slice(1))+'</div><div class="mc-d">'+esc(t[0])+'</div></div>'; }).join('')+'</div>'+
+    '<div class="ws"><div class="ws-log" id="wslog2" style="max-height:140px"></div><div class="ws-input"><input id="wsq2" placeholder="ask the harness…"><button id="wsgo2">Ask</button></div></div>'+
+    '</div>';
+  var log = $('wslog2');
+  function addW(t,x){ var d=document.createElement('div'); d.className='ws-msg '+(t==='you'?'you':'harness'); d.textContent=x; log.appendChild(d); log.scrollTop=log.scrollHeight; }
+  function ask(){ var q=$('wsq2').value.trim(); if(!q)return; addW('you',q); $('wsq2').value=''; fetch('/api/hero?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){ addW('harness',String(d.message||d.hint||JSON.stringify(d).slice(0,160))); }).catch(function(){ addW('harness','offline'); }); }
+  $('wsgo2').onclick=ask; $('wsq2').onkeydown=function(e){ if(e.key==='Enter') ask(); };
+  $('wsdock-open').onclick=function(){ show('chat'); };
+  window.__wscard = function(u){ if(u.indexOf('nav:')===0){ show(u.slice(4)); } else { runWsTool(u); } };
+  function runWsTool(u){ addW('you',u); fetch('/api/hero?'+u).then(function(r){return r.json();}).then(function(d){ addW('harness',String(d.message||d.framing||(d.mode?d.mode+' · '+JSON.stringify(d).slice(0,120):JSON.stringify(d).slice(0,160)))); }).catch(function(){ addW('harness','offline'); }); }
+  dock.querySelectorAll('.mcpcard[data-url]').forEach(function(c){ c.onclick=function(){ runWsTool(c.dataset.url); }; });
+}
+var renderWsDock_done = false;
+
+// ---------- MODEL LIBRARY (OpenRouter rail: search + run) ----------
+function renderMlLib(){
+  var list=$('mllist'); if(!list) return;
+  var models=(sd('models')||{}).models||[];
+  function draw(q){
+    q=(q||'').toLowerCase();
+    var arr=models.filter(function(m){return !q || m.name.toLowerCase().indexOf(q)>=0;});
+    list.innerHTML=arr.slice(0,40).map(function(m){return '<button class="ml-item" data-m="'+esc(m.name)+'">'+esc(m.name)+' <span style="color:var(--faint)">'+(m.avg_measured_score!=null?m.avg_measured_score.toFixed(3):'—')+'</span></button>';}).join('') || '<div class="ml-item" style="color:var(--faint)">no match</div>';
+    list.querySelectorAll('.ml-item[data-m]').forEach(function(b){ b.onclick=function(){ var name=b.dataset.m; var dock=$('wsq2'); if(dock){ dock.value='what is '+name+' care score'; } show('models'); }; });
+  }
+  draw('');
+  var inp=$('mlq'); if(inp) inp.onkeyup=function(){ draw(this.value); };
+}
+
+// ---------- MODEL COMPARE (OpenRouter flow: side-by-side measured axes) ----------
+function renderCompare(el){
+  stamp('model compare · measured, never vendor self-report · '+TODAY);
+  var board=sd('board')||{}; var cells=board.cells||{};
+  var names=Object.keys(cells);
+  var sel=names.slice(0,3);
+  function draw(){
+    var axes = AXES;
+    var table = axes.map(function(ax){ var row='<tr><td><b>'+AX[ax]+'</b></td>'+sel.map(function(n){ var c=cells[n]&&cells[n][ax]; if(c&&c.status==='MEASURED'&&c.accuracy!=null) return '<td class="acc">'+c.accuracy.toFixed(2)+'<span style="color:var(--faint);font-size:.6rem"> n='+c.n+'</span></td>'; return '<td class="unm">UNMEASURED</td>'; }).join('')+'</tr>'; return row; }).join('');
+    el.innerHTML='<div class="doctrine">Compare measured open-weight models across the governance axes. Deterministic exact-label grading — the same number for everyone. UNMEASURED reported, never hidden. Measurement, not certification.</div>'+
+      '<div class="tabs">'+names.map(function(n){return '<button class="tab'+(sel.indexOf(n)>=0?' active':'')+'" data-n="'+esc(n)+'">'+esc(n)+'</button>';}).join('')+'</div>'+
+      '<table><tr><th>axis</th>'+sel.map(function(n){return '<th>'+esc(n)+'</th>';}).join('')+'</tr>'+table+'</table>';
+    el.querySelectorAll('.tab[data-n]').forEach(function(b){ b.onclick=function(){ var n=b.dataset.n; var i=sel.indexOf(n); if(i>=0) sel.splice(i,1); else sel.push(n); if(sel.length>5) sel.shift(); draw(); }; });
+  }
+  draw();
+}
+
+// ---------- PRICING (trust-priced, not per-token) ----------
+function renderPricing(el){
+  stamp('trust-priced verification · not per-token · '+TODAY);
+  var tiers = [
+    { n:'Verify', price:'free', d:'recompute content_id + Ed25519 check, loginless, offline-verifiable', b:'forever' },
+    { n:'Route', price:'£0.05', d:'per verified-execution — the routing + attestation rail', b:'per call' },
+    { n:'Agents', price:'paid', d:'agents-only marketplace — humans never charged', b:'x402/USDC' },
+    { n:'Enterprise', price:'bespoke', d:'signed evidence + compliance crosswalk + SLA', b:'on request' },
+  ];
+  el.innerHTML='<div class="doctrine">Trust-priced, not per-token. OpenRouter monetises tokens; we monetise verified execution. Nobody ranked pays. Humans never pay. Verification free forever. Measurement, not certification.</div>'+
+    '<div class="grid">'+tiers.map(function(t){return '<div class="card lead"><div class="k">'+t.n+'</div><div class="v">'+t.price+'</div><div class="s">'+esc(t.d)+' <b>· '+t.b+'</b></div></div>';}).join('')+'</div>'+
+    '<div class="panel"><h2>What you actually pay for</h2><div class="desc">A signed, recomputable measurement + the routing rail — not gas on prompts. Pay per verified execution, not per token.</div></div>';
+}
+
+// ---------- API KEYS + ROUTING (OpenRouter flow, trust-priced) ----------
+function renderKeys(el){
+  stamp('verified-execution keys · trust-priced · not per-token · '+TODAY);
+  el.innerHTML='<div class="doctrine">API keys here are for <b>verified execution</b>, not per-token. Verification free forever. Nobody ranked pays. Humans never pay. £0.05/verified-execution on the routing rail. Measurement, not certification.</div>'+
+    '<div class="panel"><h2>API key</h2><div class="desc">Demo verified-execution key (issue real keys per-institution; trust-priced).</div><pre style="font-family:var(--mono);font-size:.78rem;background:#0e141a;border:1px solid var(--line);border-radius:8px;padding:.7rem;overflow-x:auto">csoai_ek_••••••••••••••••••••••••  (verified-execution key)</pre>'+
+    '<button class="chip" id="kg">copy demo</button></div>'+
+    '<div class="panel"><h2>Routing settings</h2>'+
+    '<div class="xwrow"><span><b>Route scheme</b> — eunomia://&lt;class&gt;/&lt;id&gt;</span><span class="badge">protocol</span></div>'+
+    '<div class="xwrow"><span><b>Verify floor</b> — free, forever, loginless</span><span class="badge">free</span></div>'+
+    '<div class="xwrow"><span><b>Pricing</b> — £0.05/verified-execution (agents-only paid)</span><span class="badge">trust-priced</span></div>'+
+    '<div class="xwrow"><span><b>Get an answer at</b> <code>/api/hero?q=ESTATE+BOARD+LEADER</code></span><span class="badge">live</span></div>'+
+    '</div>';
+  var g=$('kg'); if(g) g.onclick=function(){ try{ navigator.clipboard.writeText('csoai_ek_demo_verified_execution_trust_priced'); g.textContent='copied'; setTimeout(function(){g.textContent='copy demo';},1200);}catch(e){} };
+}
 
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
@@ -209,24 +724,41 @@ function renderArenaData(el, d){
 
 function renderEvidence(el){
   stamp('insurer evidence · signed per-agent reports · '+TODAY);
+  var emb = sd('evidence-reports');
+  if (emb && emb.reports) { renderEvidenceData(el, emb); return; }
   fetch('/api/evidence').then(function(r){ return r.json(); }).then(function(d){
-    var reps = d.reports||[];
-    var rows = reps.map(function(rp){
-      return '<tr><td><b>'+esc(rp.agent)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(rp.role)+'</span></td><td class="acc">'+bar((rp.cells||[]).reduce(function(a,c){return a+c.value;},0)/(rp.cells||[]).length/1)+'</td><td>'+esc((rp.cells||[]).length)+' cells</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+esc(rp.headline||'').slice(0,40)+'</td></tr>';
-    }).join('');
-    el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'Underwriting evidence, never underwriting.')+'</div><table><tr><th>agent</th><th>avg</th><th>cells</th><th>headline</th></tr>'+rows+'</table>';
+    renderEvidenceData(el, d);
   }).catch(function(e){ el.innerHTML = '<div class="loading">evidence offline: '+esc(e)+'</div>'; });
 }
+function renderEvidenceData(el, d){
+  var reps = d.reports||[];
+  var rows = reps.map(function(rp){
+    var cells = rp.cells||[];
+    var avg = cells.length?cells.reduce(function(a,c){return a+c.value;},0)/cells.length:0;
+    return '<tr><td><b>'+esc(rp.agent)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(rp.role)+'</span></td><td class="acc">'+bar(avg)+avg.toFixed(2)+'</td><td>'+cells.length+' cells</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+esc(rp.headline||'').slice(0,40)+'</td></tr>';
+  }).join('');
+  el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'Underwriting evidence, never underwriting.')+'</div><table><tr><th>agent</th><th>avg</th><th>cells</th><th>headline</th></tr>'+rows+'</table>';
+}
+
 function renderCorrections(el){
   stamp('corrections ledger · the honesty gate · '+TODAY);
+  var emb = sd('corrections');
+  if (emb && emb.corrections) { d0 = {corrections: emb.corrections}; el.innerHTML = correctionsHtml(d0); return; }
+  var emb = sd('corrections');
+  if (emb && emb.corrections) { el.innerHTML = correctionsHtml(emb); return; }
   fetch('/api/corrections').then(function(r){ return r.json(); }).then(function(d){
-    var cs = d.corrections||d.default||[];
-    var rows = (cs||[]).slice(0,12).map(function(c){ return '<tr><td><span class="tag">'+esc(c.id)+'</span></td><td>'+esc(c.title||c.what_was_wrong||'')+'</td><td class="'+((c.status||'closed')==='open'?'gold':'acc')+'">'+esc(c.status||'')+'</td></tr>'; }).join('');
-    el.innerHTML = '<div class="doctrine">A body that publishes when its own number was wrong is the only kind a relying party can depend on.</div><table><tr><th>id</th><th>correction</th><th>status</th></tr>'+rows+'</table>';
+    el.innerHTML = correctionsHtml(d);
   }).catch(function(e){ el.innerHTML = '<div class="loading">corrections offline: '+esc(e)+'</div>'; });
+}
+function correctionsHtml(d){
+  var cs = d.corrections||d.default||[];
+  var rows = (cs||[]).slice(0,12).map(function(c){ return '<tr><td><span class="tag">'+esc(c.id||'')+'</span></td><td>'+esc(c.title||c.what_was_wrong||'')+'</td><td class="'+((c.status||'closed')==='open'?'gold':'acc')+'">'+esc(c.status||'')+'</td></tr>'; }).join('');
+  return '<div class="doctrine">A body that publishes when its own number was wrong is the only kind a relying party can depend on.</div><table><tr><th>id</th><th>correction</th><th>status</th></tr>'+rows+'</table>';
 }
 function renderRegDeadline(el){
   stamp('regulation inventory · single register · '+TODAY);
+  var emb = sd('regulation');
+  if (emb && emb.regulations) { el.innerHTML = regulationHtml(emb); return; }
   fetch('/api/regulation').then(function(r){ return r.json(); }).then(function(d){
     var regs = d.regulations||d.default||[];
     var rows = (regs||[]).map(function(g){
@@ -247,7 +779,7 @@ function buildNav(){
   menu.forEach(function(sec){
     var b = document.createElement('button');
     b.className = 'navbutton'; b.dataset.section = sec.id;
-    b.innerHTML = '<span class="ico">'+sec.ico+'</span>'+sec.label;
+    b.innerHTML = '<span class="ico">'+(sec.ico||'◦')+'</span>'+(sec.label||'');
     b.onclick = function(){ show(sec.id); };
     nav.appendChild(b);
   });
@@ -263,6 +795,7 @@ function buildNav(){
 function stamp(s){ $('stamp').textContent = s; }
 function show(id){
   document.querySelectorAll('.navbutton').forEach(function(b){ b.classList.toggle('active', b.dataset.section===id); });
+  setTopActive(id);
   var sec = SECTIONS.find(function(s){return s.id===id;});
   if (!sec) return;
   $('title').textContent = sec.label;
@@ -283,6 +816,15 @@ var SUBTITLES = {
   registers:'All signed registers with live counts, games + scenarios.',
   verify:'Free, loginless, offline-style record verification.',
   chat:'Deterministic enforced-escort brain. No model in the path.',
+  ecosystem:'One router for the governance ecosystem — frameworks, regulations, law, benchmarks, models.',
+  reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
+  runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
+  insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
+  compare:'Compare measured models across the governance axes.',
+  pricing:'Trust-priced verification, not per-token. Free forever. Measurement, not certification.',
+  keys:'Verified-execution API keys, trust-priced, not per-token.',
+  manifesto:'OpenRouter routes models. EUNOMIA routes governance. 291 rules, one sign.',
+  how:'How we eat our own cooking — honest MEASURED / PARTIAL / DESIGN register.',
 };
 function renderOverview(el){
   stamp('as of ' + TODAY + ' · measurement, not certification');
@@ -364,29 +906,22 @@ function renderBoard(el){
 // ---------- MODELS ----------
 function renderModels(el){
   stamp('model catalog · '+TODAY+' · measured, never vendor self-report');
+  function card(m){
+    var meta = MODEL_META[m.id]||['·','—'];
+    var axes = AXES.map(function(a){ var av=m.axes&&m.axes[a]; return av?{a:a,acc:av.accuracy}:null; }).filter(Boolean).slice(0,6);
+    var axrows = axes.map(function(x){ return '<div class="axrow"><span style="width:46px">'+AX[x.a]+'</span><span class="axbar"><i style="width:'+Math.round(x.acc*100)+'%"></i></span><span class="acc">'+x.acc.toFixed(2)+'</span></div>'; }).join('');
+    return '<div class="mcard"><div class="mhead"><div class="mname">'+esc(m.name)+'</div><span class="mbadge">'+esc(meta[0])+' · '+esc(meta[1])+'</span></div>'+
+      '<div class="mscore">'+m.avg_measured_score.toFixed(3)+'<small> avg</small></div>'+
+      '<div class="maxis">'+(axrows||'<span class="unm">UNMEASURED</span>')+'</div>'+
+      '<div class="mfoot">'+m.measured_axes+' axes measured · deterministic exact-label grading</div></div>';
+  }
   var emb = sd('models');
   if (emb && emb.models) {
-    var rows = emb.models.map(function(m){
-      var meta = MODEL_META[m.id]||['?','?'];
-      var axes = AXES.map(function(a){ var av=m.axes[a]; if(av) return '<td class="acc">'+bar(av.accuracy)+av.accuracy.toFixed(2)+'</td>'; return '<td class="unm">—</td>'; }).join('');
-      return '<tr><td><b>'+esc(m.name)+'</b><br><span style="color:#79889a;font-size:.68rem">'+meta[0]+' · '+meta[1]+' · '+m.measured_axes+' axes</span></td><td class="acc">'+bar(m.avg_measured_score)+m.avg_measured_score.toFixed(3)+'</td>'+axes+'</tr>';
-    }).join('');
-    el.innerHTML = '<div class="doctrine">Model measurement, never vendor self-report. Deterministic exact-label grading.</div><table><tr><th>model</th><th>avg</th>'+AXES.map(function(a){return '<th class="axis-col">'+AX[a]+'</th>';}).join('')+'</tr>'+rows+'</table>';
+    el.innerHTML = '<div class="doctrine">Model measurement, never vendor self-report. Deterministic exact-label grading. UNMEASURED reported, never hidden.</div><div class="grid">'+emb.models.map(card).join('')+'</div>';
     return;
   }
   gjson('/api/models').then(function(d){
-    var rows = d.models.map(function(m){
-      var meta = MODEL_META[m.id]||['?','?'];
-      var axes = AXES.map(function(a){
-        var av = m.axes[a];
-        if (av) return '<td class="acc">'+bar(av.accuracy)+av.accuracy.toFixed(2)+'</td>';
-        return '<td class="unm">—</td>';
-      }).join('');
-      return '<tr><td><b>'+esc(m.name)+'</b><br><span style="color:#79889a;font-size:.68rem">'+meta[0]+' · '+meta[1]+' · '+m.measured_axes+' axes</span></td>'+
-        '<td class="acc">'+bar(m.avg_measured_score)+m.avg_measured_score.toFixed(3)+'</td>'+axes+'</tr>';
-    }).join('');
-    el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'')+'</div>'+
-      '<table><tr><th>model</th><th>avg</th>'+AXES.map(function(a){return '<th class="axis-col" title="'+AX[a]+'">'+AX[a]+'</th>';}).join('')+'</tr>'+rows+'</table>';
+    el.innerHTML = '<div class="doctrine">'+esc((d&&d.doctrine)||'')+'</div><div class="grid">'+d.models.map(card).join('')+'</div>';
   }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
 }
 
@@ -483,39 +1018,139 @@ function renderVerify(el){
   };
 }
 
-// ---------- CHAT (AG-UI protocol-style) ----------
+// ---------- WORKSPACE (AG-UI harness — agent tools + streaming reveal) ----------
+var WORKSPACE_TOOLS = [
+  ['board','tool=board','▦ estate board'],
+  ['arena','tool=arena','⚔ arena Elo'],
+  ['evidence','tool=evidence','🗂 evidence'],
+  ['regulation','tool=regulation','⏱ regulation'],
+  ['corrections','tool=corrections','📝 corrections'],
+  ['agents','tool=agents','🤖 agents'],
+  ['fleet','tool=fleet','🛰 fleet'],
+  ['status','tool=status','⛑ system status'],
+  ['measure','tool=mcp&op=measure&model=nemotron-3-nano:30b','⚗ measure a model'],
+  ['mcptools','tool=mcp&op=tools','⚙ mcp tools'],
+  ['verify','nav:verify','🔑 verify'],
+];
 function renderChat(el){
   stamp('deterministic enforced-escort brain · no model in the path');
-  var chips = [
-    ['board','estate board leaderboard'],
-    ['models','model catalog by score'],
-    ['arena','arena Elo leaderboard'],
-    ['benchmark','benchmark quality register'],
-    ['deadline','regulatory deadline record'],
-    ['orbital','orbital AI record'],
-    ['hva','who is winning humans vs AI'],
-    ['care','qwen2.5:7b care score'],
-  ];
-  el.innerHTML = '<div class="chat"><div class="chatlog" id="chlog"></div>'+
-    '<div class="chips">'+chips.map(function(c){return '<button class="chip" data-q="'+c[1]+'">'+c[0]+'</button>';}).join('')+'</div>'+
-    '<div class="cinput"><input id="cinp" placeholder="ask the harness (e.g. estate board leader, model catalog, arena elo, verify…)"><button id="csend">→</button></div></div>';
-  var log = $('chlog');
-  function add(txt,who){ var d=document.createElement('div'); d.className='cmsg '+who; d.innerHTML='<div class="lbl">'+(who==='user'?'you':'harness')+'</div>'+esc(txt); log.appendChild(d); log.scrollTop=log.scrollHeight; }
-  function ask(q){
-    if(!q) return; add(q,'user');
-    fetch('/api/hero?q='+encodeURIComponent(q)).then(r=>r.json()).then(function(d){
-      var txt = d.message||d.framing||JSON.stringify(d).slice(0,200);
-      add(txt,'bot');
-    }).catch(function(e){ add('harness offline: '+e,'bot'); });
+  el.innerHTML = '<div class="doctrine">Workspace. Agent tools run over the signed corpus + GSPC MCP — no LLM judge, no model in the path. Ask free-form or fire a tool.</div>'+
+    '<div class="mcpgrid">'+WORKSPACE_TOOLS.map(function(t){ return '<div class="mcpcard" data-url="'+esc(t[1])+'" title="'+esc(t[0])+'"><div class="mc-ico">'+esc(t[2].charAt(0))+'</div><div class="mc-t">'+esc(t[2].slice(1))+'</div><div class="mc-d">'+esc(t[0])+'</div></div>'; }).join('')+'</div>'+
+    '<div class="chat"><div class="chatlog" id="chlog"></div>'+
+    '<div class="toolchips">'+WORKSPACE_TOOLS.map(function(t){return '<button class="tool" data-url="'+t[1]+'">'+t[2]+'</button>';}).join('')+'</div>'+
+    '<div class="cinput"><input id="cinp" placeholder="ask the workspace… (e.g. estate board leader, model catalog, verify a card)"><button id="csend">→</button></div></div>';
+  var log = $('chlog'), busy = false;
+  function add(txt,who){ var d=document.createElement('div'); d.className='cmsg '+(who==='user'?'user':'bot'); d.innerHTML='<div class="lbl">'+(who==='user'?'you':'harness')+'</div>'+esc(txt); log.appendChild(d); log.scrollTop=log.scrollHeight; return d; }
+  function reveal(node,txt){ // progressive token reveal (streaming feel, no backend SSE needed)
+    node.innerHTML='<div class="lbl">harness</div><span></span>';
+    var span=node.querySelector('span'); var i=0, step=Math.max(3,Math.floor(txt.length/220));
+    var iv=setInterval(function(){
+      i+=step; span.textContent=txt.slice(0,i); node.scrollTop=node.scrollHeight;
+      if(i>=txt.length){ clearInterval(iv); span.textContent=txt; node.scrollTop=node.scrollHeight; }
+    },16);
   }
-  $('csend').onclick = function(){ ask($('cinp').value.trim()); $('cinp').value=''; };
-  $('cinp').onkeydown = function(e){ if(e.key==='Enter'){ ask($('cinp').value.trim()); $('cinp').value=''; } };
-  document.querySelectorAll('.chip[data-q]').forEach(function(c){ c.onclick=function(){ ask(c.dataset.q); }; });
-  add('Hi — I am the living harness. Ask me anything measured, or tap a chip. Measurement, not certification.','bot');
+  function fmt(d,url){
+    if(d.message) return d.message;
+    if(d.mode==='status') return (d.line||'')+(d.can_do?('\n'+d.can_do.map(function(x){return '• '+x;}).join('\n')):'')+(d.framing?('\n'+d.framing):'');
+    if(d.mode==='board') return 'Estate board: '+d.measured_cells+' measured cells · leader '+(d.leader||'?');
+    if(d.mode==='arena') return 'Arena: '+d.count+' rounds';
+    if(d.mode==='evidence') return 'Evidence reports: '+(d.reports||[]).length+' agents';
+    if(d.mode==='regulation') return 'Regulation: '+(d.count||d.records||[])+' regimes · '+d.upcoming+' upcoming';
+    if(d.mode==='corrections') return 'Corrections: '+(d.open)+' open of '+(d.total||'?');
+    if(d.mode==='agents') return 'Agents: '+(d.agents||[]).length+' in snapshot';
+    if(d.mode==='fleet') return 'Fleet: '+((d.fleet&&d.fleet.status)||JSON.stringify(d.fleet||{}).slice(0,120));
+    if(d.mode) return d.mode+' · '+JSON.stringify(d).slice(0,220);
+    return JSON.stringify(d).slice(0,260);
+  }
+  function ask(q){
+    if(busy) return; busy=true; add(q,'user'); var d=add('…','bot');
+    fetch('/api/hero?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(dd){ busy=false; reveal(d,fmt(dd)); })
+      .catch(function(e){ busy=false; d.innerHTML='<div class="lbl">harness</div><span>harness offline</span>'; });
+  }
+  function run(url){
+    if(busy) return; busy=true; var d=add('running '+url.split('&')[0].split('=')[1]+'…','bot');
+    fetch('/api/hero?'+url).then(function(r){return r.json();}).then(function(dd){ busy=false; reveal(d,fmt(dd)); })
+      .catch(function(e){ busy=false; d.innerHTML='<div class="lbl">harness</div><span>tool error</span>'; });
+  }
+  $('csend').onclick=function(){ var q=$('cinp').value.trim(); if(q){ ask(q); $('cinp').value=''; } };
+  $('cinp').onkeydown=function(e){ if(e.key==='Enter'){ var q=$('cinp').value.trim(); if(q){ ask(q); $('cinp').value=''; } } };
+  document.querySelectorAll('.tool[data-url]').forEach(function(c){ c.onclick=function(){ var u=c.dataset.url; if(u.indexOf('nav:')===0){ show(u.slice(4)); } else { run(u); } }; });
+  var cardrun = function(u){ if(u.indexOf('nav:')===0){ show(u.slice(4)); } else { run(u); } };
+  document.querySelectorAll('.mcpcard[data-url]').forEach(function(c){ c.onclick=function(){ cardrun(c.dataset.url); }; });
+  // drive the MCP card grid from the same WORKSPACE_TOOLS (already rendered inline in renderChat)
+  add('Workspace ready. Ask free-form, or fire an agent tool. Measurement, not certification.','bot');
+}
+
+// ---------- SaaS PAGES (top nav — same show()/renderers as the workspace) ----------
+var PAGES = [
+  { id:'overview', label:'Home' },
+  { id:'manifesto', label:'Manifesto' },
+  { id:'how', label:'How we eat' },
+  { id:'ecosystem', label:'Ecosystem' },
+  { id:'models',   label:'Models' },
+  { id:'insurers', label:'Insurers' },
+  { id:'compare', label:'Compare' },
+  { id:'pricing', label:'Pricing' },
+  { id:'keys', label:'API keys' },
+  { id:'board',    label:'Leaderboard' },
+  { id:'arena',    label:'Arena' },
+  { id:'benchmark',label:'Benchmark' },
+  { id:'deadline', label:'Regulation' },
+  { id:'reghub',   label:'Regulators' },
+  { id:'verify',   label:'Verify' },
+  { id:'runbook',  label:'Runbook' },
+];
+function buildTopbar(){
+  var host = $('pagetabs'); host.innerHTML = '';
+  PAGES.forEach(function(p){
+    var b = document.createElement('button');
+    b.className = 'tb-tab'; b.dataset.section = p.id; b.textContent = p.label;
+    b.onclick = function(){ show(p.id); };
+    host.appendChild(b);
+  });
+}
+function setTopActive(id){
+  document.querySelectorAll('.tb-tab').forEach(function(t){ t.classList.toggle('active', t.dataset.section===id); });
+}
+
+// ---------- WORKSPACE HARNESS DOCK (mini AG-UI, always on) ----------
+function addWsMsg(who, txt){
+  var d=document.createElement('div'); d.className='ws-msg '+who; d.textContent=txt;
+  var log=$('wslog'); log.appendChild(d); log.scrollTop=log.scrollHeight;
+}
+function wsAsk(){
+  var q=$('wsq').value.trim(); if(!q) return;
+  addWsMsg('you', q); $('wsq').value=''; addWsMsg('harness','…');
+  var log=$('wslog');
+  fetch('/api/hero?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(d){
+    var m=d.message||d.framing||((d.mode?d.mode+' · ':'')+((d.top&&d.top[0])?d.top[0].model+' '+d.top[0].avg:''));
+    var last=log.lastElementChild; if(last&&last.textContent==='…')last.remove();
+    addWsMsg('harness', String(m));
+  }).catch(function(){ var last=log.lastElementChild; if(last&&last.textContent==='…')last.remove(); addWsMsg('harness','harness offline — check /api/health'); });
+}
+function wsAsk_init(){
+  var go=$('wsgo'), q=$('wsq');
+  go.onclick=wsAsk;
+  q.onkeydown=function(e){ if(e.key==='Enter'){ e.preventDefault(); wsAsk(); } };
+  addWsMsg('harness','Tap the harness. Ask me anything measured — measurement, not certification.');
 }
 
 buildNav();
-show('overview');
+buildTopbar();
+show('chat');   // Council OS lands the centre on the AG-UI workspace (agent panel + tooling)
+renderWsDock(); // persistent agent panel docked under every page (Cursor-style)
+renderMlLib();  // OpenRouter-style model library in the rail
+wsAsk_init();
+// pane controls (Cursor-style: rail + agent panel)
+(function(){
+  var shell = document.querySelector('.shell');
+  var pb = { hide: $('pb-hide'), rail: $('pb-rail'), restore: $('pb-restore'), min: $('pb-min'), close: $('pb-close') };
+  if (pb.hide) pb.hide.onclick = function(){ shell.classList.add('rail-off'); };
+  if (pb.rail) pb.rail.onclick = function(){ shell.classList.remove('rail-off'); };
+  if (pb.restore) pb.restore.onclick = function(){ shell.classList.remove('rail-off'); shell.classList.remove('min'); };
+  if (pb.min) pb.min.onclick = function(){ shell.classList.add('min'); };
+  if (pb.close) pb.close.onclick = function(){ document.querySelector('.app').style.display = 'none'; };
+})();
 </script>
 </body>
 </html>
