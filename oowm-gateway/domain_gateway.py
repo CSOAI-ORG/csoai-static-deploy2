@@ -32,15 +32,15 @@ CARDS = "/Users/nicholas/sim-world-data/cards/mined/h3k-*.json"
 
 # domain -> (best model, mined field to retrieve, retrieval top-k)
 DOMAINS = {
-    "law":        ("qwen3:8b", "gov", 3),
-    "regulation": ("qwen3:8b", "gov", 3),
-    "framework":  ("qwen3:8b", "gov", 3),
-    "benchmark":  ("qwen3:8b",             "arch", 3),
+    "law":        ("mistral:7b", "gov", 3),
+    "regulation": ("mistral:7b", "gov", 3),
+    "framework":  ("mistral:7b", "gov", 3),
+    "benchmark":  ("mistral:7b",             "arch", 3),
     "harm":       ("council-oowm:latest",  "safety", 3),
-    "sovereignty":("qwen3:8b", "sovereignty", 3),
+    "sovereignty":("mistral:7b", "sovereignty", 3),
     "knowledge":  ("phi4:14b",             "mine", 2),
 }
-FALLBACK_MODEL = "qwen3:8b"
+FALLBACK_MODEL = "mistral:7b"
 
 def classify_domain(q: str) -> str:
     t = q.lower()
@@ -101,6 +101,17 @@ def chat(model, prompt, n=120, timeout=150):
 def route(q: str):
     domain = classify_domain(q)
     model, field, k = DOMAINS.get(domain, (FALLBACK_MODEL, "mine", 2))
+    # WARMTH-AWARE model selection: pick the warm (VRAM-loaded) model meeting the
+    # quality floor for instant answers; keep the domain specialist when no warm
+    # model clears the floor (or planner unavailable). Latency control, not size.
+    try:
+        import route_planner as RP
+        rp_reg = RP.load_registry()
+        best, meta = RP.choose(domain, rp_reg)
+        if best and best["id"] not in ("openrouter-frontier", "deepseek-official"):
+            model = best["id"]  # warm/expert specialist (never external for sovereign default)
+    except Exception:
+        pass
     bank = load_card_bank()
     ctx = retrieve(bank, field, q, k)
     context = "\n".join(f"- {c[0]}: {c[1][:160]}" for c in ctx)
