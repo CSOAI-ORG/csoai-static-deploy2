@@ -128,6 +128,55 @@ var SECTIONS = [
   { id:'chat',     label:'Ask the harness', ico:'💬', read: renderChat },
 ];
 
+// ── END-PARTY ROLES: each party gets its own sidebar menu tuned to its tooling ──
+var ROLES = {
+  'insurer':   { label:'Insurer', ico:'🛡', menu:[
+    {id:'evidence', label:'Underwriting evidence', ico:'🗂', read:renderEvidence},
+    {id:'deadline', label:'Reg deadline exposure', ic:0, read:renderDeadline},
+    {id:'benchmark', label:'Benchmark signal', ico:'✓', read:renderBenchmark},
+    {id:'board', label:'Model risk board', ico:'▦', read:renderBoard},
+    {id:'verify', label:'Verify a claim', ico:'🔑', read:renderVerify},
+  ]},
+  'regulator': { label:'Regulator', ico:'⚖', menu:[
+    {id:'deadline', label:'Deadline tracker', ico:'⏱', read:renderDeadline},
+    {id:'regulation', label:'Regulation inventory', ico:'📖', read:renderRegDeadline},
+    {id:'board', label:'Measured model board', ico:'▦', read:renderBoard},
+    {id:'evidence', label:'Evidence chain', ico:'🗂', read:renderEvidence},
+  ]},
+  'enterprise': { label:'Enterprise', ico:'🏢', menu:[
+    {id:'benchmark', label:'Vendor benchmark', ico:'✓', read:renderBenchmark},
+    {id:'models', label:'Model comparison', ico:'▤', read:renderModels},
+    {id:'board', label:'Axis board', ico:'▦', read:renderBoard},
+    {id:'verify', label:'Verify a record', ico:'🔑', read:renderVerify},
+  ]},
+  'researcher': { label:'Researcher', ico:'🔬', menu:[
+    {id:'board', label:'Estate board', ico:'▦', read:renderBoard},
+    {id:'arena', label:'Arena Elo', ico:'⚔', read:renderArena},
+    {id:'benchmark', label:'Benchmark quality', ico:'✓', read:renderBenchmark},
+    {id:'registers', label:'Registers', ico:'📚', read:renderRegisters},
+    {id:'orbital', label:'Orbital AI', ico:'🛰', read:renderOrbital},
+  ]},
+  'public':  { label:'Public', ico:'🌍', menu:[
+    {id:'verify', label:'Verify', ico:'🔑', read:renderVerify},
+    {id:'corrections', label:'Corrections', ico:'📝', read:renderCorrections},
+    {id:'board', label:'See the board', ico:'▦', read:renderBoard},
+    {id:'chat', label:'Ask the harness', ico:'💬', read:renderChat},
+  ]},
+  'internal': { label:'Internal', ico:'🛠', menu:[
+    {id:'chat', label:'Ask the harness', ico:'💬', read:renderChat},
+    {id:'board', label:'All axes', ico:'▦', read:renderBoard},
+    {id:'models', label:'All models', ico:'▤', read:renderModels},
+    {id:'arena', label:'Arena Elo', ico:'⚔', read:renderArena},
+    {id:'benchmark', label:'Benchmark quality', ico:'✓', read:renderBenchmark},
+    {id:'deadline', label:'Reg deadline', ico:'⏱', read:renderDeadline},
+    {id:'orbital', label:'Orbital AI', ico:'🛰', read:renderOrbital},
+    {id:'registers', label:'Registers', ico:'📚', read:renderRegisters},
+    {id:'verify', label:'Verify', ico:'🔑', read:renderVerify},
+    {id:'evidence', label:'Evidence', ico:'🗂', read:renderEvidence},
+  ]},
+};
+var CURRENT_ROLE = 'internal';
+
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
@@ -158,14 +207,57 @@ function renderArenaData(el, d){
   el.innerHTML = '<div class="grid">'+top3+'</div><div class="panel" style="margin-top:1rem"><table><tr><th>#</th><th>model</th><th>Elo</th><th>record</th><th>duels</th></tr>'+rows+'</table><div class="info" style="margin-top:.6rem">'+d.total_rounds+' rounds</div></div>';
 }
 
+function renderEvidence(el){
+  stamp('insurer evidence · signed per-agent reports · '+TODAY);
+  fetch('/api/evidence').then(function(r){ return r.json(); }).then(function(d){
+    var reps = d.reports||[];
+    var rows = reps.map(function(rp){
+      return '<tr><td><b>'+esc(rp.agent)+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(rp.role)+'</span></td><td class="acc">'+bar((rp.cells||[]).reduce(function(a,c){return a+c.value;},0)/(rp.cells||[]).length/1)+'</td><td>'+esc((rp.cells||[]).length)+' cells</td><td style="font-family:var(--mono);font-size:.66rem;color:#79889a">'+esc(rp.headline||'').slice(0,40)+'</td></tr>';
+    }).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'Underwriting evidence, never underwriting.')+'</div><table><tr><th>agent</th><th>avg</th><th>cells</th><th>headline</th></tr>'+rows+'</table>';
+  }).catch(function(e){ el.innerHTML = '<div class="loading">evidence offline: '+esc(e)+'</div>'; });
+}
+function renderCorrections(el){
+  stamp('corrections ledger · the honesty gate · '+TODAY);
+  fetch('/api/corrections').then(function(r){ return r.json(); }).then(function(d){
+    var cs = d.corrections||d.default||[];
+    var rows = (cs||[]).slice(0,12).map(function(c){ return '<tr><td><span class="tag">'+esc(c.id)+'</span></td><td>'+esc(c.title||c.what_was_wrong||'')+'</td><td class="'+((c.status||'closed')==='open'?'gold':'acc')+'">'+esc(c.status||'')+'</td></tr>'; }).join('');
+    el.innerHTML = '<div class="doctrine">A body that publishes when its own number was wrong is the only kind a relying party can depend on.</div><table><tr><th>id</th><th>correction</th><th>status</th></tr>'+rows+'</table>';
+  }).catch(function(e){ el.innerHTML = '<div class="loading">corrections offline: '+esc(e)+'</div>'; });
+}
+function renderRegDeadline(el){
+  stamp('regulation inventory · single register · '+TODAY);
+  fetch('/api/regulation').then(function(r){ return r.json(); }).then(function(d){
+    var regs = d.regulations||d.default||[];
+    var rows = (regs||[]).map(function(g){
+      return '<tr><td><b>'+esc(g.title||g.name||'')+'</b><br><span style="color:#79889a;font-size:.68rem">'+esc(g.instrument||'')+'</span></td><td style="font-family:var(--mono)">'+esc(g.date||'')+'</td><td class="'+((g.status||'')==='in-force'?'acc':'gold')+'">'+esc(g.status||'')+'</td><td style="font-size:.68rem">'+esc(g.penalty_exposure||'')+'</td></tr>';
+    }).join('');
+    el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'Regulation as corrected data.')+'</div><table><tr><th>reg</th><th>date</th><th>status</th><th>penalty</th></tr>'+rows+'</table>';
+  }).catch(function(e){ el.innerHTML = '<div class="loading">regulation offline: '+esc(e)+'</div>'; });
+}
+
 function buildNav(){
   var nav = $('nav'); nav.innerHTML = '';
-  SECTIONS.forEach(function(sec){
+  // role selector at top of sidebar
+  var roles = '<div class="roles">';
+  for (var r in ROLES) { roles += '<button class="rolebutton'+(r===CURRENT_ROLE?' active':'')+'" data-role="'+r+'">'+ROLES[r].ico+' '+ROLES[r].label+'</button>'; }
+  roles += '</div>';
+  nav.innerHTML = roles;
+  var menu = ROLES[CURRENT_ROLE].menu;
+  menu.forEach(function(sec){
     var b = document.createElement('button');
     b.className = 'navbutton'; b.dataset.section = sec.id;
     b.innerHTML = '<span class="ico">'+sec.ico+'</span>'+sec.label;
     b.onclick = function(){ show(sec.id); };
     nav.appendChild(b);
+  });
+  // wire role buttons
+  nav.querySelectorAll('.rolebutton').forEach(function(rb){
+    rb.onclick = function(){
+      CURRENT_ROLE = rb.dataset.role;
+      buildNav();
+      show(ROLES[CURRENT_ROLE].menu[0].id);
+    };
   });
 }
 function stamp(s){ $('stamp').textContent = s; }
