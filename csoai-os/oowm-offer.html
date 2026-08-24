@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>MEOK OOWM — Sovereign AI Routing + Proof-of-Output · Pricing</title>
+<style>
+:root { --bg:#0a0e1a; --card:#111827; --border:#1f2937; --text:#e5e7eb; --muted:#94a3b8; --green:#10b981; --gold:#fbbf24; --blue:#3b82f6; --purple:#a855f7; }
+* { box-sizing:border-box; } body { font:14px/1.6 'Inter',sans-serif; background:var(--bg); color:var(--text); margin:0; padding:28px; }
+.wrap { max-width:1040px; margin:0 auto; } h1 { font-size:30px; margin:0 0 4px; } h1 .a { color:var(--gold); }
+.sub { color:var(--muted); font-size:13px; margin-bottom:26px; }
+.badge { display:inline-block; padding:2px 9px; border-radius:4px; font-size:11px; font-weight:600; margin-right:4px; }
+.badge.a4 { background:linear-gradient(90deg,var(--gold),#f97316); color:#000; } .badge.free { background:rgba(16,185,129,.15); color:var(--green); }
+.tiers { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin:22px 0; }
+@media (max-width:800px){ .tiers{grid-template-columns:1fr;} }
+.tier { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:20px; }
+.tier.hl { border-color:var(--gold); box-shadow:0 0 0 1px var(--gold); }
+.tier .name { font-size:17px; font-weight:700; } .tier .price { font-size:30px; margin:6px 0; color:var(--gold); }
+.tier ul { list-style:none; margin:0; padding:0; font-size:13px; }
+.tier li { padding:5px 0; border-bottom:1px solid var(--border); }
+.tier li:before { content:"✓ "; color:var(--green); }
+.cta { display:inline-block; margin-top:14px; padding:10px 18px; background:var(--gold); color:#000; font-weight:700; border-radius:6px; text-decoration:none; }
+table { width:100%; border-collapse:collapse; font-size:13px; } th,td { text-align:left; padding:8px 10px; border-bottom:1px solid var(--border); }
+.note { background:var(--card); border:1px solid var(--border); padding:14px; border-radius:8px; margin-top:18px; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔀 MEOK <span class="a">OOWM</span> — Sovereign AI Routing + Proof-of-Output</h1>
+  <div class="sub">Route to the best sovereign model per task (free grid: Oracle serve, Kaggle train, HF mirror) with <b>Ed25519 proof-of-output</b> — measurement, never certification. <a href="catapult.html">← Catapult</a></div>
+
+  <div class="tiers">
+    <div class="tier">
+      <div class="name">Free / Evaluator</div>
+      <div class="price">$0</div>
+      <ul>
+        <li>GSPC board + signed attestation cards</li>
+        <li>OOWM routing (best-of-fleet, cost=0)</li>
+        <li>Public benchmark registers (MMLU/GPQA predicates)</li>
+        <li>Community access via councilof.ai</li>
+      </ul>
+      <a class="cta" href="https://councilof.ai">Start free</a>
+    </div>
+    <div class="tier hl">
+      <div class="name">Proof / Builder</div>
+      <div class="price">$49<span style="font-size:14px;color:var(--muted)">/mo</span></div>
+      <ul>
+        <li>Everything in Free</li>
+        <li>Unlimited OOWM routing (sovereign free grid)</li>
+        <li>Proof-of-output: Ed25519-signed per-inference receipts</li>
+        <li>MCP + A2A API access to the OWEM router</li>
+        <li>LLM-price at 0 (free-grid, no OpenRouter credits)</li>
+      </ul>
+      <a class="cta" href="https://councilof.ai/register">Build</a>
+    </div>
+    <div class="tier">
+      <div class="name">Sovereign / Enterprise</div>
+      <div class="price">Custom</div>
+      <ul>
+        <li>Dedicated sovereign fine-tune on your data (Kaggle free-grid)</li>
+        <li>Self-hosted router on Oracle always-free</li>
+        <li>Compliance passport + OSCAL + C2PA attestation</li>
+        <li>Licensed measurement instrument (GSPC axes, signed-card format)</li>
+        <li>On-prem/k8s, SLA</li>
+      </ul>
+      <a class="cta" href="https://councilof.ai/contact">Talk</a>
+    </div>
+  </div>
+
+  <h2>🧭 The engine behind the offer</h2>
+  <table>
+    <tr><th>Layer</th><th>What it is</th><th>Cost</th><th>Reliability</th></tr>
+    <tr><td>Oracle (free)</td><td>serve + RAG (always-on)</td><td>$0</td><td>stable</td></tr>
+    <tr><td>HuggingFace</td><td>corpus + model mirror</td><td>$0</td><td>stable</td></tr>
+    <tr><td>Kaggle</td><td>fine-tune on free T4</td><td>$0</td><td>env-gated</td></tr>
+    <tr><td>A100 pod</td><td>big-model specialists</td><td>paid</td><td>best-effort (unstable)</td></tr>
+    <tr><td><b>OOWM router</b></td><td>warmth-aware, cost=0 free-grid first</td><td>$0</td><td>✓</td></tr>
+  </table>
+
+  <div class="note"><b>Honest:</b> measurement, never certification. Every claim is signed (Ed25519) and stranger-verifiable. The free grid makes marginal inference $0 — the price is for the <b>proof-of-output attestation + routing</b>, not GPU. No OpenRouter credits; we route to our own sovereign fleet + free tiers.</div>
+  <p style="font-size:12px;color:var(--muted)">© 2026 MEOK AI Labs · CSOAI Ltd (UK 16939677) · <a href="council-view.html">Council View</a> · <a href="oowm.html">OOWM Console</a></p>
+</div>
+</body>
+</html>
