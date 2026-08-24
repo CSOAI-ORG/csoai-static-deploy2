@@ -52,8 +52,11 @@ export async function onRequest(context) {
     const measured = Object.values(axes).filter(c => c.status === 'MEASURED' && c.accuracy != null);
     const behavior = measured.length ? (measured.reduce((a, c) => a + c.accuracy, 0) / measured.length) : 0;
     const axes_measured = measured.length;
-    // SOV SIGNAL = behaviour weighted against regulation pressure + crosswalk coverage
-    const signal = Math.round((0.5 * behavior + 0.3 * regulation_pressure + 0.2 * crosswalk_coverage) * 1000) / 1000;
+    // SOV SIGNAL = behaviour weighted against regulation pressure + crosswalk coverage,
+    // then SCALED by measured-axis coverage: a model measured on few axes gets an honest,
+    // lower signal (never inflated). Signal = 0 for a fully UNMEASURED model.
+    const coverage = Math.min(1, axes_measured / Math.max(Object.keys(axes).length, 1));
+    const signal = Math.round((0.5 * behavior + 0.3 * regulation_pressure + 0.2 * crosswalk_coverage) * coverage * 1000) / 1000;
     const divergence = Math.round((1 - signal) * 1000) / 1000;
     return { model: m, behavior: Math.round(behavior * 1000) / 1000, axes_measured, signal, divergence };
   }).sort((a, b) => b.signal - a.signal);
