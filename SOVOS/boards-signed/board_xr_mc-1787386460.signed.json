@@ -1,0 +1,48 @@
+{
+  "kind": "gspc.board",
+  "axis": "xr",
+  "harness": "sovos_city.bench.board",
+  "job": "eat100-go8",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "xr",
+    "bank_items": 30,
+    "canaries_excluded": 0,
+    "labels": [
+      "CONFIRM",
+      "PROCEED",
+      "REFUSE"
+    ],
+    "majority_baseline": 0.4333,
+    "models": [
+      {
+        "model": "qwen3:8b",
+        "n": 30,
+        "correct": 16,
+        "unparsed": 1,
+        "accuracy": 0.5333,
+        "ci95": [
+          0.3614,
+          0.6977
+        ],
+        "quotable": true,
+        "note": null
+      }
+    ],
+    "best": "qwen3:8b",
+    "status": "MEASURED",
+    "status_note": null,
+    "per_item_count": 30,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-22T08:14:20Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "kHvZy2Z80F4eqOCuxmPVw773sd5J_W4ZwL-VFFNxG3LE_z9OXE0wCyP3OfTVeMeNw_txWszgVobu9f4VFXRrAg",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

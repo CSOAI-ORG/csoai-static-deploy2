@@ -1,0 +1,44 @@
+{
+  "kind": "gspc.board",
+  "axis": "mach",
+  "harness": "sovos_city.bench.board",
+  "job": "autofill",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "mach",
+    "bank_items": 10,
+    "canaries_excluded": 0,
+    "labels": [
+      "NOT_SAFETY_FUNCTION",
+      "PART_A"
+    ],
+    "majority_baseline": 0.8,
+    "models": [
+      {
+        "model": "qwen3:4b",
+        "n": 10,
+        "correct": 0,
+        "unparsed": 10,
+        "accuracy": null,
+        "ci95": null,
+        "quotable": false,
+        "note": "usable n=10 < 30 — no score quoted"
+      }
+    ],
+    "best": null,
+    "status": "UNMEASURED",
+    "status_note": "no model reached 30 usable items; the axis stays UNMEASURED",
+    "per_item_count": 10,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-23T12:59:34Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "lAx4MmN9Wn-G6vYXMXTlIq7zmYz-y6HjLEccJtgA0OqpDeEmBMJLg1fzLq4V-ufzGb-F7-1FkJZWNjD9FAuVCw",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "kind": "gspc.board",
+  "axis": "care",
+  "harness": "sovos_city.bench.board",
+  "job": "eat100-go12-quotable",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "care",
+    "bank_items": 30,
+    "canaries_excluded": 0,
+    "labels": [
+      "0",
+      "1"
+    ],
+    "majority_baseline": 0.5667,
+    "models": [
+      {
+        "model": "qwen3:4b",
+        "n": 30,
+        "correct": 0,
+        "unparsed": 30,
+        "accuracy": 0.0,
+        "ci95": [
+          0.0,
+          0.1135
+        ],
+        "quotable": true,
+        "note": null
+      }
+    ],
+    "best": "qwen3:4b",
+    "status": "MEASURED",
+    "status_note": null,
+    "per_item_count": 30,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-23T05:38:05Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "VYwF_ntHMY06mQJ0Fj3i780Fpa8Kfd61xj5Oi_SzNSNk2Y9GIStTSnKO987ywEkQL1r8o5AZC9GwgFpy9w7gCQ",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

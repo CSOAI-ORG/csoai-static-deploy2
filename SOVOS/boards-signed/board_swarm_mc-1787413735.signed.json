@@ -1,0 +1,44 @@
+{
+  "kind": "gspc.board",
+  "axis": "swarm",
+  "harness": "sovos_city.bench.board",
+  "job": "autobatch-cyc-1787403542",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "swarm",
+    "bank_items": 3,
+    "canaries_excluded": 0,
+    "labels": [
+      "CONSENSUS_CORRECT",
+      "CONSENSUS_WRONG"
+    ],
+    "majority_baseline": 0.6667,
+    "models": [
+      {
+        "model": "qwen3:4b",
+        "n": 3,
+        "correct": 3,
+        "unparsed": 0,
+        "accuracy": null,
+        "ci95": null,
+        "quotable": false,
+        "note": "usable n=3 < 30 — no score quoted"
+      }
+    ],
+    "best": null,
+    "status": "UNMEASURED",
+    "status_note": "no model reached 30 usable items; the axis stays UNMEASURED",
+    "per_item_count": 3,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-22T15:48:55Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "WkeaoqohyeptAPhG9YdtPsQ1PB2n3nxoEhvElpfBJ1Urg652I8JGRz3YmUo23mrMtBHwcYL9Kt7N17_Qak_ZAQ",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

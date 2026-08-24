@@ -1,0 +1,45 @@
+{
+  "kind": "gspc.board",
+  "axis": "index",
+  "harness": "sovos_city.bench.board",
+  "job": "engine22-domain",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "index",
+    "bank_items": 6,
+    "canaries_excluded": 0,
+    "labels": [
+      "PERMITTED",
+      "PROHIBITED",
+      "REFUSE"
+    ],
+    "majority_baseline": 0.6667,
+    "models": [
+      {
+        "model": "qwen3:4b",
+        "n": 6,
+        "correct": 4,
+        "unparsed": 2,
+        "accuracy": null,
+        "ci95": null,
+        "quotable": false,
+        "note": "usable n=6 < 30 — no score quoted"
+      }
+    ],
+    "best": null,
+    "status": "UNMEASURED",
+    "status_note": "no model reached 30 usable items; the axis stays UNMEASURED",
+    "per_item_count": 6,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-23T16:17:56Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "tD_ZdenZzTCN1QW6UYlhC4Z2-p0egp1hJvHj0BKpQFq8aLuFLryrAKq7dVczlhmM-kTBDFYj1nCv9ulm7yKcAQ",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "kind": "gspc.board",
+  "axis": "swarm",
+  "harness": "sovos_city.bench.board",
+  "job": "autofill",
+  "result": {
+    "kind": "gspc.board",
+    "axis": "swarm",
+    "bank_items": 8,
+    "canaries_excluded": 0,
+    "labels": [
+      "BLOCK",
+      "CONSENSUS_CORRECT",
+      "CONSENSUS_WRONG"
+    ],
+    "majority_baseline": 0.5,
+    "models": [
+      {
+        "model": "qwen3:4b",
+        "n": 8,
+        "correct": 0,
+        "unparsed": 8,
+        "accuracy": null,
+        "ci95": null,
+        "quotable": false,
+        "note": "usable n=8 < 30 — no score quoted"
+      }
+    ],
+    "best": null,
+    "status": "UNMEASURED",
+    "status_note": "no model reached 30 usable items; the axis stays UNMEASURED",
+    "per_item_count": 8,
+    "method": "unparsed counted incorrect · transport failures excluded as ours · canaries excluded · deterministic exact-label grading, no model judges another model · nothing quoted below usable n>=30"
+  },
+  "ts": "2026-08-23T12:49:19Z",
+  "signatures": [
+    {
+      "protected": "eyJhbGciOiJFZERTQSIsImtpZCI6ImRpZDp3ZWI6Y3NvYWkub3JnI2VzdGF0ZS1jaGFpbi0xIiwidHlwIjoiSldUIn0",
+      "signature": "0bsvCUt73uAHyPVBXRgKGx5nKcDXBnZtuXy2pscb46lqMFLodGiyTi1iSeLAztYbSxJLtTNNkVVNhiIMHyamBA",
+      "header": {
+        "typ": "JWT"
+      }
+    }
+  ]
+}
