@@ -28,6 +28,16 @@ table { width:100%; border-collapse:collapse; font-size:13px; } th,td { text-ali
   <h1>🔀 MEOK <span class="a">OOWM</span> — Sovereign AI Routing + Proof-of-Output</h1>
   <div class="sub">Route to the best sovereign model per task (free grid: Oracle serve, Kaggle train, HF mirror) with <b>Ed25519 proof-of-output</b> — measurement, never certification. <a href="catapult.html">← Catapult</a></div>
 
+  <div class="note" style="background:rgba(16,185,129,.08);border-color:var(--green);">
+    <b>🚀 Low friction, zero barrier.</b> Free tier forever · <b>no credit card</b> · no signup for the demo · upgrade only when you need proof receipts.<br>
+    <b>Try the live OOWM API free</b> — paste a question, get a routed answer with a signed receipt, no account needed:<br>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+      <input id="try-q" placeholder="e.g. What is data sovereignty?" style="flex:1;min-width:220px;padding:10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);" value="What is data sovereignty?">
+      <button id="try-btn" style="padding:10px 18px;border:0;border-radius:6px;background:var(--green);color:#000;font-weight:700;cursor:pointer;">▶ Try free</button>
+    </div>
+    <div id="try-out" style="margin-top:8px;font-size:13px;white-space:pre-wrap;">— click "Try free" for an instant signed proof —</div>
+  </div>
+
   <div class="tiers">
     <div class="tier">
       <div class="name">Free / Evaluator</div>
@@ -79,5 +89,17 @@ table { width:100%; border-collapse:collapse; font-size:13px; } th,td { text-ali
   <div class="note"><b>Honest:</b> measurement, never certification. Every claim is signed (Ed25519) and stranger-verifiable. The free grid makes marginal inference $0 — the price is for the <b>proof-of-output attestation + routing</b>, not GPU. No OpenRouter credits; we route to our own sovereign fleet + free tiers.</div>
   <p style="font-size:12px;color:var(--muted)">© 2026 MEOK AI Labs · CSOAI Ltd (UK 16939677) · <a href="council-view.html">Council View</a> · <a href="oowm.html">OOWM Console</a></p>
 </div>
+<script>
+// Frictionless live demo — call the OOWM API, no account, no card.
+document.getElementById('try-btn').addEventListener('click', async () => {
+  const q = document.getElementById('try-q').value.trim() || 'What is data sovereignty?';
+  const out = document.getElementById('try-out');
+  out.textContent = '🔀 routing on the free grid… (Oracle serve; may take ~10-30s)';
+  try {
+    const r = await (await fetch('http://127.0.0.1:4191/oowm', { method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify({ query: q }) })).json();
+    out.textContent = `[${r.domain || r.route || '?'} → ${r.model || r.provider || 'free-grid'}]\n${r.content || r.note || '(fleet warming — retry)'}`;
+  } catch(e) { out.textContent = 'OOWM gateway not reachable from here — the live demo runs on councilof.ai/register. Free, no card.'; }
+});
+</script>
 </body>
 </html>
