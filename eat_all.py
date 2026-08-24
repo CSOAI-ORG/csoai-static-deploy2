@@ -210,10 +210,13 @@ def phase_0_health() -> dict:
         result["souls"] = data.get("n_souls", 0)
     except Exception as e:
         result["sov_local_status"] = f"unreachable: {e}"
-    # Check ollama
+    # Check ollama (fleet tunnel, not empty local :11434; Mac is terminal-only per AGENTS.md)
+    ollama_host = os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11436")
     try:
-        out = subprocess.run(["ollama", "list"], capture_output=True, text=True, timeout=5)
-        result["ollama_models"] = len(out.stdout.strip().split("\n")) - 1
+        req = urllib.request.Request(ollama_host.rstrip("/") + "/api/tags")
+        with urllib.request.urlopen(req, timeout=5) as r:
+            data = json.loads(r.read())
+        result["ollama_models"] = len(data.get("models", []))
     except Exception as e:
         result["ollama_status"] = f"unreachable: {e}"
     # Check KB
@@ -654,7 +657,10 @@ def phase_9b_external_harness() -> dict:
                 entries.append(entry)
                 result["clans_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            _tmp = kb_path.with_suffix(".json.tmp")
+            _tmp.write_text(json.dumps(kb, indent=2))
+            _tmp.replace(kb_path)  # atomic
+
             result["artifacts"].append(str(kb_path))
 
         # Build swarm routing entry — every clan becomes a peer
@@ -903,7 +909,10 @@ def phase_9c_owem_cluster() -> dict:
                     entries.append(stage_entry)
                     result["clusters_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            _tmp = kb_path.with_suffix(".json.tmp")
+            _tmp.write_text(json.dumps(kb, indent=2))
+            _tmp.replace(kb_path)  # atomic
+
             result["artifacts"].append(str(kb_path))
 
         # Bind to SovSpace — emit a swarm event so the dome planet reflects the cluster
@@ -1113,7 +1122,10 @@ def phase_9d_benchmarks_harness() -> dict:
                 entries.append(entry)
                 result["benchmarks_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            _tmp = kb_path.with_suffix(".json.tmp")
+            _tmp.write_text(json.dumps(kb, indent=2))
+            _tmp.replace(kb_path)  # atomic
+
             result["artifacts"].append(str(kb_path))
 
     except Exception as e:
@@ -1267,7 +1279,10 @@ def phase_9e_training_data_harness() -> dict:
                 entries.append(entry)
                 result["data_sources_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            _tmp = kb_path.with_suffix(".json.tmp")
+            _tmp.write_text(json.dumps(kb, indent=2))
+            _tmp.replace(kb_path)  # atomic
+
             result["artifacts"].append(str(kb_path))
 
     except Exception as e:
@@ -1390,7 +1405,10 @@ def phase_9f_sovereign_training_pipeline() -> dict:
                 entries.append(entry)
                 result["stages_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            _tmp = kb_path.with_suffix(".json.tmp")
+            _tmp.write_text(json.dumps(kb, indent=2))
+            _tmp.replace(kb_path)  # atomic
+
             result["artifacts"].append(str(kb_path))
 
     except Exception as e:
@@ -1508,7 +1526,10 @@ def phase_9g_audience_harness() -> dict:
                 entries.append(entry)
                 result["audiences_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            _tmp = kb_path.with_suffix(".json.tmp")
+            _tmp.write_text(json.dumps(kb, indent=2))
+            _tmp.replace(kb_path)  # atomic
+
             result["artifacts"].append(str(kb_path))
 
     except Exception as e:
@@ -1733,7 +1754,10 @@ def phase_10b_model_routing() -> dict:
             entries.append(mcp_entry)
             result["specs_routed"] += 1
 
-            kb_path.write_text(json.dumps(kb, indent=2))
+            _tmp = kb_path.with_suffix(".json.tmp")
+            _tmp.write_text(json.dumps(kb, indent=2))
+            _tmp.replace(kb_path)  # atomic
+
             result["artifacts"].append(str(kb_path))
     except Exception as e:
         result["status"] = "failed"
