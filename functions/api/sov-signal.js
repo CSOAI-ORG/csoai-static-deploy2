@@ -81,6 +81,17 @@ export async function onRequest(context) {
     divergence: Math.round((1 - agg) * 1000) / 1000,
     leader: leader ? { model: leader.model, signal: leader.signal } : null,
     per_model: perModel,
+    // IY.5 / §3: the index about the index — this index's own construction is a
+    // signed, recomputable methodology so a stranger knows EXACTLY what a row is.
+    methodology: {
+      schema: 'csoai.sov-signal-methodology/0.1',
+      what_counts_as_a_row: 'a model with >=1 measured axis on the frozen bank; signal = 0 cover-scaled for a fully UNMEASURED model',
+      formula: 'signal = round((0.5*behavior + 0.3*regulation_pressure + 0.2*crosswalk_coverage) * coverage * 1000)/1000',
+      coverage: 'min(1, axes_measured / total_axes) — never inflated, never interpolated over a gap',
+      grammar: 'the index counts what was measured. Sim rows are labeled SYNTHETIC-SIM; UNTESTED renders UNTESTED; honest zeros render.',
+      never: ['a forecast', 'an interpolation over a gap', 'a quality verdict', 'a compliance determination', 'a certification'],
+      provenance: 'east-west crosswalk x live regulation pressure x SOV-space sims — deterministic, no model judge, no vendor self-report',
+    },
   };
   const content_id = await sha(canon(claim));
   const pair = await key(context.env);

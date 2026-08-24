@@ -50,7 +50,7 @@ function bytesToB64(u8) {
 
 function h2b(h){return new Uint8Array((h.match(/.{2}/g)||[]).map(b=>parseInt(b,16)));}
 
-export async function onRequestPost({ request }) {
+export async function onRequestPost({ request, env }) {
   const headers = { 'content-type': 'application/json', 'access-control-allow-origin': '*' };
   try {
     const body = await request.json();
@@ -68,7 +68,7 @@ export async function onRequestPost({ request }) {
     };
     const canonical = canon(claim);
     const content_id = await sha256hex(canonical);
-    const pair = await getKey(context.env);
+    const pair = await getKey(env);
     const sig = await crypto.subtle.sign('Ed25519', pair.privateKey, new TextEncoder().encode(content_id));
     const pub = pair.rawPubHex ? h2b(pair.rawPubHex) : await crypto.subtle.exportKey('raw', pair.publicKey);
     const out = { ...claim, content_id, signature: bytesToB64(new Uint8Array(sig)), pubkey: bytesToHex(new Uint8Array(pub)) };
