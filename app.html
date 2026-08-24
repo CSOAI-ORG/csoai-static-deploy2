@@ -271,6 +271,7 @@ var SECTIONS = [
   { id:'compliance', label:'Compliance', ico:'⚖', read: renderCompliance },
   { id:'fines', label:'Fines & radar', ico:'💸', read: renderCompliance },
   { id:'integrate', label:'Integrate', ico:'🔌', read: renderIntegrate },
+  { id:'enforcement', label:'Enforcement', ico:'🚨', read: renderEnforcement },
   { id:'board',    label:'Estate board', ico:'▦', read: renderBoard },
   { id:'models',   label:'Models', ico:'▤', read: renderModels },
   { id:'arena',    label:'Arena Elo', ico:'⚔', read: renderArena },
@@ -866,6 +867,21 @@ function renderIntegrate(el){
   var wl=$('wl2'); if(wl)wl.onclick=function(){ var o=$('intout'); if(o)o.textContent='Whitelabel: same GSPC OS, your brand, drop-in widget + MCP + API. £0.05/verified-execution. (draft: owner sends.)'; };
   var dl=$('dl'); if(dl)dl.onclick=function(){ var o=$('intout'); if(o)o.textContent='CLI: npx csoai measure/route/verify — install + run (published to npm/PyPI).'; };
 }
+
+// ---------- ENFORCEMENT & DEADLINES (Part IX: systematic signed coverage) ----------
+function renderEnforcement(el){
+  stamp('enforcement & deadlines · systematic signed coverage · '+TODAY);
+  var regs=(sd('regulation')||{}).regulations||[];
+  var live=new Date('2026-08-02T00:00:00Z'); var days=Math.max(0,Math.floor((Date.now()-live.getTime())/86400000));
+  var sorted=regs.slice().sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); });
+  var rows=sorted.map(function(g){ return '<tr><td style="font-family:var(--mono)">'+esc(g.date||'')+'</td><td><b>'+esc(g.title||'')+'</b></td><td class="'+((g.status||'')==='in-force'?'acc':'gold')+'">'+esc(g.status||'')+'</td><td style="font-size:.68rem">'+esc(g.penalty_exposure||'')+'</td></tr>'; }).join('');
+  el.innerHTML='<div class="doctrine">⚖ Enforcement &amp; deadlines — systematic signed coverage of the public enforcement record. EU AI Act fines: €0 collected; enforcement powers LIVE since 2 Aug 2026 (Art 101 up to €35M/7%). Regulators free forever (R8). Measurement, not certification.</div>'+
+    '<div class="grid"><div class="card lead"><div class="k">First-Fine Watch</div><div class="v">€0</div><div class="s">EU AI Act fines collected · enforcement live '+days+' days</div></div>'+
+    '<div class="card"><div class="k">Upcoming</div><div class="v">'+regs.filter(function(g){return (g.status||'')==='upcoming'||(g.status||'')==='positioning';}).length+'</div><div class="s">demand-creating</div></div>'+
+    '<div class="card"><div class="k">In force</div><div class="v">'+regs.filter(function(g){return (g.status||'')==='in-force';}).length+'</div><div class="s">live now</div></div>'+
+    '<div class="card"><div class="k">Highest</div><div class="v">€35M/7%</div><div class="s">Art 5 / Art 101 GPAI</div></div></div>'+
+    '<div class="panel"><h2>Deadline calendar (all regions)</h2><div class="desc">Every obligation + date + penalty — the product hook, deadlines force demand.</div><table><tr><th>date</th><th>obligation</th><th>status</th><th>penalty</th></tr>'+rows+'</table></div>';
+}
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
@@ -1010,6 +1026,7 @@ var SUBTITLES = {
   dashboard:'The whole system at a glance — every product working E2E, live back-end.',
   compliance:'Compliance radar — every obligation + fine tier, the regulator whitelabel pivot.',
   integrate:'Drop the OS into your stack — MCP · A2A · API · SDK · embed · CLI.',
+  enforcement:'Enforcement & deadlines — First-Fine Watch + signed deadline calendar.',
   reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
   runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
   insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
@@ -1330,6 +1347,7 @@ var PAGES = [
   { id:'dashboard', label:'Status' },
   { id:'compliance', label:'Fines' },
   { id:'integrate', label:'Integrate' },
+  { id:'enforcement', label:'Enforcement' },
   { id:'models',   label:'Models' },
   { id:'insurers', label:'Insurers' },
   { id:'compare', label:'Compare' },
