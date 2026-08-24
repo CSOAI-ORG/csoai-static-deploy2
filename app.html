@@ -686,7 +686,14 @@ function renderPricing(el){
   ];
   el.innerHTML='<div class="doctrine">Trust-priced, not per-token. OpenRouter monetises tokens; we monetise verified execution. Nobody ranked pays. Humans never pay. Verification free forever. Measurement, not certification.</div>'+
     '<div class="grid">'+tiers.map(function(t){return '<div class="card lead"><div class="k">'+t.n+'</div><div class="v">'+t.price+'</div><div class="s">'+esc(t.d)+' <b>· '+t.b+'</b></div></div>';}).join('')+'</div>'+
+    '<div class="panel" style="border-color:var(--accent)"><h2>Start a paid pilot → get a verified measurement</h2><div class="desc">One model × one axis, signed + honest (measurement, not certification). Paid in USDC on Base L2 (x402). The proof-of-rail.</div>'+
+      '<div style="display:flex;gap:.4rem;flex-wrap:wrap"><button class="chip" id="pilot">Request a pilot</button><button class="chip" id="book">Book a call</button><button class="chip" id="rail">View the rail</button></div>'+
+      '<div id="pilotout" style="margin-top:.6rem;font-size:.72rem;color:var(--muted)"></div></div>'+
     '<div class="panel"><h2>What you actually pay for</h2><div class="desc">A signed, recomputable measurement + the routing rail — not gas on prompts. Pay per verified execution, not per token.</div></div>';
+  var wt=function(){ var o=$('pilotout'); if(o) o.textContent='Pilot paid in USDC on Base L2 · verify free forever · £0.05/verified-execution · measurement, not certification.'; };
+  var pb=$('pilot'); if(pb) pb.onclick=wt;
+  var rb=$('rail'); if(rb) rb.onclick=function(){ show('keys'); };
+  var bk=$('book'); if(bk) bk.onclick=function(){ var o=$('pilotout'); if(o) o.textContent='Book a call → the pilot is a 30-min on-ramp (draft: owner sends).'; };
 }
 
 // ---------- API KEYS + ROUTING (OpenRouter flow, trust-priced) ----------
