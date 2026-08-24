@@ -20,7 +20,7 @@ TASKS = [
 ]
 
 MODELS = ["mistral:7b", "qwen2.5:7b"]  # local GPU ollama (warm, reliable) — same weight family as gateway teachers
-BASE = "http://localhost:11434/v1"
+BASE = "http://127.0.0.1:11434/v1"
 
 # Declared SOVOS policy — same identity/rules as the deployed Modelfile System prompt,
 # so the teacher's refusal behavior matches what the student must learn.

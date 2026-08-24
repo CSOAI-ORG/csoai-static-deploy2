@@ -12,7 +12,7 @@ const ENV = fs.readFileSync(os.homedir() + '/.dsh/.env', 'utf8');
 const RUNPOD_KEY = (ENV.match(/RUNPOD_API_KEY=(\S+)/) || [])[1] || '';
 const PORT = process.env.PORT || 8878;
 const LEDGER = os.homedir() + '/eunomia-ledger.jsonl';
-const LOCAL = 'http://localhost:11434'; // Mac ollama (policy teachers; healthy)
+const LOCAL = 'http://127.0.0.1:11434'; // Mac ollama (policy teachers; healthy)
 
 // model alias -> provider chain (primary first); local twins only where weights family matches
 const ROUTES = {

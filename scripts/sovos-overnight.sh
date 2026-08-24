@@ -39,7 +39,10 @@ ssh -F /dev/null -p 25804 -i ~/.runpod/ssh/runpodctl-ssh-key -o StrictHostKeyChe
 # POD KILLS CPU-HEAVY TRAINING (verified: SIGKILL in 25s, no OOM trace) -> train on MAC, weights -> volume.
 TR=~/clawd/csoai-static-deploy2
 if ! pgrep -f sov_minimal_train >/dev/null 2>&1; then
-  nohup bash -c "cd $TR && /tmp/sovtrain/bin/python sov_minimal_train.py --steps 150 --output sov-minimal-output-v3 >> ~/clawd/_alignment/train-v3.log 2>&1 && /tmp/sovtrain/bin/python ~/clawd/eval_student.py $TR/sov-minimal-output-v3 >> ~/clawd/_alignment/eval-v3.log 2>&1" >> $LOG 2>&1 &
-  echo "[$STAMP] mac train v3 launched" >> $LOG
+  # auto-version: next vN after the highest existing sov-minimal-output-vN
+  V=3
+  for n in 2 3 4 5 6 7 8; do [ -d "$TR/sov-minimal-output-v$n" ] && V=$((n+1)); done
+  nohup bash -c "cd $TR && /tmp/sovtrain/bin/python sov_minimal_train.py --steps 150 --output sov-minimal-output-v$V >> ~/clawd/_alignment/train-v$V.log 2>&1 && /tmp/sovtrain/bin/python ~/clawd/eval_student.py $TR/sov-minimal-output-v$V >> ~/clawd/_alignment/eval-v$V.log 2>&1" >> $LOG 2>&1 &
+  echo "[$STAMP] mac train v$V launched" >> $LOG
 fi
 echo "[$STAMP] overnight pass done (corpus=$N)" >> $LOG
