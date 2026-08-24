@@ -32,7 +32,7 @@ a { color:var(--accent2); text-decoration:none; }
 .badges-row { display:flex; flex-wrap:wrap; gap:.5rem; }
 .badge-chip { font-size:.68rem; font-weight:600; color:var(--text); padding:.4rem .7rem; border-radius:999px; border:1px solid var(--line); background:var(--card); text-decoration:none; white-space:nowrap; }
 .badge-chip:hover { transform:translateY(-1px); border-color:var(--accent); }
-.b-win { color:#7cc7a1; } .b-lot { color:#85a; } .b-ietf { color:#6f9; } .b-euai { color:#6af; } .b-nv { color:#7b6; } .b-glama { color:#c97; } .b-arxiv { color:#e88; } .b-c2pa { color:#9c9; } .b-bsi { color:#fb8; } .b-orcid { color:#8a9; } .b-codabench { color:#9c7; } .b-grey { color:var(--faint); font-weight:400; }
+.b-win { color:#7cc7a1; } .b-lot { color:#85a; } .b-ietf { color:#6f9; } .b-euai { color:#6af; } .b-nv { color:#7b6; } .b-glama { color:#c97; } .b-arxiv { color:#e88; } .b-c2pa { color:#9c9; } .b-bsi { color:#fb8; } .b-orcid { color:#8a9; } .b-codabench { color:#9c7; } .b-grey { color:var(--faint); font-weight:400; } .b-fw { color:var(--accent2); }
 .badges-note { font-size:.62rem; color:var(--faint); margin-top:.55rem; font-family:var(--mono); }
 
 .shell.rail-off .side { display:none; } .shell.rail-off { grid-template-columns:1fr; }
@@ -794,6 +794,8 @@ function renderPartners(el){
   stamp('partners · the ecosystem we sit in · '+TODAY);
   el.innerHTML='<div class="doctrine">Members of the bodies writing the rules, and the ecosystem we build with. Measurement, not certification.</div>'+
     '<div class="panel"><h2>Standards bodies & memberships</h2>'+badgesHtml()+'</div>'+
+    '<div class="panel"><h2>Regulators & frameworks we align to</h2><div class="desc">We measure and crosswalk against these (EU · US · UK · CN · global) — a neutral alignment map, never an endorsement of us by them.</div>'+frameworksHtml()+'</div>'+
+    '<div class="panel"><h2>Built on / powered by</h2><div class="desc">The full technology stack that powers the measurement spine.</div>'+techHtml()+'</div>'+
     '<div class="panel"><h2>Ecosystem</h2><div class="desc">Where we work — and the reference standards we improve on.</div><div class="grid">'+
       '<div class="card"><div class="k">OpenRouter</div><div class="s">models routing (we add governance routing)</div></div>'+
       '<div class="card"><div class="k">LM Arena</div><div class="s">blind A/B (we add measured + signed)</div></div>'+
@@ -802,6 +804,14 @@ function renderPartners(el){
       '</div></div>';
 }
 
+function techHtml(){
+  var t=[['Cloudflare','https://cloudflare.com','Pages + Functions'],['Hugging Face','https://huggingface.co/datasets/csoai','published datasets'],['Ed25519','https://github.com/paulmillr/noble-ed25519','signing spine'],['RFC 9943 (SCITT)','https://datatracker.ietf.org/doc/rfc9943/','receipt alignment'],['RunPod','https://runpod.io','GPU fleet'],['Oracle OCI','https://www.oracle.com/cloud/','offload']];
+  return '<div class="badges-row">'+t.map(function(x){return '<a class="badge-chip b-grey" href="'+x[1]+'" target="_blank" rel="noopener" title="'+esc(x[2])+'">'+esc(x[0])+'</a>';}).join('')+'</div>';
+}
+function frameworksHtml(){
+  var f=[['EU AI Act','https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai'],['NIST AI RMF','https://www.nist.gov/itl/ai-risk-management-framework'],['ISO/IEC 42001','https://www.iso.org/standard/81230.html'],['ISO/IEC 17020','https://www.iso.org/standard/52932.html'],['DORA','https://www.dora-info.eu'],['MiCA','https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica'],['China TC260','https://www.cac.gov.cn'],['UK DSIT','https://www.gov.uk/government/organisations/department-for-science-innovation-and-technology']];
+  return '<div class="badges-row">'+f.map(function(x){return '<a class="badge-chip b-fw" href="'+x[1]+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>';}).join('')+'</div>';
+}
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
