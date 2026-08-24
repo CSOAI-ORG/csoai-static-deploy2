@@ -55,9 +55,11 @@ export async function onRequestGet({ request }) {
 export async function onRequestPost({ request }) {
   try {
     const body = await request.json();
-    // full signed record → verify content_id recompute + signature
     const r = body;
-    const fields = ['content_id', 'signature', 'prev', 'pubkey'];
+    // full signed record → verify content_id recompute + signature.
+    // Strip every server/meta field that is NOT part of the canonical claim body
+    // (incl. the JB-D1 pinned-key fields) so content_id recomputes identically.
+    const fields = ['content_id', 'signature', 'prev', 'pubkey', 'key_id', 'verification_method', 'did_resolver'];
     const payload = {};
     for (const k of Object.keys(r)) if (!fields.includes(k)) payload[k] = r[k];
     const recomputed = await sha256hex(canon(payload));

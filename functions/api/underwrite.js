@@ -2,7 +2,8 @@
  * /api/underwrite — eunomia-insurance-engine, live + signed.
  * care-membrane risk probe → underwriting recommendation → Ed25519 attestation.
  */
-let _k=null; async function key(){ if(!_k)_k=crypto.subtle.generateKey({name:'Ed25519'},true,['sign','verify']); return _k; }
+import { getKey as getPinnedKey, bytesToHex } from './signlib.js';
+let _k=null; async function key(env){ if(!_k)_k=getPinnedKey(env); return _k; }
 function canon(o){ if(o===null)return'null'; if(o===true)return'true'; if(o===false)return'false'; if(typeof o==='string')return JSON.stringify(o); if(typeof o==='number')return Number.isFinite(o)?String(o):'0'; if(Array.isArray(o))return'['+o.map(canon).join(',')+']'; if(typeof o==='object')return'{'+Object.keys(o).sort().map(k=>JSON.stringify(k)+':'+canon(o[k])).join(',')+'}'; return'null'; }
 async function sha(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
 function h2b(h){const u=new Uint8Array((h.match(/.{2}/g)||[]).map(b=>parseInt(b,16)));return u;}
@@ -18,7 +19,9 @@ export async function onRequest(context){
   const risk=scores.risk.score>=1,care=scores.care.score>=1,prv=scores.privacy.score>=1;
   const rec=(!risk&&!prv)?'insure':(risk&&!care)?'decline':(care&&(risk||prv))?'flag':'insure';
   const witnessed_at=new Date().toISOString();
-  const claim={schema:'csoai.underwrite/0.1',record_type:'measured-current-state',not_a_certification:true,endorsement:'none',authored_by:'did:web:csoai.org',basis:'care-membrane deterministic probe',witnessed_at,text:b.text,recommendation:rec,axes:scores};
-  const content_id=await sha(canon(claim)); const pair=await key(); const sig=await crypto.subtle.sign('Ed25519',pair.privateKey,new TextEncoder().encode(content_id)); const pub=await crypto.subtle.exportKey('raw',pair.publicKey);
-  return new Response(JSON.stringify({summary:`underwrite → ${rec} (care=${scores.care.score},risk=${scores.risk.score})`,card:{...claim,content_id,signature:b64(new Uint8Array(sig)),pubkey:[...new Uint8Array(pub)].map(x=>x.toString(16).padStart(2,'0')).join('')}}),{status:200,headers:h});
+  const claim={schema:'csoai.underwrite/0.1',record_type:'measured-current-state',not_a_certification:true,endorsement:'none',authored_by:'did:web:csoai-gspc.pages.dev',basis:'care-membrane deterministic probe',witnessed_at,text:b.text,recommendation:rec,axes:scores};
+  const content_id=await sha(canon(claim)); const pair=await key(context.env); const sig=await crypto.subtle.sign('Ed25519',pair.privateKey,new TextEncoder().encode(content_id)); const pub=pair.rawPubHex?h2b(pair.rawPubHex):await crypto.subtle.exportKey('raw',pair.publicKey);
+  const card={...claim,content_id,signature:b64(new Uint8Array(sig)),pubkey:bytesToHex(new Uint8Array(pub))};
+  if(pair.kid){card.key_id=pair.kid;card.verification_method=pair.did+'#gspc';card.did_resolver='https://'+pair.did.replace('did:web:','')+'/.well-known/did.json';}
+  return new Response(JSON.stringify({summary:`underwrite → ${rec} (care=${scores.care.score},risk=${scores.risk.score})`,card}),{status:200,headers:h});
 }

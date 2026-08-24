@@ -11,7 +11,7 @@
  * Measurement, not certification. Deterministic, offline, no LLM in the parse.
  */
 
-const FIELD_RE = /^\s*(\d+)\s+([A-Z0-9][A-Z0-9-]*)\s+PIC\s+([A-Z0-9()V]+)\s*\.?\s*$/;
+const FIELD_RE = /^\s*(\d+)\s+([A-Z0-9][A-Z0-9-]*)\s+PIC\s+([A-Z0-9()V]+)\s*\.?\s*$/i;
 
 function parseCopybook(text) {
   const fields = [];

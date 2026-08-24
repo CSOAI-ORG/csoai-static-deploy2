@@ -15,11 +15,10 @@
  *   GET  → schema + examples
  */
 
-let keyPromise = null;
-async function getKey() {
-  if (!keyPromise) keyPromise = crypto.subtle.generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']);
-  return keyPromise;
-}
+// Stranger-verification (JB-D1): sign with the did:web-pinned key when the
+// GSPC_SIGNER_PRIV secret is present; fall back to ephemeral otherwise.
+import { getKey as getPinnedKey } from './signlib.js';
+function getKey(env) { return getPinnedKey(env); }
 function canon(obj) {
   if (obj === null) return 'null';
   if (obj === true) return 'true';
@@ -33,6 +32,7 @@ function canon(obj) {
 async function sha256hex(s) { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); }
 function bytesToHex(u8) { return [...u8].map(b => b.toString(16).padStart(2, '0')).join(''); }
 function bytesToB64(u8) { let bin = ''; u8.forEach(b => bin += String.fromCharCode(b)); return btoa(bin); }
+function h2b(hex) { return new Uint8Array((hex.match(/.{2}/g) || []).map(b => parseInt(b, 16))); }
 
 // one governance-axis vocabulary across ALL sectors.
 const SIG = {
@@ -92,7 +92,7 @@ export async function onRequest(context) {
     record_type: 'measured-current-state',
     not_a_certification: true,
     endorsement: 'none',
-    authored_by: 'did:web:csoai.org',
+    authored_by: 'did:web:csoai-gspc.pages.dev',
     basis: 'one EUNOMIA engine-axis vocabulary, deterministic exact-label predicates (no model judge, no self-report)',
     sector,
     witnessed_at,
@@ -118,10 +118,11 @@ export async function onRequest(context) {
   } else {
     prev = body.prev || await sha256hex(canon({ schema: 'csoai.engine-axis-attestation/0.1', genesis: 'sovos-engine-axis-chain-v1' }));
   }
-  const pair = await getKey();
+  const pair = await getKey(context.env);
   const sig = await crypto.subtle.sign('Ed25519', pair.privateKey, new TextEncoder().encode(content_id));
-  const pub = await crypto.subtle.exportKey('raw', pair.publicKey);
+  const pub = pair.rawPubHex ? h2b(pair.rawPubHex) : await crypto.subtle.exportKey('raw', pair.publicKey);
   const card = { ...claim, prev, content_id, signature: bytesToB64(new Uint8Array(sig)), pubkey: bytesToHex(new Uint8Array(pub)) };
+  if (pair.kid) { card.key_id = pair.kid; card.verification_method = pair.did + '#gspc'; card.did_resolver = 'https://' + pair.did.replace('did:web:', '') + '/.well-known/did.json'; }
   let chained = false;
   if (kv) {
     try { await kv.put('sovos-chain-head', card.content_id); await kv.put('card:' + card.content_id, JSON.stringify(card)); chained = true; }

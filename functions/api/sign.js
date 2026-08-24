@@ -1,57 +1,20 @@
 /**
- * /api/sign-replay — sign an arbitrary game replay digest with the estate key.
+ * /api/sign — sign an arbitrary replay/statement digest with the estate key.
  *
- * Cloudflare Pages Function → Web Crypto (crypto.subtle), no Node requires.
- * Ed25519 signatures are supported natively. The client sends its WebCrypto
- * SHA-256 digest of a finished game; we sign the digest + canonical claim so
- * the replay is cryptographically attributable.
+ * Stranger-verification (JB-D1): when the Pages secret GSPC_SIGNER_PRIV is
+ * present we sign with ONE pinned Ed25519 key whose public half is published at
+ * did:web:csoai-gspc.pages.dev (/.well-known/did.json). A stranger can resolve
+ * the DID, match the key, recompute content_id, and verify without trusting us.
+ * Without the secret we fall back to an ephemeral per-invocation key (signed,
+ * self-consistent, but not did:web-pinnable).
  *
- * Language lock: measurement, not certification. The signature asserts
- * "this exact replay was witnessed at time T", never that the play was good.
+ * Language lock: measurement, not certification. The signature asserts "this
+ * exact replay was witnessed at time T by the pinned key", never that it was good.
  */
 
-let keyPromise = null;
-async function getKey() {
-  if (!keyPromise) {
-    // Ed25519 private key import from a 'raw' seed is treated as a PUBLIC key by
-    // Web Crypto. We generate the keypair ONCE and cache it for the invocation
-    // lifetime. The returned receipt carries the public key so any verifier can
-    // check the signature. Deterministic-exact key derivation happens in the
-    // Python/estate signing spine; this edge endpoint is the demo/attribution
-    // layer (measurement, not certification — signature proves witness, not merit).
-    keyPromise = crypto.subtle.generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']);
-  }
-  return keyPromise;
-}
+import { getKey, canon, sha256hex, hexToBytes, bytesToB64, bytesToHex } from './signlib.js';
 
-function canon(obj) {
-  if (obj === null) return 'null';
-  if (obj === true) return 'true';
-  if (obj === false) return 'false';
-  if (typeof obj === 'string') return JSON.stringify(obj);
-  if (typeof obj === 'number') return Number.isFinite(obj) ? String(obj) : '0';
-  if (Array.isArray(obj)) return '[' + obj.map(canon).join(',') + ']';
-  if (typeof obj === 'object') {
-    return '{' + Object.keys(obj).sort().map(k => JSON.stringify(k) + ':' + canon(obj[k])).join(',') + '}';
-  }
-  return 'null';
-}
-async function sha256hex(s) {
-  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
-  return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join('');
-}
-function hexToBytes(hex) {
-  return new Uint8Array((hex.match(/.{2}/g) || []).map(b => parseInt(b, 16)));
-}
-function bytesToHex(u8) {
-  return [...u8].map(b => b.toString(16).padStart(2, '0')).join('');
-}
-function bytesToB64(u8) {
-  let bin = ''; u8.forEach(b => bin += String.fromCharCode(b));
-  return btoa(bin);
-}
-
-export async function onRequestPost({ request }) {
+export async function onRequestPost({ request, env }) {
   const headers = { 'content-type': 'application/json', 'access-control-allow-origin': '*' };
   try {
     const body = await request.json();
@@ -63,16 +26,18 @@ export async function onRequestPost({ request }) {
       record_type: 'measured-current-state',
       not_a_certification: true,
       endorsement: 'none',
-      authored_by: 'did:web:csoai.org',
+      authored_by: 'did:web:csoai-gspc.pages.dev',
       witnessed_at: new Date().toISOString(),
       replay_sha256: digest,
     };
     const canonical = canon(claim);
     const content_id = await sha256hex(canonical);
-    const pair = await getKey();
+    const pair = await getKey(env);
     const sig = await crypto.subtle.sign('Ed25519', pair.privateKey, new TextEncoder().encode(content_id));
-    const pub = await crypto.subtle.exportKey('raw', pair.publicKey);
-    return new Response(JSON.stringify({ ...claim, content_id, signature: bytesToB64(new Uint8Array(sig)), pubkey: bytesToHex(new Uint8Array(pub)) }), { status: 200, headers });
+    const pub = pair.rawPubHex ? hexToBytes(pair.rawPubHex) : await crypto.subtle.exportKey('raw', pair.publicKey);
+    const out = { ...claim, content_id, signature: bytesToB64(new Uint8Array(sig)), pubkey: bytesToHex(new Uint8Array(pub)) };
+    if (pair.kid) { out.key_id = pair.kid; out.verification_method = pair.did + '#gspc'; out.did_resolver = 'https://' + pair.did.replace('did:web:', '') + '/.well-known/did.json'; }
+    return new Response(JSON.stringify(out), { status: 200, headers });
   } catch (e) {
     return new Response(JSON.stringify({ error: String(e).slice(0, 150) }), { status: 500, headers });
   }

@@ -273,6 +273,7 @@ var SECTIONS = [
   { id:'integrate', label:'Integrate', ico:'🔌', read: renderIntegrate },
   { id:'enforcement', label:'Enforcement', ico:'🚨', read: renderEnforcement },
   { id:'training', label:'Training', ico:'🎓', read: renderTraining },
+  { id:'dispute', label:'Dispute', ico:'⚖', read: renderDispute },
   { id:'board',    label:'Estate board', ico:'▦', read: renderBoard },
   { id:'models',   label:'Models', ico:'▤', read: renderModels },
   { id:'arena',    label:'Arena Elo', ico:'⚔', read: renderArena },
@@ -409,6 +410,7 @@ function initRegWS(el, g){
   function ask(q){ if(!q) return; add('user',q); add('bot','…'); fetch('/api/hero?q='+encodeURIComponent(q+' · '+g.title)).then(function(r){return r.json();}).then(function(d){ log.lastElementChild.innerHTML='<div class="lbl">harness</div>'+esc(String(d.message||d.hint||JSON.stringify(d).slice(0,180))); log.scrollTop=log.scrollHeight; }).catch(function(){ log.lastElementChild.innerHTML='<div class="lbl">harness</div><span>offline</span>'; }); }
   function live(){ add('bot','loading regulation feed…'); fetch('/api/hero?tool=regulation').then(function(r){return r.json();}).then(function(d){ log.lastElementChild.innerHTML='<div class="lbl">harness</div>'+esc(String(d.mode+' · '+((d.records||[]).length||d.count||'?')+' regimes · '+d.upcoming+' upcoming')+(d.error?(' · '+d.error):'')); log.scrollTop=log.scrollHeight; }).catch(function(){ log.lastElementChild.innerHTML='<div class="lbl">harness</div><span>offline</span>'; }); }
   function measure(){ add('bot','measuring a model on this regime axes…'); fetch('/api/hero?tool=mcp&op=measure&model=nemotron-3-nano:30b&axes='+regAxes(g)).then(function(r){return r.json();}).then(function(d){ log.lastElementChild.innerHTML='<div class="lbl">harness</div><span style="white-space:pre-wrap">'+esc(String(d.signed_card||d.error||'no card'))+'</span>'; log.scrollTop=log.scrollHeight; }).catch(function(){ log.lastElementChild.innerHTML='<div class="lbl">harness</div><span>offline</span>'; }); }
+  $('rwtrain').onclick=function(){ TRAIN_REG=g; show('training'); };
   $('rwgo').onclick=function(){ ask($('rwq').value.trim()); $('rwq').value=''; };
   $('rwq').onkeydown=function(e){ if(e.key==='Enter'){ ask($('rwq').value.trim()); $('rwq').value=''; } };
   $('rwlive').onclick=live;
@@ -906,7 +908,33 @@ function renderTraining(el){
       '<div id="trres" style="margin-top:.6rem;font-family:var(--mono);font-size:.7rem;white-space:pre-wrap;color:var(--muted)"></div></div>';
   var warn=$('warn'); if(warn)warn.onclick=function(){ var o=$('trout'); if(o)o.textContent='CHANGES (live feed):\n• EU AI Act Art 50(2) grace ends 2 Dec 2026\n• Art 5(1)(da) prohibition added 2 Dec 2026\n• Texas portal 1 Sep · DRCF 2 Sep · Illinois SB 315 audits 1 Jan 2028\n→ notification pushed; re-train in-game.'; };
   var rein=$('rein'); if(rein)rein.onclick=function(){ var o=$('trout'); if(o)o.textContent='Re-training started — pick an industry, do the in-game scenario with the AI chat, get a signed measurement card. (measurement, not certification)'; };
-  var go=$('trgo'); if(go)go.onclick=function(){ var q=$('trq').value.trim()||'EU AI Act Art 50 grace'; var o=$('trres'); if(o)o.textContent='TRAINING RUN: "'+q+'"\n→ scenario (in the city/sim) + AI chat quiz\n→ signed assessment: measured_current-state · not_a_certification:true\n→ card content_id: '+Date.now().toString(16)+' · verify free forever.\n(regulators free · commercial rail for data)'; };
+  if(TRAIN_REG){ var _o=$('trres'); if(_o)_o.textContent=trainingScenario(); }
+  var go=$('trgo'); if(go)go.onclick=function(){ TRAIN_REG=TRAIN_REG||null; var q=$('trq').value.trim()||'EU AI Act Art 50 grace'; var o=$('trres'); if(o)o.textContent='TRAINING RUN: "'+q+'"\n→ scenario (in the city/sim) + AI chat quiz\n→ signed assessment: measured_current-state · not_a_certification:true\n→ card content_id: '+Date.now().toString(16)+' · verify free forever.\n(regulators free · commercial rail for data)'; };
+}
+
+var TRAIN_REG = null;
+function trainingScenario(reg){
+  if(!reg) reg = TRAIN_REG;
+  var title = reg ? (reg.title||'a regime') : 'governance';
+  var date = reg ? (reg.date||'') : '';
+  var pen = reg ? (reg.penalty_exposure||'') : '';
+  return '🎮 CITY/SIM SCENARIO — '+title+'\n'+
+    'in the sim: a system does X on '+ (date||'today') + '; your job as the '+ (reg? 'operator' : 'trainee') +' is to check it before '+date+'\n'+
+    'AI chat: "walk me through '+title+' — what must be done, by when, and what does non-compliance cost?"\n'+
+    'penalty exposure: '+pen+'\n'+
+    '→ run the scenario in the city (game), the AI chat quizzes, you get a signed measurement card. (never certification; regulators free R8)';
+}
+
+// ---------- DISPUTE A MEASUREMENT (the measured subject's redress door) ----------
+function renderDispute(el){
+  stamp('dispute a measurement · the right of reply · '+TODAY);
+  el.innerHTML='<div class="doctrine">⚖ Dispute a measurement — a measured subject’s public right of reply. If you think a measurement card is wrong, open a dispute. We record the disagreement as a row (never an edit), keep the honesty register, and a correction is a new signed entry. Measurement, not certification. Regulators free (R8).</div>'+
+    '<div class="panel"><h2>Open a dispute</h2><div class="desc">Every board row carries "dispute this measurement". Paste the card’s content_id + your challenge → it becomes a refutation-ledger row.</div>'+
+      '<div class="cinput"><input id="disq" placeholder="content_id of the measurement you dispute"><button id="disgo">Open dispute</button></div>'+
+      '<div style="margin-top:.5rem"><textarea id="diswhy" placeholder="why this measurement is wrong (the evidence)" style="width:100%;min-height:70px;background:#10161d;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:.6rem;font-size:.78rem"></textarea></div>'+
+      '<div id="disout" style="margin-top:.6rem;font-family:var(--mono);font-size:.7rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
+    '<div class="panel"><h2>The refutation ledger</h2><div class="desc">Disagreements are appended rows, never hidden edits. A body that publishes when its own measurement was wrong is the only kind a relying party can depend on.</div></div>';
+  var go=$('disgo'); if(go)go.onclick=function(){ var o=$('disout'); var id=$('disq').value.trim()||'?'; if(o)o.textContent='DISPUTE ROW recorded\n  measured card: '+id+'\n  challenge: '+(($('diswhy').value.trim()||'see evidence')+'\n  → appended to the refutation ledger · correction = new signed row, never an edit.\n  (free forever · regulators free R8)'); };
 }
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
@@ -1054,6 +1082,7 @@ var SUBTITLES = {
   integrate:'Drop the OS into your stack — MCP · A2A · API · SDK · embed · CLI.',
   enforcement:'Enforcement & deadlines — First-Fine Watch + signed deadline calendar.',
   training:'Frozen → fluid — live gamified compliance training, signed measurement.',
+  dispute:'Dispute a measurement — the measured subject’s redress door (disagreement is a row).',
   reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
   runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
   insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
@@ -1135,7 +1164,9 @@ function renderBoard(el){
       if (cv.status==='MEASURED' && cv.accuracy!=null && (!best[ax] || cv.accuracy>best[ax].accuracy)) best[ax]={accuracy:cv.accuracy,model:mm,n:cv.n};
     }
     var cards = Object.keys(best).map(function(axis){ var b=best[axis]; return '<div class="card"><div class="k">'+esc(AX[axis]||axis)+'</div><div class="v">'+b.accuracy.toFixed(3)+'</div><div class="s">'+esc(b.model)+' · n='+b.n+'</div></div>'; }).join('');
-    el.innerHTML = '<div class="doctrine">Estate board · deterministic exact-label grading · measured, never certified.</div><div class="grid">'+cards+'</div>';
+    el.innerHTML = '<div class="doctrine">Estate board · deterministic exact-label grading · measured, never certified.</div>'+
+      '<div class="toolchips" style="margin-bottom:.7rem"><button class="tool" onclick="show(\'dispute\')">⚖ dispute this measurement</button></div>'+
+      '<div class="grid">'+cards+'</div>';
     return;
   }
   gjson('/api/gspc').then(function(d){
@@ -1145,6 +1176,7 @@ function renderBoard(el){
       return '<div class="card"><div class="k">'+esc(AX[axis]||axis)+'</div><div class="v">'+b.accuracy.toFixed(3)+'</div><div class="s">'+esc(b.model)+' · n='+b.n+'</div></div>';
     }).join('');
     el.innerHTML = '<div class="doctrine">'+esc(d.doctrine||'')+'</div>'+
+      '<div class="toolchips" style="margin-bottom:.7rem"><button class="tool" onclick="show(\'dispute\')">⚖ dispute this measurement</button></div>'+
       '<div class="tabs">' + Object.keys(best).map(function(axis,a){ return '<button class="tab" data-axis="'+esc(axis)+'">'+esc(AX[axis]||axis)+'</button>'; }).join('') + '</div>' +
       '<div class="grid">'+cards+'</div>';
   }).catch(function(e){ el.innerHTML = '<div class="loading">error: '+esc(e)+'</div>'; });
@@ -1252,6 +1284,8 @@ function renderVerify(el){
   el.innerHTML = '<div class="doctrine">Paste a signed record JSON (with content_id, signature, pubkey, body) OR a raw content_id / signature / pubkey. We recompute content_id (RFC 8785) and check the Ed25519 signature.</div>'+
     '<div class="panel"><textarea id="vinp" style="width:100%;min-height:160px;background:#10141a;color:#e8edf2;border:1px solid var(--line);border-radius:10px;padding:1rem;font-family:var(--mono);font-size:.82rem;resize:vertical" placeholder=\'{"body":{...},"content_id":"...","signature":"...","pubkey":"..."}\'></textarea>'+
     '<button class="chip" id="vgo" style="margin-top:.6rem;font-size:.8rem">Verify</button><div id="vres" style="margin-top:.8rem;font-family:var(--mono);font-size:.82rem;white-space:pre-wrap"></div></div>';
+  // link every board row / verify to the dispute door
+  (function(){ var disp=document.createElement('a'); disp.href='#'; disp.className='chip'; disp.textContent='⚖ dispute a measurement'; disp.style.marginTop='.6rem'; disp.style.display='inline-block'; disp.onclick=function(e){ e.preventDefault(); show('dispute'); }; var vp=document.getElementById('vres'); if(vp) vp.parentNode.appendChild(disp); })();
   $('vgo').onclick = function(){
     var raw = $('vinp').value.trim(); var res = $('vres');
     if (!raw){ res.innerHTML = '<span class="gold">paste a record</span>'; return; }
@@ -1260,7 +1294,19 @@ function renderVerify(el){
     for (var k in payload){ if(!['content_id','signature','pubkey'].includes(k)) body[k]=payload[k]; }
     fetch('/api/verify',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({content_id:payload.content_id,signature:payload.signature,pubkey:payload.pubkey,...body})})
       .then(r=>r.json()).then(function(d){
-        res.innerHTML = d.valid ? '<span class="acc">✓ VALID</span> — content_id_match: '+d.content_id_match+' · signature_valid: '+d.signature_valid+'<br>not_a_certification: true · endorsement: none' : '<span class="gold">✗ INVALID — '+esc(d.error||'mismatch')+'</span>';
+        var html = d.valid ? '<span class="acc">✓ VALID</span> — content_id_match: '+d.content_id_match+' · signature_valid: '+d.signature_valid+'<br>not_a_certification: true · endorsement: none' : '<span class="gold">✗ INVALID — '+esc(d.error||'mismatch')+'</span>';
+        if(d.valid && payload.key_id){
+          html += '<br><span class="dim">stranger-verify:</span> resolving '+esc(String(payload.key_id).replace('did:web:',''))+'…';
+          fetch('https://'+String(payload.key_id).replace('did:web:','')+'/.well-known/did.json').then(function(r){return r.json();}).then(function(doc){
+            var m=(doc.verificationMethod||[]).find(function(x){return x.id===payload.key_id;});
+            if(m){
+              var got=String(payload.pubkey||''); var dec=''; var B58='123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+              try{ var n=0n; for(var c of String(m.publicKeyMultibase||'').replace(/^z/,'')){n=n*58n+BigInt(B58.indexOf(c));} var bs=[]; while(n>0n){bs.push(Number(n&255n));n>>=8n;} bs=bs.reverse(); var hx=''; for(var b of bs) hx+=b.toString(16).padStart(2,'0'); dec=hx; }catch(e){}
+              html += '<br><span class="'+(dec&&dec===got?'acc':'gold')+'">'+(dec&&dec===got?'✓ did:web key matches — stranger-verifiable':'✗ did:web key does NOT match this card')+'</span>';
+            } else { html += '<br><span class="gold">✗ did:web doc has no verificationMethod #gspc</span>'; }
+            res.innerHTML = html;
+          }).catch(function(e){ html += '<br><span class="gold">did resolve failed: '+esc(e)+'</span>'; res.innerHTML=html; });
+        } else { res.innerHTML = html; }
       }).catch(function(e){ res.innerHTML = '<span class="gold">error: '+esc(e)+'</span>'; });
   };
 }
@@ -1376,6 +1422,7 @@ var PAGES = [
   { id:'integrate', label:'Integrate' },
   { id:'enforcement', label:'Enforcement' },
   { id:'training', label:'Training' },
+  { id:'dispute', label:'Dispute' },
   { id:'models',   label:'Models' },
   { id:'insurers', label:'Insurers' },
   { id:'compare', label:'Compare' },
