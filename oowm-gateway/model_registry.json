@@ -3,20 +3,224 @@
   "updated": "2026-08-23",
   "note": "Routing metadata: size, context, measured quality (GSPC-based), latency, reliability. cost_tokens: est USD per 1K tokens (local=0, external=rate). Honest: quality scores are from OUR measured-roster (axis-judge-v2) + benches, NOT market Elo.",
   "models": [
-    {"id":"phi4:14b","size":"14.7B","ctx":16384,"quality":0.87,"latency_s":30,"cost_tokens":0.0,"provider":"runpod-a100","reliable":true,"best":["knowledge","factual"]},
-    {"id":"gemma3:12b","size":"12.2B","ctx":131072,"quality":0.83,"latency_s":35,"cost_tokens":0.0,"provider":"runpod-a100","reliable":true,"best":["knowledge"]},
-    {"id":"nemotron-3-nano:30b","size":"31.6B","ctx":1048576,"quality":0.80,"latency_s":60,"cost_tokens":0.0,"provider":"runpod-a100","reliable":false,"best":["long-context","deep-reasoning"]},
-    {"id":"mistral:7b","size":"7.2B","ctx":32768,"quality":0.83,"latency_s":6,"cost_tokens":0.0,"provider":"runpod-a100","reliable":true,"best":["governance","fast","general"]},
-    {"id":"qwen2.5:7b","size":"7.6B","ctx":32768,"quality":0.78,"latency_s":8,"cost_tokens":0.0,"provider":"runpod-a100","reliable":false,"best":["general"]},
-    {"id":"council-oowm:latest","size":"494M","ctx":32768,"quality":0.73,"latency_s":4,"cost_tokens":0.0,"provider":"runpod-a100","reliable":true,"best":["safety"]},
-    {"id":"qwen3:8b","size":"8.0B","ctx":32768,"quality":0.75,"latency_s":10,"cost_tokens":0.0,"provider":"runpod-a100","reliable":false,"best":["benchmark","honor"],"note":"DROPPED FROM POD 2026-08-23 (reconcile in progress)"},
-    {"id":"deepseek-r1:8b","size":"8.0B","ctx":32768,"quality":0.62,"latency_s":12,"cost_tokens":0.0,"provider":"runpod-a100","reliable":false,"best":["reasoning"]},
-    {"id":"qwen2.5:3b","size":"3.1B","ctx":32768,"quality":0.68,"latency_s":3,"cost_tokens":0.0,"provider":"runpod-a100","reliable":true,"best":["fast"]},
-    {"id":"qw3:4b","size":"4.0B","ctx":262144,"quality":0.72,"latency_s":5,"cost_tokens":0.0,"provider":"runpod-a100","reliable":false,"best":["reasoning"]},
-    {"id":"llama3.2:3b","size":"3.2B","ctx":131072,"quality":0.66,"latency_s":4,"cost_tokens":0.0,"provider":"runpod-a100","reliable":true,"best":["fast"]},
-    {"id":"qwen2.5:1.5b","size":"1.5B","ctx":32768,"quality":0.60,"latency_s":2,"cost_tokens":0.0,"provider":"runpod-a100","reliable":true,"best":["cheapest"]},
-    {"id":"qwen2.5:0.5b","size":"494M","ctx":32768,"quality":0.60,"latency_s":1,"cost_tokens":0.0,"provider":"runpod-a100","reliable":true,"best":["cheapest"]},
-    {"id":"deepseek-official","size":"n/a","ctx":1000000,"quality":0.92,"latency_s":20,"cost_tokens":0.002,"provider":"deepseek-official","reliable":true,"best":["frontier","deep-reasoning"],"note":"external fallback (OPENROUTER/CLOUD)"},
-    {"id":"openrouter-frontier","size":"n/a","ctx":1000000,"quality":0.95,"latency_s":25,"cost_tokens":0.01,"provider":"openrouter","reliable":true,"best":["frontier"],"note":"external fallback (TOP-TIER)"}
+    {
+      "id": "phi4:14b",
+      "size": "14.7B",
+      "ctx": 16384,
+      "quality": 0.87,
+      "latency_s": 30,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": true,
+      "best": [
+        "knowledge",
+        "factual"
+      ]
+    },
+    {
+      "id": "gemma3:12b",
+      "size": "12.2B",
+      "ctx": 131072,
+      "quality": 0.83,
+      "latency_s": 35,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": true,
+      "best": [
+        "knowledge"
+      ]
+    },
+    {
+      "id": "nemotron-3-nano:30b",
+      "size": "31.6B",
+      "ctx": 1048576,
+      "quality": 0.8,
+      "latency_s": 60,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": false,
+      "best": [
+        "long-context",
+        "deep-reasoning"
+      ]
+    },
+    {
+      "id": "mistral:7b",
+      "size": "7.2B",
+      "ctx": 32768,
+      "quality": 0.83,
+      "latency_s": 6,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": true,
+      "best": [
+        "governance",
+        "fast",
+        "general"
+      ]
+    },
+    {
+      "id": "qwen2.5:7b",
+      "size": "7.6B",
+      "ctx": 32768,
+      "quality": 0.78,
+      "latency_s": 8,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": false,
+      "best": [
+        "general"
+      ]
+    },
+    {
+      "id": "council-oowm:latest",
+      "size": "494M",
+      "ctx": 32768,
+      "quality": 0.73,
+      "latency_s": 4,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": true,
+      "best": [
+        "safety"
+      ]
+    },
+    {
+      "id": "qwen3:8b",
+      "size": "8.0B",
+      "ctx": 32768,
+      "quality": 0.75,
+      "latency_s": 10,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": false,
+      "best": [
+        "benchmark",
+        "honor"
+      ],
+      "note": "DROPPED FROM POD 2026-08-23 (reconcile in progress)"
+    },
+    {
+      "id": "deepseek-r1:8b",
+      "size": "8.0B",
+      "ctx": 32768,
+      "quality": 0.62,
+      "latency_s": 12,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": false,
+      "best": [
+        "reasoning"
+      ]
+    },
+    {
+      "id": "qwen2.5:3b",
+      "size": "3.1B",
+      "ctx": 32768,
+      "quality": 0.68,
+      "latency_s": 3,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": true,
+      "best": [
+        "fast"
+      ]
+    },
+    {
+      "id": "qw3:4b",
+      "size": "4.0B",
+      "ctx": 262144,
+      "quality": 0.72,
+      "latency_s": 5,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": false,
+      "best": [
+        "reasoning"
+      ]
+    },
+    {
+      "id": "llama3.2:3b",
+      "size": "3.2B",
+      "ctx": 131072,
+      "quality": 0.66,
+      "latency_s": 4,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": true,
+      "best": [
+        "fast"
+      ]
+    },
+    {
+      "id": "qwen2.5:1.5b",
+      "size": "1.5B",
+      "ctx": 32768,
+      "quality": 0.6,
+      "latency_s": 2,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": true,
+      "best": [
+        "cheapest"
+      ]
+    },
+    {
+      "id": "qwen2.5:0.5b",
+      "size": "494M",
+      "ctx": 32768,
+      "quality": 0.6,
+      "latency_s": 1,
+      "cost_tokens": 0.0,
+      "provider": "runpod-a100",
+      "reliable": true,
+      "best": [
+        "cheapest"
+      ]
+    },
+    {
+      "id": "deepseek-official",
+      "size": "n/a",
+      "ctx": 1000000,
+      "quality": 0.92,
+      "latency_s": 20,
+      "cost_tokens": 0.002,
+      "provider": "deepseek-official",
+      "reliable": true,
+      "best": [
+        "frontier",
+        "deep-reasoning"
+      ],
+      "note": "external fallback (OPENROUTER/CLOUD)"
+    },
+    {
+      "id": "openrouter-frontier",
+      "size": "n/a",
+      "ctx": 1000000,
+      "quality": 0.95,
+      "latency_s": 25,
+      "cost_tokens": 0.01,
+      "provider": "openrouter",
+      "reliable": true,
+      "best": [
+        "frontier"
+      ],
+      "note": "external fallback (TOP-TIER)"
+    },
+    {
+      "id": "oracle-free",
+      "size": "n/a",
+      "ctx": 32768,
+      "quality": 0.83,
+      "latency_s": 15,
+      "cost_tokens": 0.0,
+      "provider": "oracle-free",
+      "reliable": true,
+      "best": [
+        "serve",
+        "rag",
+        "default"
+      ]
+    }
   ]
 }
