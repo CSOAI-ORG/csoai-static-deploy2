@@ -174,6 +174,15 @@ code { background:#1a212a; padding:.05rem .3rem; border-radius:4px; font-size:.7
 .loading { color:var(--faint); font-size:.85rem; }
 .tag { font-size:.6rem; color:var(--accent2); border:1px solid var(--line); padding:.1rem .45rem; border-radius:999px; }
 .doctrine { border-left:3px solid var(--accent); background:#121a22; padding:.7rem .9rem; border-radius:0 8px 8px 0; font-size:.8rem; color:var(--muted); margin-bottom:1rem; }
+/* visual polish layer */
+.panel { transition:border-color .15s ease; } .panel:hover { border-color:var(--line2); }
+.badge-chip { transition:transform .12s ease, border-color .15s ease; }
+a:focus-visible, button:focus-visible, .chip:focus-visible, .tab:focus-visible, .pane-btn:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:8px; }
+.card.lead { box-shadow:0 0 0 1px rgba(90,170,153,.12), 0 6px 22px rgba(0,0,0,.25); }
+.mcard, .mcpcard, .regcard { transition:transform .12s ease, border-color .15s ease; }
+pre { scrollbar-width:thin; }
+::-webkit-scrollbar { width:9px; height:9px; } ::-webkit-scrollbar-thumb { background:var(--line); border-radius:8px; }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important;} }
 </style>
 <script src="estate-data.js"></script>
 </head>
