@@ -1,43 +1,59 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RAS — Regulation-as-a-Service · CSOAI</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>SOVOS — Regulation-as-a-Service · measured verdicts, not seats</title>
 <style>
-body{font-family:ui-sans-serif,system-ui;background:#0b0f14;color:#e6edf3;margin:0;padding:2rem}
-h1{font-size:1.6rem}h2{font-size:1.05rem;color:#8ab4f8}
-.badges span{display:inline-block;background:#1a2230;border:1px solid #2b3a4d;border-radius:8px;padding:4px 10px;margin:3px;font-size:.8rem}
-.axes{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:1rem 0}
-.axis{background:#121a26;border:1px solid #24324a;border-radius:10px;padding:12px}
-.axis .v{float:right;font-weight:700;color:#7ee787}
-.assessed{border:1px dashed #f0b429;border-radius:10px;padding:14px;max-width:640px;font-size:.85rem;color:#f0b429}
-footer{margin-top:2rem;font-size:.75rem;color:#8b949e}
-</style></head><body>
-<h1>🛡️ RAS — Regulation-as-a-Service <span class="badges"><span>verdicts, not seats</span><span>measured, assessed</span><span>OSCAL-importable</span></span></h1>
-<p>SaaS sells seats. <b>RAS sells verdicts.</b> Continuous, signed, geometric conformity evidence —
-streamed into procurement, insurer policies, and auditor OSCAL importers. One SOVOS signs it.</p>
-
-<h2>SOV SIGNAL — the honest composite (live-measured)</h2>
-<div class="axes" id="axes">loading…</div>
-
-<p class="assessed">⚖️ <b>CSOAI measured this system against 13 frameworks and signed the result.</b>
-A notified body, insurer, or auditor may import the raw OSCAL. This is an <b>assessment, never a
-certificate</b> — UNMEASURED axes are excluded, never scored 0.</p>
-
-<h2>13 evidence streams → product lines</h2>
-<div class="axes">
-  <div class="axis">Governance <span class="v">streams</span></div>
-  <div class="axis">Safety / Art-5 <span class="v">streams</span></div>
-  <div class="axis">Provenance <span class="v">streams</span></div>
-  <div class="axis">Conformance (MCP) <span class="v">streams</span></div>
-  <div class="axis">Openness <span class="v">streams</span></div>
-  <div class="axis">Continuity <span class="v">streams</span></div>
+ body{font-family:system-ui,sans-serif;margin:0;background:#0b0e14;color:#e6e9ee}
+ header{padding:28px;border-bottom:1px solid #222}
+ h1{font-size:26px;margin:0} .tag{color:#7ee787}
+ main{max-width:960px;margin:auto;padding:28px}
+ .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:22px 0}
+ .card{background:#12161f;border:1px solid #232a36;border-radius:10px;padding:16px}
+ .card h3{margin:0 0 6px;font-size:15px}
+ .price{font-size:22px;font-weight:700;color:#7ee787}
+ .muted{color:#8b95a7;font-size:12px}
+ table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
+ td,th{padding:8px;border-bottom:1px solid #1e242e;text-align:left}
+ .chip{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;background:#1f2937;color:#93c5fd}
+ .warn{background:#3a2e10;color:#f5c35b;border-radius:8px;padding:10px;font-size:12px;margin:14px 0}
+ footer{color:#59647a;font-size:11px;padding:20px;text-align:center}
+</style>
+</head>
+<body>
+<header><h1>🛡️ SOVOS · <span class="tag">Regulation-as-a-Service</span></h1>
+<p class="muted">We sell <b>verdicts</b>, not seats. Each assessment is a measured, signed result — never a certificate.</p></header>
+<main>
+<div id="status" class="warn">connecting to gateway…</div>
+<h3>Live pricing (USD per 1M tokens) — <span class="muted">from the EUNOMIA price table</span></h3>
+<table id="prices"><tr><th>model</th><th>in</th><th>out</th></tr></table>
+<h3 style="margin-top:22px">Live usage ledger <span class="chip">commission log</span></h3>
+<table id="ledger"><tr><th>time</th><th>model</th><th>status</th><th>tokens</th><th>latency</th></tr></table>
+<div class="cards">
+ <div class="card"><h3>Assessment units</h3><div class="price">per-verdict</div><p class="muted">Bounded tasks, DORADO-gated, judge-recorded. No seats, no commits.</p></div>
+ <div class="card"><h3>Measurement posture</h3><div class="price">UNMEASURED ≠ 0</div><p class="muted">We never fabricate scores; unmeasured axes are reported as unmeasured.</p></div>
+ <div class="card"><h3>Signing</h3><div class="price">Ed25519</div><p class="muted">Every verdict batch signed (council-sign); verifiable without trust.</p></div>
 </div>
-<footer>RAS is the AG-UI front door (MCP · A2A · AG-UI) — the Agent-to-User leg. © CSOAI · measured,
-never certified · UNMEASURED ≠ 0.</footer>
+</main>
+<footer>SOVOS · CSOAI · measured, never certified · live data via EUNOMIA gateway /api/v1/prices + /ledger</footer>
 <script>
-// load the honest per-axis measurement board (from the verified session data)
-const DATA = {governance:0.931,safety:1.0,provenance:0.656,conformance:0.845,openness:0.75,continuity:0.75,
-              art5_refusal:1.0,compliance:0.963,honor:0.85,justice:0.95,equity:0.99,transparency:0.85};
-const el=document.getElementById('axes');
-el.innerHTML=Object.entries(DATA).map(([k,v])=>`<div class="axis">${k} <span class="v">${v.toFixed(2)}</span></div>`).join('');
+async function load(){
+  try{
+    const g = 'http://localhost:8878';
+    const [p,l] = await Promise.all([
+      fetch(g+'/api/v1/prices').then(r=>r.json()),
+      fetch(g+'/ledger').then(r=>r.json())
+    ]);
+    document.getElementById('status').textContent = 'LIVE — gateway connected ('+p.object+', '+(l.calls||0)+' ledger rows)';
+    document.getElementById('status').className = 'chip';
+    document.getElementById('prices').innerHTML += Object.entries(p.data).map(([m,v])=>`<tr><td>${m}</td><td>$${v.in}</td><td>$${v.out}</td></tr>`).join('');
+    document.getElementById('ledger').innerHTML += (l.last||[]).map(r=>`<tr><td>${String(r.t).slice(0,19)}</td><td>${r.model}</td><td>${r.status}</td><td>${r.tokens||0}</td><td>${r.latency_ms||'-'}ms</td></tr>`).join('');
+  }catch(e){
+    document.getElementById('status').textContent = 'gateway unreachable ('+e+') — retrying metrics; UNMEASURED shown honestly';
+  }
+}
+load();
 </script>
-</body></html>
+</body>
+</html>
