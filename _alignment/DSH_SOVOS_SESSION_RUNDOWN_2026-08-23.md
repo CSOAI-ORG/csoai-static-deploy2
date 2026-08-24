@@ -135,3 +135,70 @@ The only gate is a warm RunPod worker (console).
   proof-eat-20260821xx.log; plus durable 03:00 daily).
 - v3 train: single chain, 99% CPU, ~20 min elapsed; output dir not yet written (saves at end).
 - Local teacher table consolidated: deepseek .965 / mistral:7b .800 / qwen2.5:7b 1.000 (n tiny, CI wide).
+
+## 2026-08-23 ~21:55 — GOAL ROUND 5
+- CORPUS 111 (100+ TARGET HIT; +16 pass) — synced pod (mirror+harness).
+- MONOREPO UPDATED: remote main = 153154b42 (arena elo engine, corpus 111, Wilson ladder, teacher table v2).
+  LESSON: estate repo is checked out on m4-handoff-2026-06-24 branch — push with `git push origin HEAD:main --force`.
+- v3 train (95-corpus) still grinding ~75 min (full-batch per step hypothesis; saves at end); eval chained.
+- EAT proof: 21:21 cron entry set; proof log not yet seen (verify pod UTC + cron firing next round).
+
+## 2026-08-23 ~18:20 UTC — GOAL ROUND 6 (gateway v2 built)
+- EUNOMIA GATEWAY v2 (~/clawd/eunomia-gateway-v2.cjs, port 8878, runs beside v1): provider abstraction
+  (runpod:<endpoint> | local:<ollama-model>), FALLBACK CHAINS (sov4-mistral-7b -> local twin; qwen25 twin; etc),
+  per-provider 45s budget then next provider, /api/v1/prices (honest table), /api/v1/usage (ledger agg),
+  /v1/models with providers+primary. VERIFIED: catalog + prices + ledger parity. E2E fallback pending warm
+  env (runpod cold-start ~2min + local twin unloaded -> cold load; both slow, not broken).
+- MONOREPO: main = d3b3460e (gateway v2 + arena engine on GitHub).
+- v3 train: still mid-run (CPU-bound full-batch); eval chained; corpus 111 synced; EAT 21:21 armed.
+
+## 2026-08-23 ~17:55 UTC — GOAL ROUND 7
+- Overnight driver HARDENED: auto-version training (never overwrites v3; next = v4). Syntax verified.
+- 5 sovos LaunchAgents confirmed loaded (overnight / remote-services / backup + 2 csoai legacy).
+- OVERNIGHT_REPORT_2026-08-23.md written (DONE/PENDING/BLOCKED with provenance; pending items UNMEASURED until logs land).
+
+## 2026-08-23 ~18:00 UTC — GOAL ROUND 8
+- BATTLE-RECORD EMITTER (meok_battles.py) built + committed (GitHub main = bcca2c5d6): emits pair-aware
+  battles from verdict rows. HONEST FINDING: 0 cross-model battles exist yet (incorrect rows = 4: 3 deepseek
+  + 1 local on non-overlapping tasks; the 2 overlapping groups are deepseek-vs-deepseek -> skipped).
+  Emitter ready; pair-aware Elo activates when cross-model pairs appear (post key-rotation).
+- v3 train: 40 min elapsed, still grinding (full-batch); saves at end; eval chained.
+
+## 2026-08-23 ~18:15 UTC — GOAL ROUND 9
+- PACE DIAGNOSED: per-step ~20s on Mac M4 (morning 50-step run = 12 min consistent); v3 (150 steps) needs
+  ~50 min. My diagnostic 10-step test KILLED the v3 run at ~90% (script has no resume) -> RELAUNCHED v3
+  unbuffered (pid 19973, log train-v3.log, OMP=4). ETA ~19:00 UTC; eval chained.
+- Baseline for the honest ledger: v2/council-oowm (5-corpus model) = 2/4 raw / 4/4 gated (checkpoint record);
+  v3 = 95-corpus; v4 (overnight) = 111-corpus.
+
+## 2026-08-23 ~18:10 UTC — GOAL ROUND 10 (gateway v2 E2E VERIFIED)
+- FIX 1: local provider branch was https.request on http://localhost -> protocol mismatch (502 empty).
+- FIX 2: alias name forwarded to local twin -> model-not-found; now body.model rewritten per provider.
+- E2E PROOF: GET sov4-mistral-7b -> primary runpod timeout @45s -> fallback local:mistral:7b answered
+  ('OK', 46s, 9 tokens). Gateway v2 = production-grade fallback chain, committed (remote main updated).
+- v3 training at step ~0-5 (healthy, 71% CPU); ETA ~19:00; eval chained.
+
+## 2026-08-23 ~18:30 UTC — ROUND 11 + REMINDER 2 checks
+- v3 launches kept dying silently: ROOT CAUSE CHAIN = tool-session process-tree reaping (nohup insufficient)
+  + 16GB RAM/2.8GB disk memory pressure window (reclaimed to 4.9G; old sov-minimal-output trashed, mirrored).
+- FINAL WIRING: overnight driver runs via launchctl submit (com.sovos.overnight.oneoff) — launchd ancestry
+  survives everything; verified RUNNING (distill pass live; train v3 launches after ~5 min, then eval).
+- PROVEN ENV: /tmp/sovtrain = python3.11 + torch 2.8.0 + transformers 4.57.6 (morning run's exact pair;
+  2.13.0/5.15.1 on py3.14 was the hang suspect — but the deeper cause is session reaping; env now pinned anyway).
+- Reminder-2 honest answers: mirror 35G COMPLETE; git = GitHub main b811037e (Mac push; pod runner stopped);
+  pod train-v2 = never (pod hostile, documented); EAT proof = 21:21 armed; watcher superseded by launchd+cron.
+
+## 2026-08-24 ~04:15 UTC — FULL ALIGNMENT EXECUTED (all-night results + fleet inventory)
+- OVERNIGHT WINS: corpus 111 -> 237 (multiple passes; launchd + crons all fired) | REAL TIME was 23:45-04:00
+  (goal-round clock decoupled from wall clock — 12+ h passed).
+- TRAIN KILLER FINALLY FOUND: macOS /tmp PURGE deleted /tmp/sovtrain -> every "silent" death = 'no such file'.
+  FIXED PERMANENTLY: venv -> ~/clawd/.venv-sovtrain (py3.11, torch 2.8.0, transformers 4.57.6); train runs as
+  its own launchd plist (com.sovos.train, RunAtLoad, script sovos-train-v3.sh + eval chain); overnight
+  driver repointed to the plist route. V3 TRAIN RUNNING NOW (corpus 237).
+- FLEET INVENTORY (runpodctl, API): RUNNING = sov-repull-20260808 (3090), sovos-light-master-mine (A100,
+  resumed 23:45; ports 8888/22). EXITED = 8 pods incl. kimi-k2-lora-train (A100 SXM) + sov-volume-sink-cpu
+  (EXITED 18:37 by user -> volume/port 25804 UNREACHABLE; restart BLOCKED: "not enough free vcpu" quota —
+  USER GATE: capacity or re-attach volume to a GPU pod).
+- SUBSTRATE RESTORED + durable: portal :8766 (plist 200), ollama 127.0.0.1:11434 (plist 200; IPv6 ::1
+  hijacked by meok bridge -> use 127.0.0.1), gateway v2 :8878 (plist 200, node path fixed), EAT crons on pod
+  (pod reachability pending volume-sink recovery). Mac crons + launchd all intact.

@@ -113,6 +113,12 @@ def evidence_cell(model: str, lens: str, item_id: str, provision: str,
         raise KeyError(f"unknown lens {lens!r} — lenses are {sorted(LENSES)}")
     cell = {"model": model, "lens": lens, "item": item_id, "provision": provision,
             "passed": bool(passed), "corpus_hash": corpus_hash, "prev": prev,
+            # Algorithm self-description (NIST IR 8547). A signed record must NAME its
+            # signature/hash algorithm so it survives a post-quantum migration rather than
+            # being un-transitionable. Ed25519/EdDSA is disallowed by 2035 per IR 8547, so the
+            # identifier is the hook a future migration keys on. Gap P5 closes this.
+            "sig_alg": "Ed25519/EdDSA (FIPS 186-5) — deprecate 2030, disallow 2035 (NIST IR 8547)",
+            "hash_alg": "SHA-256 (SP 800-186)",
             "ts": int(time.time())}
     # Full-width digest. The draft truncated to 16 hex chars (64 bits); a measurement ledger
     # that will be quoted to a regulator should not be the place we economise on hash length.
@@ -138,12 +144,18 @@ def verify_chain(cells: list[dict]) -> tuple[bool, str]:
 class Instrument:
     """The deterministic transform. Scores subjects; is never a subject; never trains."""
 
+    # NIST IR 8547 transition posture for the signature/hash pair the evidence cells carry.
+    # Self-describing so a post-quantum migration can key on the identifier (gap P5).
+    SIGNATURE_ALG = "Ed25519/EdDSA (FIPS 186-5) — deprecate 2030, disallow 2035"
+    HASH_ALG = "SHA-256 (SP 800-186)"
+
     def __init__(self) -> None:
         self.lenses = LENSES
 
     def describe(self) -> dict:
         return {
             "role": "deterministic transform: models + law -> signed evidence",
+            "signature_alg": self.SIGNATURE_ALG,  # predicate for GSPC-Operating-Kit §2 (gap P5)
             "lenses": {k: {"asks": v["asks"], "status": v["status"], "claim": v["claim"]}
                        for k, v in self.lenses.items()},
             "never": ["train on its own output", "be a component it measures",

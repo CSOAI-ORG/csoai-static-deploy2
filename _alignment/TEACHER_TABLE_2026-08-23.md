@@ -40,3 +40,6 @@ Corpus: 95 judge-verified entries. Sources: provider:deepseek 83 | local-policy 
 Live verdicts (all passes): deepseek-chat correct=83 incorrect=3 unmeasured=46 | mistral:7b 4/1/1 | qwen2.5:7b 3/0/3.
 OpenAI/Groq/Together/Mistral/Perplexity: 0 correct (key stale), Google+Anthropic 401. ROTATE GATE.
 Verdict ratio (correct/total judged): deepseek .965 — tier-1 confirmed; teacher-selection rule: deepseek primary.
+
+## 2026-08-24 03:30 UTC — corpus 237 (final count for v3)
+Entries: 237 (deepseek ~200+ correct; local-policy 7; prior 5). v3 trains on FULL 237.

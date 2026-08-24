@@ -1,0 +1,33 @@
+{
+  "name": "frameworks-drum",
+  "description": "Living catalog agent for the FRAMEWORKS DRUM: every AI framework, charter, regulation, and article the estate has mined, sorted and queryable. Serves the catalog; it does not certify and makes no autonomous claims. Aligned to master doctrine v1.4.",
+  "url": "file://master-harness/knowledge/frameworks-drum",
+  "version": "1.4.0",
+  "skills": [
+    {
+      "id": "drum_catalog",
+      "description": "Return counts and kinds in the drum catalog."
+    },
+    {
+      "id": "drum_search",
+      "description": "Search items by name, kind, jurisdiction, status, or binding."
+    },
+    {
+      "id": "drum_get",
+      "description": "Return one catalog item by id with its sources."
+    },
+    {
+      "id": "drum_crosswalk",
+      "description": "Find items connecting a source and a target (e.g. charter to framework)."
+    }
+  ],
+  "endpoints": {
+    "mcp_stdio": "python3 mcp/frameworks_drum_server.py",
+    "catalog": "catalog.json"
+  },
+  "honesty": {
+    "banned_strings": "none on public surfaces — doctrine-clean names only",
+    "unmeasured": "reported as UNMEASURED, never papered over",
+    "sources": "every item carries a source URL or estate path"
+  }
+}

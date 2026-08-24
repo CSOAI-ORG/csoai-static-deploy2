@@ -5,7 +5,7 @@
 RSYNC=/opt/homebrew/bin/rsync
 KEY=~/.runpod/ssh/runpodctl-ssh-key
 DEST="root@213.173.105.83"
-PORT=25804
+PORT=33982
 LOG=~/clawd/_alignment/sovos-backup.log
 STAMP=$(date +%Y-%m-%dT%H:%M:%S)
 

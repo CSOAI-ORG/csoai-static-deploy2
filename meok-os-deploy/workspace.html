@@ -92,7 +92,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,
   <!-- LEFT: MEOK OS menu -->
   <nav class="menu">
     <h4>MEOK OS</h4>
-    <a data-spawn="world">🌍 SOV Space (3D)</a>
+    <a data-spawn="world">🌍 Council Space (3D)</a>
     <a data-spawn="character">🐉 Character</a>
     <a data-spawn="tools">🧰 Tools · MCP cards (378)</a>
     <a data-spawn="govern">🏛 What governs me</a>
@@ -160,7 +160,7 @@ function win(title, bodyHtml, frame){
 function frameWin(title, src){ return win(title,'<iframe src="'+src+'" loading="lazy"></iframe>',true); }
 
 const SPAWN={
-  world:()=>frameWin('🌍 SOV Space — J-Space world','/sovspace3d.html?embed=1'),
+  world:()=>frameWin('🌍 Council Space — J-Space world','https://councilof.ai/gspc-arena/?embed=1'),
   character:()=>frameWin('🐉 '+NAME+' — character','/character.html?embed=1'),
   govern:async()=>{ const w=win('🏛 What governs me',dots+' asking the governance map…'); try{const d=await (await fetch('/api/govern?q=bank')).json(); w.querySelector('.wb').textContent=(d.frameworks||[]).map(f=>'• '+f.name+(f.why?' — '+f.why:'')).join('\n')||'general frameworks';}catch(e){w.querySelector('.wb').textContent='(governance map unreachable)';} return w; },
   sign:async()=>{ const w=win('🔏 Sign & verify',dots+' minting a signed proof…'); try{const d=await (await fetch('/api/sign',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({payload:{workspace_demo:NAME,ts:Date.now()}})})).json(); w.querySelector('.wb').textContent='Signed ✓ (Ed25519)\nfingerprint: '+d.fingerprint+'\npublicKey: '+(d.publicKey||'').slice(0,40)+'…\nVerify offline at /verify.html';}catch(e){w.querySelector('.wb').textContent='(signing seam unreachable)';} return w; },
@@ -223,7 +223,7 @@ document.getElementById('go').onclick=async function(){
   // ACT — the MEDIUM OWEM (70B tool-router) brings up the surface the goal needs in the desktop
   const router=document.getElementById('router'), rmsg=document.getElementById('routermsg');
   const k=route(goal); router.classList.add('act');
-  const label={world:'🌍 SOV Space',character:'🐉 Character',tools:'🧰 Tool catalog',govern:'🏛 Governance',sign:'🔏 Sign & verify',memory:'🧠 Memory'};
+  const label={world:'🌍 Council Space',character:'🐉 Character',tools:'🧰 Tool catalog',govern:'🏛 Governance',sign:'🔏 Sign & verify',memory:'🧠 Memory'};
   if(k && SPAWN[k]){ rmsg.textContent='→ opened '+(label[k]||k)+' in the desktop'; SPAWN[k](); }
   else { rmsg.textContent='→ no tool needed — answered directly'; const ans=(left.status==='fulfilled'?left.value.text:(right.status==='fulfilled'?right.value.text:'…')); win('🐉 '+NAME, ans); }
   setTimeout(()=>router.classList.remove('act'),2500);

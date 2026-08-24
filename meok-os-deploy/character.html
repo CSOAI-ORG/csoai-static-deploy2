@@ -570,9 +570,9 @@ function orchestrate(userText, aiText){
   if(/\b(charter|govern|policy|rule|rights|who controls|control|compliance)\b/.test(q)){
     fire(()=>openCharter('keyholder')); fire(()=>openCharter('csoai')); }
   if(/\b(build|make|create|website|web ?site|app|landing|page|deploy)\b/.test(q))
-    fire(()=>spawnCard({icon:'🛠',title:'Builder',tag:'build MCP · talk-to-ship',body:`Describe it in plain words and your companion scaffolds it, shows a live preview on a card, and can deploy it — signed. <br><br><b>Try:</b> <code>build me a page for my cafe</code>`,actions:[{label:'🌍 open SOV Space',run:()=>{location.href='/sovspace3d.html';}}]}));
+    fire(()=>spawnCard({icon:'🛠',title:'Builder',tag:'build MCP · talk-to-ship',body:`Describe it in plain words and your companion scaffolds it, shows a live preview on a card, and can deploy it — signed. <br><br><b>Try:</b> <code>build me a page for my cafe</code>`,actions:[{label:'🌍 open Council Space',run:()=>{location.href='https://councilof.ai/gspc-arena/';}}]}));
   if(/\b(space|globe|map|world|fly|travel|earth|city|3d)\b/.test(q))
-    fire(()=>spawnCard({icon:'🌍',title:'SOV Space',tag:'world MCP · Cesium/WebGL',body:`Your companion can fly a cinema-grade 3D world on your own GPU — free, no Unreal needed. Ask it to take you anywhere.`,actions:[{label:'Enter SOV Space',run:()=>{location.href='/sovspace3d.html';}}]}));
+    fire(()=>spawnCard({icon:'🌍',title:'Council Space',tag:'world MCP · Cesium/WebGL',body:`Your companion can fly a cinema-grade 3D world on your own GPU — free, no Unreal needed. Ask it to take you anywhere.`,actions:[{label:'Enter Council Space',run:()=>{location.href='https://councilof.ai/gspc-arena/';}}]}));
   if(/\b(tool|mcp|what can you|capab|skill|do for me|help me)\b/.test(q))
     fire(()=>spawnCard({icon:'🧰',title:'Your Tools',tag:'MCP router · 370+ tools',body:`Your companion routes to a fleet of signed MCP tools: <b>governance</b>, <b>verify</b>, <b>legacy bridges</b> (COBOL/SAP/HL7), <b>guardian</b>, <b>family</b>, world + build. It picks the right one — you just talk.`,actions:[{label:'◉ Open AI OS',run:()=>{location.href='/';}}]}));
   return spawned;
@@ -672,15 +672,15 @@ else { hatchKeyholder(); }
 const rpmBtn=document.createElement('button'); rpmBtn.id='rpmbtn'; rpmBtn.textContent='✨ Your avatar';
 rpmBtn.style.cssText='position:fixed;top:18px;left:calc(50% + 132px);z-index:60;border:1px solid var(--gold,#c9a84c);background:rgba(255,252,245,.85);color:#2a1a14;font:600 13px Space Grotesk,sans-serif;padding:8px 16px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)';
 document.body.appendChild(rpmBtn);
-// MEOK UNIVERSE bridge — the character is the face of ONE mind that also IS the AI-OS and the SOV Space
-// world. These links let it "go main-screen": character ⇄ AI-OS (loads any app/browser) ⇄ SOV Space.
+// MEOK UNIVERSE bridge — the character is the face of ONE mind that also IS the AI-OS and the Council Space
+// world. These links let it "go main-screen": character ⇄ AI-OS (loads any app/browser) ⇄ Council Space.
 (function(){
   const nav=document.createElement('div');
   nav.style.cssText='position:fixed;top:16px;left:150px;z-index:60;display:flex;gap:8px';
   const mk=(label,href,title)=>{const a=document.createElement('a');a.href=href;a.textContent=label;a.title=title;
     a.style.cssText='border:1px solid var(--line,#e0d4b0);background:rgba(255,255,255,.6);color:#2a1a14;font:600 12px Space Grotesk,sans-serif;padding:7px 13px;border-radius:999px;text-decoration:none;backdrop-filter:blur(6px)';return a;};
   nav.appendChild(mk('◉ AI OS','/','Full-screen the keyholder AI OS — dock, windows, load any app/browser'));
-  nav.appendChild(mk('🌍 SOV Space','/sovspace3d.html','Enter the keyholder 3D world (SOV Space)'));
+  nav.appendChild(mk('🌍 Council Space','https://councilof.ai/gspc-arena/','Enter the keyholder 3D world (Council Space)'));
   document.body.appendChild(nav);
   // skin picker — the warm companion (default) · the egg-of-light · your generated keyholder body
   const skins=document.createElement('div');

@@ -1,0 +1,16 @@
+# Cloudflare Pages asset ignore — keep heavy data OUT of the deploy bundle.
+# The site is the OS surfaces (SOVOS/evidence/*.html) + functions; forest/ is the
+# 121M live measurement datastore that MUST NOT ship to the edge (and exceeds the
+# 25MiB Pages file cap). Exclude it and other regenerable data dirs.
+forest/
+data/
+*.sqlite
+*.sqlite-wal
+*.db
+.env
+node_modules/
+.git/
+.backups/
+benchmark-results/
+logs/
+_
