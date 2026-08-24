@@ -26,6 +26,15 @@ a { color:var(--accent2); text-decoration:none; }
 .pane-btn { background:transparent; color:var(--muted); border:1px solid var(--line); padding:.32rem .6rem; border-radius:8px; cursor:pointer; font-size:.68rem; }
 .pane-btn:hover { border-color:var(--accent); color:var(--text); }
 .pill { padding:.2rem .5rem; border-radius:999px; border:1px solid var(--line); white-space:nowrap; }
+/* membership / authority badges */
+.badges { padding:.9rem 1.2rem; border-top:1px solid var(--line); background:var(--panel); }
+.badges-lbl { font-size:.6rem; color:var(--faint); letter-spacing:.1em; margin-bottom:.5rem; }
+.badges-row { display:flex; flex-wrap:wrap; gap:.5rem; }
+.badge-chip { font-size:.68rem; font-weight:600; color:var(--text); padding:.4rem .7rem; border-radius:999px; border:1px solid var(--line); background:var(--card); text-decoration:none; white-space:nowrap; }
+.badge-chip:hover { transform:translateY(-1px); border-color:var(--accent); }
+.b-win { color:#7cc7a1; } .b-lot { color:#85a; } .b-ietf { color:#6f9; } .b-euai { color:#6af; } .b-nv { color:#7b6; } .b-glama { color:#c97; } .b-arxiv { color:#e88; } .b-c2pa { color:#9c9; } .b-bsi { color:#fb8; }
+.badges-note { font-size:.62rem; color:var(--faint); margin-top:.55rem; font-family:var(--mono); }
+
 .shell.rail-off .side { display:none; } .shell.rail-off { grid-template-columns:1fr; }
 .shell.min { display:none; }
 .tb-tab { background:transparent; color:var(--muted); border:0; padding:.45rem .85rem; border-radius:8px; cursor:pointer; font-size:.85rem; }
@@ -210,6 +219,22 @@ code { background:#1a212a; padding:.05rem .3rem; border-radius:4px; font-size:.7
       <div id="wsdock"></div>
     </main>
   </div>
+
+  <footer class="badges">
+    <div class="badges-lbl">MEMBERSHIP &amp; STANDARDS PARTICIPATION</div>
+    <div class="badges-row">
+      <a class="badge-chip b-win" href="https://www.openinventionnetwork.com" target="_blank" rel="noopener">OIN 2.0</a>
+      <a class="badge-chip b-lot" href="https://lotnet.com" target="_blank" rel="noopener">LOT Network</a>
+      <a class="badge-chip b-ietf" href="https://www.ietf.org/badges/" target="_blank" rel="noopener">IETF</a>
+      <a class="badge-chip b-euai" href="https://digital-strategy.ec.europa.eu/en/policies/ai-pact" target="_blank" rel="noopener">EU AI Pact</a>
+      <a class="badge-chip b-nv" href="https://developer.nvidia.com" target="_blank" rel="noopener">NVIDIA Developer</a>
+      <a class="badge-chip b-glama" href="https://glama.ai" target="_blank" rel="noopener">Glama MCP</a>
+      <a class="badge-chip b-arxiv" href="https://arxiv.org" target="_blank" rel="noopener">arXiv</a>
+      <a class="badge-chip b-c2pa" href="https://c2pa.org" target="_blank" rel="noopener">C2PA</a>
+      <a class="badge-chip b-bsi" href="https://bsigroup.com" target="_blank" rel="noopener">BSI ART/1</a>
+    </div>
+    <div class="badges-note">Membership &amp; standards participation — measurement, not certification. Verification free forever.</div>
+  </footer>
 </div>
 
 <script>
