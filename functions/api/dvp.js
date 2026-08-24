@@ -13,11 +13,9 @@
  * Measurement, not certification. not_a_certification:true.
  */
 
+import { getKey as getPinnedKey, bytesToHex } from './signlib.js';
 let keyPromise = null;
-async function getKey() {
-  if (!keyPromise) keyPromise = crypto.subtle.generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']);
-  return keyPromise;
-}
+async function getKey(env) { if (!keyPromise) keyPromise = getPinnedKey(env); return keyPromise; }
 function canon(obj) {
   if (obj === null) return 'null';
   if (obj === true) return 'true';
@@ -29,7 +27,6 @@ function canon(obj) {
   return 'null';
 }
 async function sha256hex(s) { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); }
-function bytesToHex(u8) { return [...u8].map(b => b.toString(16).padStart(2, '0')).join(''); }
 function bytesToB64(u8) { let bin = ''; u8.forEach(b => bin += String.fromCharCode(b)); return btoa(bin); }
 
 function leg(v) {
@@ -49,6 +46,8 @@ function finalize(esc, v) {
     ? { status: 'settled', released: { bond: 'buyer', cash: 'seller' }, reason: 'atomic DvP complete' }
     : { status: 'not-settled', released: 'none', reason: { bond_ok: v.bond_ok, cash_ok: v.cash_ok, currency_ok: v.currency_ok } };
 }
+
+function h2b(h){return new Uint8Array((h.match(/.{2}/g)||[]).map(b=>parseInt(b,16)));}
 
 export async function onRequest(context) {
   const headers = { 'content-type': 'application/json', 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS', 'access-control-allow-headers': 'Content-Type' };
@@ -71,7 +70,7 @@ export async function onRequest(context) {
     record_type: 'measured-current-state',
     not_a_certification: true,
     endorsement: 'none',
-    authored_by: 'did:web:csoai.org',
+    authored_by: 'did:web:csoai-gspc.pages.dev',
     basis: 'atomic DvP — both legs lock, verify, and release together or not at all',
     witnessed_at,
     escrow: esc,
@@ -80,10 +79,11 @@ export async function onRequest(context) {
   };
   const content_id = await sha256hex(canon(claim));
   const prev = await sha256hex(canon({ schema: 'csoai.atomic-dvp/0.1', genesis: 'sovos-dvp-chain-v1' }));
-  const pair = await getKey();
+  const pair = await getKey(context.env);
   const sig = await crypto.subtle.sign('Ed25519', pair.privateKey, new TextEncoder().encode(content_id));
-  const pub = await crypto.subtle.exportKey('raw', pair.publicKey);
+  const pub = pair.rawPubHex ? h2b(pair.rawPubHex) : await crypto.subtle.exportKey('raw', pair.publicKey);
   const card = { ...claim, prev, content_id, signature: bytesToB64(new Uint8Array(sig)), pubkey: bytesToHex(new Uint8Array(pub)) };
+  if (pair.kid) { card.key_id = pair.kid; card.verification_method = pair.did + '#gspc'; card.did_resolver = 'https://' + pair.did.replace('did:web:', '') + '/.well-known/did.json'; }
 
   const kv = context.env && context.env.SOVOS_CHAIN;
   let chained = false;

@@ -18,14 +18,17 @@ import regulationFeed from '../../regulation-feed.json';
 import benchmarkQualityFeed from '../../benchmark-quality-feed.json';
 import lookupData from '../../lookup-public.json';
 
+import { getKey as getPinnedKey, bytesToHex } from './signlib.js';
 let _k = null;
-async function key() { if (!_k) _k = crypto.subtle.generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']); return _k; }
+async function key(env) { if (!_k) _k = getPinnedKey(env); return _k; }
 function canon(o) { if (o === null) return 'null'; if (o === true) return 'true'; if (o === false) return 'false'; if (typeof o === 'string') return JSON.stringify(o); if (typeof o === 'number') return Number.isFinite(o) ? String(o) : '0'; if (Array.isArray(o)) return '[' + o.map(canon).join(',') + ']'; if (typeof o === 'object') return '{' + Object.keys(o).sort().map(k => JSON.stringify(k) + ':' + canon(o[k])).join(',') + '}'; return 'null'; }
 async function sha(s) { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); }
 function b64(u) { let b = ''; u.forEach(x => b += String.fromCharCode(x)); return btoa(b); }
 
 // east-west crosswalk coverage: how many curated East signals resolve cleanly.
 const CROSSWALK_SIGNALS = ['tc260-registry', 'social-credit-profile', 'pdca-cycle', 'algorithm-filing', 'data-localisation'];
+
+function h2b(h){return new Uint8Array((h.match(/.{2}/g)||[]).map(b=>parseInt(b,16)));}
 
 export async function onRequest(context) {
   const h = { 'content-type': 'application/json', 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS' };
@@ -70,7 +73,7 @@ export async function onRequest(context) {
     record_type: 'measured-current-state',
     not_a_certification: true,
     endorsement: 'none',
-    authored_by: 'did:web:csoai.org',
+    authored_by: 'did:web:csoai-gspc.pages.dev',
     basis: 'cross-sync: east-west crosswalk x live regulation x SOV-space sims (deterministic, no model judge)',
     witnessed_at,
     rails: { crosswalk_coverage, crosswalk_density, regulation_pressure, in_force_regimes: inForce, upcoming_regimes: upcoming },
@@ -80,10 +83,11 @@ export async function onRequest(context) {
     per_model: perModel,
   };
   const content_id = await sha(canon(claim));
-  const pair = await key();
+  const pair = await key(context.env);
   const sig = await crypto.subtle.sign('Ed25519', pair.privateKey, new TextEncoder().encode(content_id));
-  const pub = await crypto.subtle.exportKey('raw', pair.publicKey);
-  const card = { ...claim, content_id, signature: b64(new Uint8Array(sig)), pubkey: [...new Uint8Array(pub)].map(x => x.toString(16).padStart(2, '0')).join('') };
+  const pub = pair.rawPubHex ? h2b(pair.rawPubHex) : await crypto.subtle.exportKey('raw', pair.publicKey);
+  const card = { ...claim, content_id, signature: b64(new Uint8Array(sig)), pubkey: bytesToHex(new Uint8Array(pub)) };
+  if (pair.kid) { card.key_id = pair.kid; card.verification_method = pair.did + '#gspc'; card.did_resolver = 'https://' + pair.did.replace('did:web:', '') + '/.well-known/did.json'; }
 
   return new Response(JSON.stringify({
     summary: `SOV SIGNAL ${agg} (divergence ${(1 - agg).toFixed(3)}) · leader ${leader ? leader.model + ' ' + leader.signal : '?'} · ${perModel.length} models · ${inForce}+${upcoming} regimes`,

@@ -15,10 +15,11 @@
  *   GET  /api/settle  → schema + example
  */
 
+import { getKey as getPinnedKey } from './signlib.js';
 let keyPromise = null;
-async function getKey() {
+async function getKey(env) {
   if (!keyPromise) {
-    keyPromise = crypto.subtle.generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']);
+    keyPromise = getPinnedKey(env);
   }
   return keyPromise;
 }
@@ -59,6 +60,8 @@ function axisRisk(text, ax) {
   const hits = re.filter(r => r.test(t)).length;
   return { measured: hits > 0, score: Math.min(1, hits / re.length) };
 }
+
+function h2b(h){return new Uint8Array((h.match(/.{2}/g)||[]).map(b=>parseInt(b,16)));}
 
 export async function onRequest(context) {
   const headers = { 'content-type': 'application/json', 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS', 'access-control-allow-headers': 'Content-Type' };
@@ -103,7 +106,7 @@ export async function onRequest(context) {
     record_type: 'measured-current-state',
     not_a_certification: true,
     endorsement: 'none',
-    authored_by: 'did:web:csoai.org',
+    authored_by: 'did:web:csoai-gspc.pages.dev',
     basis: 'deterministic governance-axis predicates over the execution (no model judge, no self-report)',
     witnessed_at,
     execution: exec,
@@ -114,10 +117,11 @@ export async function onRequest(context) {
   const canonical = canon(claim);
   const content_id = await sha256hex(canonical);
   const prev = await sha256hex(canon({ schema: 'csoai.bond-settlement-attestation/0.1', genesis: 'csoai-settlement-chain-v1', n: 0 }));
-  const pair = await getKey();
+  const pair = await getKey(context.env);
   const sig = await crypto.subtle.sign('Ed25519', pair.privateKey, new TextEncoder().encode(content_id));
-  const pub = await crypto.subtle.exportKey('raw', pair.publicKey);
+  const pub = pair.rawPubHex ? h2b(pair.rawPubHex) : await crypto.subtle.exportKey('raw', pair.publicKey);
   const card = { ...claim, prev, content_id, signature: bytesToB64(new Uint8Array(sig)), pubkey: bytesToHex(new Uint8Array(pub)) };
+  if (pair.kid) { card.key_id = pair.kid; card.verification_method = pair.did + '#gspc'; card.did_resolver = 'https://' + pair.did.replace('did:web:', '') + '/.well-known/did.json'; }
 
   return new Response(JSON.stringify({
     note: 'Signed settlement-risk attestation. Measurement, not certification. Verify at /api/verify.',

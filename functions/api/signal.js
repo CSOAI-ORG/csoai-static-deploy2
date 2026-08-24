@@ -14,13 +14,16 @@ import regulationFeed from '../../regulation-feed.json';
 import estateBoard from '../../estate-board.json';
 import lookupData from '../../lookup-public.json';
 
+import { getKey as getPinnedKey, bytesToHex } from './signlib.js';
 let _k = null;
-async function getKey() { if (!_k) _k = crypto.subtle.generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']); return _k; }
+async function getKey(env) { if (!_k) _k = getPinnedKey(env); return _k; }
 function canon(o) { if (o === null) return 'null'; if (o === true) return 'true'; if (o === false) return 'false'; if (typeof o === 'string') return JSON.stringify(o); if (typeof o === 'number') return Number.isFinite(o) ? String(o) : '0'; if (Array.isArray(o)) return '[' + o.map(canon).join(',') + ']'; if (typeof o === 'object') return '{' + Object.keys(o).sort().map(k => JSON.stringify(k) + ':' + canon(o[k])).join(',') + '}'; return 'null'; }
 async function sha(s) { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); }
 function b64(u) { let b = ''; u.forEach(x => b += String.fromCharCode(x)); return btoa(b); }
 
 const PREDICATES = { 'eu-ai-act': ['ISO-42001-AIMS', 'NIST-AI-RMF-MAP'], 'dora': ['DORA-ICT', 'NIST-CSF'], 'fda': ['ISO-13485', 'MDR-2024'], 'fca': ['ISO-42001-AIMS', 'PSD2'], 'illinois': ['SB-315-AUDIT'], 'none': ['NIST-AI-RMF-GOVERN'] };
+function h2b(h){return new Uint8Array((h.match(/.{2}/g)||[]).map(b=>parseInt(b,16)));}
+
 export async function onRequest(context) {
   const h = { 'content-type': 'application/json', 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,OPTIONS' };
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: h });
@@ -53,7 +56,7 @@ export async function onRequest(context) {
     record_type: 'measured-current-state',
     not_a_certification: true,
     endorsement: 'none',
-    authored_by: 'did:web:csoai.org',
+    authored_by: 'did:web:csoai-gspc.pages.dev',
     basis: 'composes regulation x crosswalk x measured-AI — computes only, adds no new claim',
     witnessed_at,
     axis, jurisdiction,
@@ -65,10 +68,11 @@ export async function onRequest(context) {
     divergence,
   };
   const content_id = await sha(canon(claim));
-  const pair = await getKey();
+  const pair = await getKey(context.env);
   const sig = await crypto.subtle.sign('Ed25519', pair.privateKey, new TextEncoder().encode(content_id));
-  const pub = await crypto.subtle.exportKey('raw', pair.publicKey);
-  const card = { ...claim, content_id, signature: b64(new Uint8Array(sig)), pubkey: [...new Uint8Array(pub)].map(x => x.toString(16).padStart(2, '0')).join('') };
+  const pub = pair.rawPubHex ? h2b(pair.rawPubHex) : await crypto.subtle.exportKey('raw', pair.publicKey);
+  const card = { ...claim, content_id, signature: b64(new Uint8Array(sig)), pubkey: bytesToHex(new Uint8Array(pub)) };
+  if (pair.kid) { card.key_id = pair.kid; card.verification_method = pair.did + '#gspc'; card.did_resolver = 'https://' + pair.did.replace('did:web:', '') + '/.well-known/did.json'; }
   return new Response(JSON.stringify({ summary: `SOV SIGNAL [${axis} / ${jurisdiction}] divergence ${divergence} · leader ${leader ? leader.model + ' ' + leader.accuracy : 'unmeasured'} · ${card.crosswalk_predicates.join(',')}`, card }), { status: 200, headers: h });
   } catch (e) {
     return new Response(JSON.stringify({ error: String(e).slice(0, 300) }), { status: 200, headers: h });
