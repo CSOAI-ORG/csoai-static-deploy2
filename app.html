@@ -1193,6 +1193,28 @@ var WORKSPACE_TOOLS = [
   ['mcptools','tool=mcp&op=tools','⚙ mcp tools'],
   ['verify','nav:verify','🔑 verify'],
 ];
+
+// ---------- AI CHAT: DO ALL + SORT ALL (natural-language intent router) ----------
+function chatIntent(q, log){
+  var t=(q||'').toLowerCase(); var board=sd('board')||{}; var cells=board.cells||{};
+  function models(){
+    var names=Object.keys(cells); return names.map(function(n){ var vals=[]; for(var ax in cells[n]){var c=cells[n][ax]; if(c&&c.status==='MEASURED'&&c.accuracy!=null)vals.push(c.accuracy);} return {model:n,avg:vals.length?vals.reduce(function(a,b){return a+b;},0)/vals.length:0}; }); }
+  function sortBy(ax){ return models().filter(function(m){return cells[m.model][ax]&&cells[m.model][ax].status==='MEASURED';}).sort(function(a,b){return (cells[b.model][ax].accuracy)-(cells[a.model][ax].accuracy);}).slice(0,5).map(function(m){return m.model+' '+(cells[m.model][ax].accuracy).toFixed(2);}).join(', '); }
+  // sorts
+  var srt=t.match(/sort.*by (care|gov|art5|jail|prv|mcp)/); if(srt){ return 'sorted by '+AX[srt[1]]+': '+sortBy(srt[1]); }
+  var lead=t.match(/(leader|best|top).*(care|gov|art5)/); if(lead){ return 'best on '+AX[lead[2]]+': '+sortBy(lead[2]).split(',')[0]; }
+  // measure
+  if(/measure|score/.test(t)&&/[a-z0-9:. -]/.test(t)){ var m=t.match(/([a-z0-9][a-z0-9:. -]{3,30}?(?= care| gov| score|$))/i); if(m) return 'measure model "' + m[1].trim().slice(0,24) + '" — run the measure tool (top toolchip).'; }
+  // route
+  var rt=t.match(/route.*(care|gov|art5|jail)/); if(rt){ return 'route '+AX[rt[1]]+' → best measured model: '+(sortBy(rt[1]).split(',')[0]||'unmeasured'); }
+  // compare
+  if(/compare|vs /.test(t)&&/model/.test(t+' ')){ return 'open the Compare page (nav) — side-by-side measured axes.'; }
+  // regulators
+  var reg=t.match(/(eu|uk|us|china|east|west|all).*(regulat|framework)/); if(reg){ var n=(getRegs()||[]).length; return n+' regimes tracked · open Regulators (nav) → pick one → its regulator workspace (deadlines/crosswalk/measure).'; }
+  // verify
+  if(/verify/.test(t)){ return 'verify — paste a signed card (nav Verify). Free + offline.'; }
+  return null;
+}
 function renderChat(el){
   stamp('deterministic enforced-escort brain · no model in the path');
   el.innerHTML = '<div class="doctrine">Workspace. Agent tools run over the signed corpus + GSPC MCP — no LLM judge, no model in the path. Ask free-form or fire a tool.</div>'+
@@ -1230,6 +1252,7 @@ function renderChat(el){
   }
   function ask(q){
     if(busy) return; busy=true; add(q,'user'); var d=add('…','bot');
+    var it=chatIntent(q); if(it){ busy=false; reveal(d,it); return; }
     fetch('/api/hero?q='+encodeURIComponent(q)).then(function(r){return r.json();}).then(function(dd){ busy=false; reveal(d,fmt(dd)); })
       .catch(function(e){ busy=false; d.innerHTML='<div class="lbl">harness</div><span>harness offline</span>'; });
   }
