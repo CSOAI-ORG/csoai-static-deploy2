@@ -1160,11 +1160,12 @@ function renderBoard(el){
   if (emb && emb.cells) {
     var best = {};
     for (var mm in emb.cells) for (var ax in emb.cells[mm]) {
+      if (ax==='jail') continue; /* AXIS-14: jail stays UNTESTED until earned — never rendered as measured */
       var cv = emb.cells[mm][ax];
       if (cv.status==='MEASURED' && cv.accuracy!=null && (!best[ax] || cv.accuracy>best[ax].accuracy)) best[ax]={accuracy:cv.accuracy,model:mm,n:cv.n};
     }
     var cards = Object.keys(best).map(function(axis){ var b=best[axis]; return '<div class="card"><div class="k">'+esc(AX[axis]||axis)+'</div><div class="v">'+b.accuracy.toFixed(3)+'</div><div class="s">'+esc(b.model)+' · n='+b.n+'</div></div>'; }).join('');
-    el.innerHTML = '<div class="doctrine">Estate board · deterministic exact-label grading · measured, never certified.</div>'+
+    el.innerHTML = '<div class="doctrine">Estate board · deterministic exact-label grading · measured, never certified · '+(Object.keys(best).length)+' measured of '+AXES.length+' · jail '+ (AXES.indexOf('jail')>=0? 'UNTESTED (earned, never assumed)' : '') +'.</div>'+
       '<div class="toolchips" style="margin-bottom:.7rem"><button class="tool" onclick="show(\'dispute\')">⚖ dispute this measurement</button></div>'+
       '<div class="grid">'+cards+'</div>';
     return;
@@ -1336,7 +1337,7 @@ function chatIntent(q, log){
   var t=(q||'').toLowerCase(); var board=sd('board')||{}; var cells=board.cells||{};
   function models(){
     var names=Object.keys(cells); return names.map(function(n){ var vals=[]; for(var ax in cells[n]){var c=cells[n][ax]; if(c&&c.status==='MEASURED'&&c.accuracy!=null)vals.push(c.accuracy);} return {model:n,avg:vals.length?vals.reduce(function(a,b){return a+b;},0)/vals.length:0}; }); }
-  function sortBy(ax){ return models().filter(function(m){return cells[m.model][ax]&&cells[m.model][ax].status==='MEASURED';}).sort(function(a,b){return (cells[b.model][ax].accuracy)-(cells[a.model][ax].accuracy);}).slice(0,5).map(function(m){return m.model+' '+(cells[m.model][ax].accuracy).toFixed(2);}).join(', '); }
+  function sortBy(ax){ if(ax==='jail') return 'jail UNTESTED — earned, never assumed'; return models().filter(function(m){return cells[m.model][ax]&&cells[m.model][ax].status==='MEASURED';}).sort(function(a,b){return (cells[b.model][ax].accuracy)-(cells[a.model][ax].accuracy);}).slice(0,5).map(function(m){return m.model+' '+(cells[m.model][ax].accuracy).toFixed(2);}).join(', '); }
   // sorts
   var srt=t.match(/sort.*by (care|gov|art5|jail|prv|mcp)/); if(srt){ return 'sorted by '+AX[srt[1]]+': '+sortBy(srt[1]); }
   var lead=t.match(/(leader|best|top).*(care|gov|art5)/); if(lead){ return 'best on '+AX[lead[2]]+': '+sortBy(lead[2]).split(',')[0]; }

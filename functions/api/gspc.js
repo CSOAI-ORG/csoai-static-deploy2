@@ -40,6 +40,12 @@ export async function onRequestGet() {
     rows.sort((a, b) => b.accuracy - a.accuracy);
     best[axis] = rows[0];
   }
+  // AXIS-14 / grammar wall: jail stays UNTESTED until earned. Exclude it from the
+  // measured board and n_axes so the board honestly renders "N measured of M"
+  // with jail as the empty chair. It is never rendered as measured, never implied.
+  delete best.jail;
+  const measured = Object.keys(best).filter(a => a !== 'jail');
+  const jailStatus = 'UNTESTED — self-enforcing; flips only when its own first-row gate (frozen bank + consent gate + stranger-verified card) passes. The honesty of the board is denominated in what it refuses to claim.';
   return new Response(JSON.stringify({
     mode: 'gspc',
     schema: estateBoard.schema,
@@ -49,8 +55,10 @@ export async function onRequestGet() {
     banks: estateBoard.banks,
     axes_: AXES,
     best: best,
-    measured_axes: Object.keys(best),
-    n_axes: Object.keys(best).length,
+    measured_axes: measured,
+    n_axes: measured.length,
+    jail: jailStatus,
+    grammar: measured.length + ' measured of ' + (AXES.length + 1) + ' · jail UNTESTED (earned, never assumed)',
     note: estateBoard.note,
   }), { status: 200, headers });
 }
