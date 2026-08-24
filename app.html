@@ -268,6 +268,8 @@ var SECTIONS = [
   { id:'ecosystem', label:'Ecosystem', ico:'🧭', read: renderEcosystem },
   { id:'axes', label:'Axes', ico:'⚙', read: renderAxes },
   { id:'dashboard', label:'Status', ico:'📊', read: renderDashboard },
+  { id:'compliance', label:'Compliance', ico:'⚖', read: renderCompliance },
+  { id:'fines', label:'Fines & radar', ico:'💸', read: renderCompliance },
   { id:'board',    label:'Estate board', ico:'▦', read: renderBoard },
   { id:'models',   label:'Models', ico:'▤', read: renderModels },
   { id:'arena',    label:'Arena Elo', ico:'⚔', read: renderArena },
@@ -821,6 +823,21 @@ function frameworksHtml(){
   var f=[['EU AI Act','https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai'],['NIST AI RMF','https://www.nist.gov/itl/ai-risk-management-framework'],['ISO/IEC 42001','https://www.iso.org/standard/81230.html'],['ISO/IEC 17020','https://www.iso.org/standard/52932.html'],['DORA','https://www.dora-info.eu'],['MiCA','https://www.esma.europa.eu/esmas-activities/digital-finance-and-innovation/markets-crypto-assets-regulation-mica'],['China TC260','https://www.cac.gov.cn'],['UK DSIT','https://www.gov.uk/government/organisations/department-for-science-innovation-and-technology']];
   return '<div class="badges-row">'+f.map(function(x){return '<a class="badge-chip b-fw" href="'+x[1]+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>';}).join('')+'</div>';
 }
+
+// ---------- COMPLIANCE RADAR (find every problem + fines; regulator whitelabel pivot) ----------
+function renderCompliance(el){
+  stamp('compliance radar · every obligation + fine tier · regulator whitelabel · '+TODAY);
+  var regs=(sd('regulation')||{}).regulations||[];
+  var rows=regs.map(function(g){ return '<tr><td><b>'+esc(g.title||'')+'</b><br><span style="color:var(--faint);font-size:.62rem;font-family:var(--mono)">'+esc(g.celex||'')+'</span></td><td style="font-family:var(--mono)">'+esc(g.date||'')+'</td><td class="'+((g.status||'')==='in-force'?'acc':'gold')+'">'+esc(g.status||'')+'</td><td style="font-size:.68rem">'+esc(g.penalty_exposure||'')+'</td><td style="font-size:.68rem">'+esc((g.what||'').slice(0,120))+'</td></tr>'; }).join('');
+  el.innerHTML='<div class="doctrine">⚖ Compliance radar. Every EU/global AI obligation + fine tier, from the signed/verified regulation feed. This is the tooling we hand regulators (whitelabelled) so THEY can sort all issues — and the map to find any company exposure before it contacts us. We do not preach in blogs; we hand working E2E tooling. Measurement, not certification.</div>'+
+    '<div class="grid"><div class="card lead"><div class="k">Obligations tracked</div><div class="v">'+regs.length+'</div><div class="s">CELEX-keyed · re-verified quarterly</div></div>'+
+    '<div class="card"><div class="k">In force</div><div class="v">'+regs.filter(function(g){return g.status==="in-force";}).length+'</div><div class="s">live now</div></div>'+
+    '<div class="card"><div class="k">Upcoming</div><div class="v">'+regs.filter(function(g){return g.status==="upcoming"||g.status==="positioning";}).length+'</div><div class="s">demand-creating</div></div>'+
+    '<div class="card"><div class="k">Highest fine</div><div class="v">€35M / 7%</div><div class="s">Art 5 prohibited practices</div></div></div>'+
+    '<div class="panel"><h2>All obligations + fines (find-the-problem map)</h2><div class="desc">Every regime → its obligation + penalty exposure + date. This is the radar to find exposure for any AI company today.</div><table><tr><th>regime</th><th>date</th><th>status</th><th>penalty</th><th>obligation</th></tr>'+rows+'</table></div>'+
+    '<div class="panel"><h2>Regulator whitelabel</h2><div class="desc">Hand a regulator this same GSPC E2E surface (their branding) so their team can sort all issues — the pivot. Workings, not words.</div><button class="chip" id="wl">Request whitelabel</button><div id="wlout" style="margin-top:.5rem;font-size:.72rem;color:var(--muted)"></div></div>';
+  var wl=$('wl'); if(wl) wl.onclick=function(){ var o=$('wlout'); if(o)o.textContent='Whitelabel: hand the regulator the same GSPC radar + measurement engine, their brand. £0.05/verified-execution. (draft: owner sends.)'; };
+}
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
@@ -963,6 +980,7 @@ var SUBTITLES = {
   ecosystem:'One router for the governance ecosystem — frameworks, regulations, law, benchmarks, models.',
   axes:'13 core GSPC axes + extended domains — all measurable, signed, explained.',
   dashboard:'The whole system at a glance — every product working E2E, live back-end.',
+  compliance:'Compliance radar — every obligation + fine tier, the regulator whitelabel pivot.',
   reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
   runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
   insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
@@ -1281,6 +1299,7 @@ var PAGES = [
   { id:'ecosystem', label:'Ecosystem' },
   { id:'axes', label:'Axes' },
   { id:'dashboard', label:'Status' },
+  { id:'compliance', label:'Fines' },
   { id:'models',   label:'Models' },
   { id:'insurers', label:'Insurers' },
   { id:'compare', label:'Compare' },
