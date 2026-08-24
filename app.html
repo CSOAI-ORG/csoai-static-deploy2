@@ -880,8 +880,15 @@ function renderEnforcement(el){
     '<div class="card"><div class="k">Upcoming</div><div class="v">'+regs.filter(function(g){return (g.status||'')==='upcoming'||(g.status||'')==='positioning';}).length+'</div><div class="s">demand-creating</div></div>'+
     '<div class="card"><div class="k">In force</div><div class="v">'+regs.filter(function(g){return (g.status||'')==='in-force';}).length+'</div><div class="s">live now</div></div>'+
     '<div class="card"><div class="k">Highest</div><div class="v">€35M/7%</div><div class="s">Art 5 / Art 101 GPAI</div></div></div>'+
-    '<div class="panel"><h2>Deadline calendar (all regions)</h2><div class="desc">Every obligation + date + penalty — the product hook, deadlines force demand.</div><table><tr><th>date</th><th>obligation</th><th>status</th><th>penalty</th></tr>'+rows+'</table></div>';
+    '<div class="panel"><h2>Deadline calendar (all regions)</h2><div class="desc">Every obligation + date + penalty — the product hook, deadlines force demand.</div><table><tr><th>date</th><th>obligation</th><th>status</th><th>penalty</th></tr>'+rows+'</table></div>'+
+    '<div class="panel" style="border-color:var(--accent)"><h2>Scaffold a compliance package (manager)</h2><div class="desc">Drop a company/scope in → we scaffold its obligation checklist from the live calendar + fines. A manager, not a guess — the pre-contact exposure finder.</div>'+
+      '<div class="cinput"><input id="scaf" placeholder="e.g. EU genAI recommender / UK fintech / US insurance" style="font-family:var(--mono);font-size:.76rem"><button id="scafgo">Scaffold</button></div>'+
+      '<div id="scafout" style="margin-top:.6rem;font-family:var(--mono);font-size:.7rem;white-space:pre-wrap;color:var(--muted)"></div>'+
+      '<div style="margin-top:.5rem"><button class="chip" data-j="reghub">Open in Regulator hub →</button></div></div>';
+  var g=$('scafgo'); if(g) g.onclick=function(){ var scope=$('scaf').value.trim()||'EU genAI'; var regs=(sd('regulation')||{}).regulations||[]; var up=regs.filter(function(r){return (r.status||'')==='upcoming'||(r.status||'')==='positioning';}); var o=$('scafout'); if(o) o.textContent='SCOPE: '+scope+'\nOBLIGATIONS ('+up.length+' upcoming, live from the signed feed):\n'+up.slice(0,5).map(function(r){return '• '+r.title+' ('+r.date+') — '+r.penalty_exposure;}).join('\n')+'\n→ scaffolded. Regulators free (R8); commercial rail for data.'; };
+  el.querySelectorAll('[data-j]').forEach(function(b){ b.onclick=function(){ show(b.dataset.j); }; });
 }
+
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
