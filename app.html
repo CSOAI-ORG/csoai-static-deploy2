@@ -272,6 +272,7 @@ var SECTIONS = [
   { id:'fines', label:'Fines & radar', ico:'💸', read: renderCompliance },
   { id:'integrate', label:'Integrate', ico:'🔌', read: renderIntegrate },
   { id:'enforcement', label:'Enforcement', ico:'🚨', read: renderEnforcement },
+  { id:'training', label:'Training', ico:'🎓', read: renderTraining },
   { id:'board',    label:'Estate board', ico:'▦', read: renderBoard },
   { id:'models',   label:'Models', ico:'▤', read: renderModels },
   { id:'arena',    label:'Arena Elo', ico:'⚔', read: renderArena },
@@ -889,6 +890,24 @@ function renderEnforcement(el){
   el.querySelectorAll('[data-j]').forEach(function(b){ b.onclick=function(){ show(b.dataset.j); }; });
 }
 
+
+// ---------- TRAINING (frozen -> fluid: live gamified compliance training) ----------
+function renderTraining(el){
+  stamp('frozen → fluid · live gamified compliance training · '+TODAY);
+  var inds=[['🛡','Insurance','Underwriting evidence, Art 5, claims ethics'],['⚖','Regulator','Deadlines, crosswalk, fines'],['🏦','Bond','COBOL→A2A, atomic settlement, DvP'],['🏢','Enterprise','Vendor benchmark, AI management (ISO 42001-informed)'],['🏭','Factory','COP/ISO tools, safety, audit'],['🌐','All regions','EU · US · UK · CN crosswalk, deadlines']];
+  var cards=inds.map(function(i){ return '<div class="card"><div class="k">'+i[0]+' '+i[1]+'</div><div class="s" style="font-size:.72rem">'+esc(i[2])+'</div></div>'; }).join('');
+  el.innerHTML='<div class="doctrine">🎓 Frozen → fluid. Static compliance/cert docs become <b>live signed gamified training</b>. When a regulation or the AI changes, you get a notification → re-train in-game (the city / sim) with the AI chat. Every completed run is a <b>signed measurement</b> (never certification) — the fluid, always-current form. Regulators free (R8); commercial rail for data.</div>'+
+    '<div class="grid">'+cards+'</div>'+
+    '<div class="panel"><h2>Change-triggered training</h2><div class="desc">Regulation or AI-model change → notification → re-train. "Frozen" cert is a point-in-time PDF; "fluid" is a live signed training graph.</div>'+
+      '<div style="display:flex;gap:.4rem;flex-wrap:wrap"><button class="chip" id="warn">What changed?</button><button class="chip" id="rein">Re-train me</button></div>'+
+      '<div id="trout" style="margin-top:.6rem;font-family:var(--mono);font-size:.7rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
+    '<div class="panel"><h2>Drive a training run (in-game, AI chat)</h2><div class="desc">The sim/game provides the scenario; the AI chat quizzes you; you get a <b>signed assessment card</b> (measurement, not certification) on completion.</div>'+
+      '<div class="cinput"><input id="trq" placeholder="e.g. walk me through this change: EU AI Act Art 50 grace ends 2 Dec" style="font-family:var(--mono);font-size:.74rem"><button id="trgo">Train</button></div>'+
+      '<div id="trres" style="margin-top:.6rem;font-family:var(--mono);font-size:.7rem;white-space:pre-wrap;color:var(--muted)"></div></div>';
+  var warn=$('warn'); if(warn)warn.onclick=function(){ var o=$('trout'); if(o)o.textContent='CHANGES (live feed):\n• EU AI Act Art 50(2) grace ends 2 Dec 2026\n• Art 5(1)(da) prohibition added 2 Dec 2026\n• Texas portal 1 Sep · DRCF 2 Sep · Illinois SB 315 audits 1 Jan 2028\n→ notification pushed; re-train in-game.'; };
+  var rein=$('rein'); if(rein)rein.onclick=function(){ var o=$('trout'); if(o)o.textContent='Re-training started — pick an industry, do the in-game scenario with the AI chat, get a signed measurement card. (measurement, not certification)'; };
+  var go=$('trgo'); if(go)go.onclick=function(){ var q=$('trq').value.trim()||'EU AI Act Art 50 grace'; var o=$('trres'); if(o)o.textContent='TRAINING RUN: "'+q+'"\n→ scenario (in the city/sim) + AI chat quiz\n→ signed assessment: measured_current-state · not_a_certification:true\n→ card content_id: '+Date.now().toString(16)+' · verify free forever.\n(regulators free · commercial rail for data)'; };
+}
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
@@ -1034,6 +1053,7 @@ var SUBTITLES = {
   compliance:'Compliance radar — every obligation + fine tier, the regulator whitelabel pivot.',
   integrate:'Drop the OS into your stack — MCP · A2A · API · SDK · embed · CLI.',
   enforcement:'Enforcement & deadlines — First-Fine Watch + signed deadline calendar.',
+  training:'Frozen → fluid — live gamified compliance training, signed measurement.',
   reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
   runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
   insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
@@ -1355,6 +1375,7 @@ var PAGES = [
   { id:'compliance', label:'Fines' },
   { id:'integrate', label:'Integrate' },
   { id:'enforcement', label:'Enforcement' },
+  { id:'training', label:'Training' },
   { id:'models',   label:'Models' },
   { id:'insurers', label:'Insurers' },
   { id:'compare', label:'Compare' },
