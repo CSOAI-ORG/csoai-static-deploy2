@@ -1,0 +1,18 @@
+{
+  "schema": "csoai.oowm-conversion-posture/0.1",
+  "ts": "2026-08-24T03:56:05Z",
+  "frictionless_built": {
+    "offer_page": "clawd/csoai-os/oowm-offer.html (Free/$49/Custom, live demo, no-card copy)",
+    "live_demo": "Try OOWM API free (one click, no signup, no card)",
+    "wired": "sidebar + index + councilof.ai/register CTA"
+  },
+  "honest_boundary": {
+    "oracle_public": {
+      "external_8771": "000 (NOT open \u2014 localhost-only)",
+      "why": "public inference endpoint without auth = security risk; deferred deliberately",
+      "right_fix": "host OOWM gateway on councilof.ai OR via a public tunneled endpoint WITH auth (key/token)"
+    },
+    "local_demo": "works on Mac :4191; NOT yet reachable by a stranger from councilof.ai"
+  },
+  "honest_10000x": "I will NOT claim 10000x revenue/growth. Real, measured: (1) a priced $0/$49/Custom offer, (2) $0-marginal-cost free-grid routing, (3) self-owned IP corpus mirrored to HF+Kaggle, (4) low-friction funnel. CONVERSION needs (a) the gateway publicly hostable (with auth) and (b) the owner-key distribution unlocks (PYPI/GCP/Vercel) \u2014 sales execution, not infrastructure."
+}
