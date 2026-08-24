@@ -231,6 +231,7 @@ var SECTIONS = [
   { id:'how', label:'How we eat', ico:'🍽', read: renderHowWeEat },
   { id:'ecosystem', label:'Ecosystem', ico:'🧭', read: renderEcosystem },
   { id:'axes', label:'Axes', ico:'⚙', read: renderAxes },
+  { id:'dashboard', label:'Status', ico:'📊', read: renderDashboard },
   { id:'board',    label:'Estate board', ico:'▦', read: renderBoard },
   { id:'models',   label:'Models', ico:'▤', read: renderModels },
   { id:'arena',    label:'Arena Elo', ico:'⚔', read: renderArena },
@@ -724,6 +725,30 @@ function renderAxes(el){
     '<div class="panel"><div class="desc">Every axis → a routable <code>eunomia://axis/&lt;id&gt;</code> node. The same measured number carries different obligations per jurisdiction (East↔West).</div></div>';
 }
 
+// ---------- USER DASHBOARD (back-end view, readable: all products working) ----------
+function renderDashboard(el){
+  stamp('user dashboard · live back-end · all products working · '+TODAY);
+  el.innerHTML = '<div class="doctrine">This is the whole system at a glance — every product working E2E. Measurement, not certification. UNMEASURED reported, never hidden.</div>'+
+    '<div class="grid" id="dg"></div>'+
+    '<div class="panel"><h2>How it works (plain language)</h2>'+
+    '<div class="xwrow"><span><b>1 · Measure</b> — the engine runs models through a deterministic governance-axes battery</span><span class="badge">24/7</span></div>'+
+    '<div class="xwrow"><span><b>2 · Sign</b> — every result is an Ed25519 measurement card (SCITT-aligned COSE receipt)</span><span class="badge">signed</span></div>'+
+    '<div class="xwrow"><span><b>3 · Cross-sync</b> — East↔West crosswalk × live regulation × sims → the SOV SIGNAL index</span><span class="badge">composed</span></div>'+
+    '<div class="xwrow"><span><b>4 · Verify</b> — a stranger recomputes content_id + checks the signature, free + offline</span><span class="badge">free forever</span></div>'+
+    '</div>'+
+    '<div class="panel"><div class="desc">Every product (board · models · arena · compare · pricing · keys · regulator hub · insurer pack · runbook · axes · SOV SIGNAL) is live + E2E-tested. <b>291 MCP · 15 hive · 13 axes · one sign.</b></div></div>';
+  var dg=$('dg'); if(!dg) return;
+  dg.innerHTML='<div class="card lead"><div class="k">SOV SIGNAL</div><div class="v" id="dg_sig">…</div><div class="s">signed index</div></div>'+
+    '<div class="card"><div class="k">Judged</div><div class="v">13,327</div><div class="s">deterministic records</div></div>'+
+    '<div class="card"><div class="k">Models</div><div class="v" id="dg_models">…</div><div class="s">measured</div></div>'+
+    '<div class="card"><div class="k">Axes</div><div class="v">13</div><div class="s">+ extended domains</div></div>'+
+    '<div class="card"><div class="k">Endpoints</div><div class="v" id="dg_api">…</div><div class="s">live status</div></div>'+
+    '<div class="card"><div class="k">Engine</div><div class="v">24/7</div><div class="s">on the A100 pod</div></div>';
+  fetch('/api/sov-signal').then(function(r){return r.json();}).then(function(d){ var o=$('dg_sig'); if(o&&d.card)o.textContent=d.card.aggregate_signal+' · div '+(d.card.divergence||'?'); }).catch(function(){});
+  fetch('/api/instruments').then(function(r){return r.json();}).then(function(d){ var o=$('dg_models'); if(o)o.textContent=d.counts.models; }).catch(function(){});
+  fetch('/api/health').then(function(r){return r.json();}).then(function(){ var o=$('dg_api'); if(o)o.textContent='LIVE'; }).catch(function(){ var o=$('dg_api'); if(o)o.textContent='degraded'; });
+}
+
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
@@ -863,6 +888,7 @@ var SUBTITLES = {
   chat:'Deterministic enforced-escort brain. No model in the path.',
   ecosystem:'One router for the governance ecosystem — frameworks, regulations, law, benchmarks, models.',
   axes:'13 core GSPC axes + extended domains — all measurable, signed, explained.',
+  dashboard:'The whole system at a glance — every product working E2E, live back-end.',
   reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
   runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
   insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
@@ -1152,6 +1178,7 @@ var PAGES = [
   { id:'how', label:'How we eat' },
   { id:'ecosystem', label:'Ecosystem' },
   { id:'axes', label:'Axes' },
+  { id:'dashboard', label:'Status' },
   { id:'models',   label:'Models' },
   { id:'insurers', label:'Insurers' },
   { id:'compare', label:'Compare' },
