@@ -270,6 +270,7 @@ var SECTIONS = [
   { id:'dashboard', label:'Status', ico:'📊', read: renderDashboard },
   { id:'compliance', label:'Compliance', ico:'⚖', read: renderCompliance },
   { id:'fines', label:'Fines & radar', ico:'💸', read: renderCompliance },
+  { id:'integrate', label:'Integrate', ico:'🔌', read: renderIntegrate },
   { id:'board',    label:'Estate board', ico:'▦', read: renderBoard },
   { id:'models',   label:'Models', ico:'▤', read: renderModels },
   { id:'arena',    label:'Arena Elo', ico:'⚔', read: renderArena },
@@ -838,6 +839,27 @@ function renderCompliance(el){
     '<div class="panel"><h2>Regulator whitelabel</h2><div class="desc">Hand a regulator this same GSPC E2E surface (their branding) so their team can sort all issues — the pivot. Workings, not words.</div><button class="chip" id="wl">Request whitelabel</button><div id="wlout" style="margin-top:.5rem;font-size:.72rem;color:var(--muted)"></div></div>';
   var wl=$('wl'); if(wl) wl.onclick=function(){ var o=$('wlout'); if(o)o.textContent='Whitelabel: hand the regulator the same GSPC radar + measurement engine, their brand. £0.05/verified-execution. (draft: owner sends.)'; };
 }
+
+// ---------- INTEGRATE / GET THE OS (drop-in artifacts for every end party) ----------
+function renderIntegrate(el){
+  stamp('integrate · drop the OS into your stack · '+TODAY);
+  var B='https://csoai-gspc.pages.dev';
+  var items=[
+    ['MCP server (agents call it)','mcp add csoai-gspc \''+B+'/mcp \'\n# then any agent can: measure/route/verify/enter-arena'],
+    ['A2A agent card','curl -sS '+B+'/api/instruments\n# the agent contract: route + measure + sign'],
+    ['API key + REST','curl -sS -H \'Authorization: Bearer csoai_ek_...\' '+B+'/api/gspc'],
+    ['Python SDK','pip install csoai\nfrom csoai import measure; print(measure("qwen2.5:7b"))'],
+    ['JS SDK','npm i @csoai/sdk\nimport { route } from "@csoai/sdk"; await route("eunomia://regulation/REG-001")'],
+    ['Embed widget (any website)','<scr'+'ipt src="'+B+'/widget.js" data-axis="care"></scr'+'ipt>\n<!-- solves the compliance/measurement problem on YOUR site -->'],
+    ['CLI','npx csoai measure qwen2.5:7b\nnpx csoai route eunomia://bridge/iso20022'],
+  ];
+  el.innerHTML='<div class="doctrine">Drop the Council OS into your stack. MCP · A2A · API · SDK · embed · CLI — a clean AG-UI OS every end party (regulator, insurer, bond, COBOL, AI company) can add to their website or wherever, and it solves the compliance/measurement problem. Whitelabel available. Measurement, not certification.</div>'+
+    '<div class="panel">'+items.map(function(it){ return '<div style="margin-bottom:.7rem"><div style="font-size:.72rem;color:var(--muted);margin-bottom:.25rem">'+it[0]+'</div><div style="display:flex;gap:.4rem;align-items:flex-start"><button class="chip" data-copy="'+esc(it[1])+'">copy</button><pre style="flex:1;margin:0;overflow-x:auto;background:#0e141a;border:1px solid var(--line);border-radius:8px;padding:.45rem .6rem;font-family:var(--mono);font-size:.64rem">'+esc(it[1])+'</pre></div></div>'; }).join('')+'</div>'+
+    '<div class="panel"><h2>Embeddable OS (drop-in)</h2><div class="desc">Add one script tag to any website — your team gets the measured-governance OS, whitelabelled to your brand. Works online (live API) + offline (embedded data).</div><div style="display:flex;gap:.4rem;flex-wrap:wrap"><button class="chip" id="wl2">Whitelabel the OS</button><button class="chip" id="dl">Download CLI</button></div><div id="intout" style="margin-top:.5rem;font-size:.72rem;color:var(--muted)"></div></div>';
+  el.querySelectorAll('[data-copy]').forEach(function(b){ b.onclick=function(){ try{ if(navigator.clipboard) navigator.clipboard.writeText(b.dataset.copy); b.textContent='copied'; setTimeout(function(){b.textContent='copy';},1100); }catch(e){} }; });
+  var wl=$('wl2'); if(wl)wl.onclick=function(){ var o=$('intout'); if(o)o.textContent='Whitelabel: same GSPC OS, your brand, drop-in widget + MCP + API. £0.05/verified-execution. (draft: owner sends.)'; };
+  var dl=$('dl'); if(dl)dl.onclick=function(){ var o=$('intout'); if(o)o.textContent='CLI: npx csoai measure/route/verify — install + run (published to npm/PyPI).'; };
+}
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
@@ -981,6 +1003,7 @@ var SUBTITLES = {
   axes:'13 core GSPC axes + extended domains — all measurable, signed, explained.',
   dashboard:'The whole system at a glance — every product working E2E, live back-end.',
   compliance:'Compliance radar — every obligation + fine tier, the regulator whitelabel pivot.',
+  integrate:'Drop the OS into your stack — MCP · A2A · API · SDK · embed · CLI.',
   reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
   runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
   insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
@@ -1300,6 +1323,7 @@ var PAGES = [
   { id:'axes', label:'Axes' },
   { id:'dashboard', label:'Status' },
   { id:'compliance', label:'Fines' },
+  { id:'integrate', label:'Integrate' },
   { id:'models',   label:'Models' },
   { id:'insurers', label:'Insurers' },
   { id:'compare', label:'Compare' },
