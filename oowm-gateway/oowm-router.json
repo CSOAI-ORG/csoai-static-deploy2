@@ -81,6 +81,37 @@
   "free_sites": {
     "oracle": "141.147.73.85:8771 (always-free RAG+inference, cost=0)",
     "kaggle": "nicktempleman/oowm-free-train (free T4 fine-tune, cost=0)",
-    "hf": "GATED on HF_TOKEN (corpus+adapter mirror)"
-  }
+    "hf": {
+      "status": "LIVE",
+      "repo": "Nicholastempleman/oowm-sovereign-corpus",
+      "note": "corpus mirrored to HF, token valid"
+    }
+  },
+  "default_provider": "oracle-free",
+  "providers": {
+    "oracle-free": {
+      "endpoint": "141.147.73.85:8771",
+      "cost": 0,
+      "role": "serve+rag",
+      "reliable": true
+    },
+    "kaggle": {
+      "kernel": "nicktempleman/oowm-free-train",
+      "cost": 0,
+      "role": "train+eval"
+    },
+    "hf": {
+      "repo": "Nicholastempleman/oowm-sovereign-corpus",
+      "cost": 0,
+      "role": "mirror"
+    },
+    "a100": {
+      "endpoint": "runpod-a100",
+      "cost": "paid",
+      "role": "best-effort",
+      "reliable": false,
+      "note": "UNSTABLE - port drift/Ollama drops"
+    }
+  },
+  "routing_rule": "Route to oracle-free (cost=0, stable) first; use A100 only as best-effort fallback; mirror to HF."
 }
