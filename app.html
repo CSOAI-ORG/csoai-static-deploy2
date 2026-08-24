@@ -252,6 +252,8 @@ function gjson(url){ return fetch(url).then(function(r){return r.json();}); }
 
 var SECTIONS = [
   { id:'overview', label:'Overview', ico:'◉', read: renderOverview },
+  { id:'about', label:'About', ico:'🏛', read: renderAbout },
+  { id:'partners', label:'Partners', ico:'🤝', read: renderPartners },
   { id:'manifesto', label:'Manifesto', ico:'⚔', read: renderManifesto },
   { id:'how', label:'How we eat', ico:'🍽', read: renderHowWeEat },
   { id:'ecosystem', label:'Ecosystem', ico:'🧭', read: renderEcosystem },
@@ -774,6 +776,30 @@ function renderDashboard(el){
   fetch('/api/health').then(function(r){return r.json();}).then(function(){ var o=$('dg_api'); if(o)o.textContent='LIVE'; }).catch(function(){ var o=$('dg_api'); if(o)o.textContent='degraded'; });
 }
 
+// ---------- ABOUT + PARTNERS (membership/authority pages) ----------
+function badgesHtml(){
+  var b=[['OIN 2.0','b-win','https://www.openinventionnetwork.com'],['LOT Network','b-lot','https://lotnet.com'],['IETF','b-ietf','https://www.ietf.org/badges/'],['EU AI Pact','b-euai','https://digital-strategy.ec.europa.eu/en/policies/ai-pact'],['NVIDIA Developer','b-nv','https://developer.nvidia.com'],['Glama MCP','b-glama','https://glama.ai'],['arXiv','b-arxiv','https://arxiv.org'],['C2PA','b-c2pa','https://c2pa.org'],['BSI ART/1','b-bsi','https://bsigroup.com']];
+  return '<div class="badges-row">'+b.map(function(x){return '<a class="badge-chip '+x[1]+'" href="'+x[2]+'" target="_blank" rel="noopener">'+x[0]+'</a>';}).join('')+'</div>';
+}
+function renderAbout(el){
+  stamp('about · an independent measurement body · '+TODAY);
+  el.innerHTML='<div class="doctrine">An independent measurement body for AI behaviour. We measure, sign, and re-attest — everyone can check. Measurement, not certification. Verification free forever. Nobody ranked pays.</div>'+
+    '<div class="panel"><h2>Who we are</h2><div class="desc">CSOAI runs open-weight models through a deterministic governance-axes battery and signs every result (Ed25519, SCITT / RFC 9943-aligned COSE receipt). We publish an honest register — UNMEASURED reported, never hidden. Independence is the asset: we never take money from the parties we measure, never re-score for payment.</div></div>'+
+    '<div class="panel"><h2>Membership & standards participation</h2>'+badgesHtml()+'</div>'+
+    '<div class="panel"><h2>What we are not</h2><div class="desc">Not a certification body · not a notified body · no money either way with anything we rank · we never grade a model with another model.</div></div>';
+}
+function renderPartners(el){
+  stamp('partners · the ecosystem we sit in · '+TODAY);
+  el.innerHTML='<div class="doctrine">Members of the bodies writing the rules, and the ecosystem we build with. Measurement, not certification.</div>'+
+    '<div class="panel"><h2>Standards bodies & memberships</h2>'+badgesHtml()+'</div>'+
+    '<div class="panel"><h2>Ecosystem</h2><div class="desc">Where we work — and the reference standards we improve on.</div><div class="grid">'+
+      '<div class="card"><div class="k">OpenRouter</div><div class="s">models routing (we add governance routing)</div></div>'+
+      '<div class="card"><div class="k">LM Arena</div><div class="s">blind A/B (we add measured + signed)</div></div>'+
+      '<div class="card"><div class="k">Glama</div><div class="s">MCP registry</div></div>'+
+      '<div class="card"><div class="k">chipzen.ai</div><div class="s">MCP-skills pilot (warmest external thread)</div></div>'+
+      '</div></div>';
+}
+
 function renderRegisters(el){
   stamp('signed registers + games + scenarios · '+TODAY);
   var emb = sd('registers');
@@ -902,6 +928,8 @@ function show(id){
 // ---------- OVERVIEW ----------
 var SUBTITLES = {
   overview:'One dashboard. Every measured surface. Deterministic, signed, never certified.',
+  about:'An independent measurement body — measure, sign, re-attest.',
+  partners:'Members of the bodies writing the rules + the ecosystem we build with.',
   board:'Deterministic exact-label grading · n=30 · UNMEASURED reported, never hidden.',
   models:'Open-weight models, measured on our own fleet. Never vendor self-report.',
   arena:'Live Elo from estate-run duels (Bradley-Terry).',
@@ -1199,6 +1227,8 @@ function renderChat(el){
 // ---------- SaaS PAGES (top nav — same show()/renderers as the workspace) ----------
 var PAGES = [
   { id:'overview', label:'Home' },
+  { id:'about', label:'About' },
+  { id:'partners', label:'Partners' },
   { id:'manifesto', label:'Manifesto' },
   { id:'how', label:'How we eat' },
   { id:'ecosystem', label:'Ecosystem' },
