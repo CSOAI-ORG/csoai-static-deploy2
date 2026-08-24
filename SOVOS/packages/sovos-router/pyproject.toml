@@ -9,7 +9,10 @@ description = "Routing + fleet + cluster orchestration: sov4_router, orchestrato
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{name = "Nicholas Templeman"}]
-dependencies = ["requests"]
+dependencies = [
+    "requests",
+    "sovos-invariants>=0.1.0",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
