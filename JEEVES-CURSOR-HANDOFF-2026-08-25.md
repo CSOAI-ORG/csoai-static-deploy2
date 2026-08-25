@@ -17,6 +17,7 @@
 ## WALLS (must hold in any Cursor polish — do not break)
 - R8: regulators + anything ranked FREE forever, NEVER a 402. £0.05/verified-execution is COMMERCIAL rail only (insurers/bond desks/vendors buying DATA).
 - R1/R3: scores never sold; no money with anything ranked.
+- **ATTESTATION (the new load-bearing wall, 2026-08-25):** an attestation is an independent, verifiable OPINION/MEASUREMENT about an asset — it NEVER tokenizes that asset, NEVER confers ownership/claim rights, and is NOT itself a token. It rides ALONGSIDE an instrument. We licence attestation infra white-label ("powered-by", Chainalysis/Chainlink model); we NEVER mint or tokenize anyone's assets. Never describe an attestation as "tokenizing" or "granting rights" (EAS: attestations are explicitly not tokens/NFTs; XRPL credential has no effect until accepted + no ownership; SEC 2026-01-28 + Peirce 2025-07: tokenized securities are still securities). Q1 (white-label attestation licensing) = recommended lower-risk path; Q2 (tokenization-as-a-service) ONLY as tech/distribution partner of a REGULATED issuer (Tokeny/Securitize/Archax), not by minting ourselves.
 - measurement ≠ certification (never "certified"); "12 measured of 13" (moves only when a signed card lands); jail UNTESTED.
 - Never "every problem of every AI company" → say "systematic signed coverage of the public enforcement record".
 - agents = model + harness; never "C2PA-certified/approved/partner" → "member of TWG + TF".
