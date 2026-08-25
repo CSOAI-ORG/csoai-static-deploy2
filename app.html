@@ -284,6 +284,7 @@ var SECTIONS = [
   { id:'receipts', label:'Receipts', ico:'🧾', read: renderReceipts },
   { id:'methodology', label:'Methodology', ico:'📐', read: renderMethodology },
   { id:'products', label:'Products', ico:'📦', read: renderProducts },
+  { id:'press', label:'Press', ico:'🗞', read: renderPress },
   { id:'verify',   label:'Verify', ico:'🔑', read: renderVerify },
   { id:'chat',     label:'Ask the harness', ico:'💬', read: renderChat },
   { id:'reghub',   label:'Regulator hub', ico:'🏛', read: renderRegHub },
@@ -887,6 +888,24 @@ function frameworksHtml(){
 // ---------- COMPLIANCE RADAR (find every problem + fines; regulator whitelabel pivot) ----------
 
 // ---------- FINES RADAR (focused penalty-exposure view — distinct from full Compliance) ----------
+
+// ---------- PRESS (facts, resolved to signed artifacts — never a pitch deck) ----------
+function renderPress(el){
+  stamp('press · facts, each resolved to a signed artifact · '+TODAY);
+  el.innerHTML='<div class="doctrine">Press. Every number below resolves to a signed, stranger-verifiable artifact — a journalist can check it without asking us. Measurement, not certification. No pitch deck; a verify kit.</div>'+
+    '<div class="grid">'+
+      '<div class="card lead"><div class="k">First-Fine Watch</div><div class="v">€0</div><div class="s">EU AI Act fines collected · enforcement live 2 Aug 2026 → <code>/api/first-fine</code></div></div>'+
+      '<div class="card"><div class="k">Board honest count</div><div class="v" id="press_n">12 of 13</div><div class="s">jail UNTESTED (earned) → <code>/api/gspc</code></div></div>'+
+      '<div class="card"><div class="k">Corrections register</div><div class="v">65+</div><div class="s">appended, never edited → <code>/api/corrections</code></div></div>'+
+      '<div class="card"><div class="k">Statistical discipline</div><div class="v">Wilson + McNemar</div><div class="s">published + signed → <code>/api/methodology</code></div></div>'+
+    '</div>'+
+    '<div class="panel"><h2>The claim we make — and the one we never make</h2><div class="desc">We provide systematic signed coverage of the public enforcement record, measured against a frozen bank, intervals attached. We never claim to solve "every problem of every AI company." Every number is a signed card; a journalist verifies it, not us.</div></div>'+
+    '<div class="panel"><h2>Verify kit for journalists</h2><div class="desc">'+
+      '<code>POST /api/verify</code> (recompute + Ed25519) · <code>/.well-known/did.json</code> (the key a stranger resolves) · '+
+      '<code>/.well-known/agent-card.json</code> (signed A2A) · <code>/api/methodology</code> (the discipline). No account, no email, £0, forever.</div></div>'+
+    '<div class="panel"><h2>Boundary — what we are not</h2><div class="desc">Not a certification body · not a credit-rating agency · not a token issuer · an attestation is an opinion/measurement, never a token or ownership right · we never take money from the parties we measure.</div></div>';
+  fetch('/api/gspc').then(function(r){return r.json();}).then(function(d){ var o=document.getElementById('press_n'); if(o&&d.grammar){ o.textContent=d.grammar.split(' · ')[0]; } }).catch(function(){});
+}
 function renderFines(el){
   stamp('fines & radar · penalty exposure, find the problem · '+TODAY);
   var regs=(sd('regulation')||{}).regulations||[];
@@ -944,6 +963,7 @@ function renderEnforcement(el){
     '<div class="card"><div class="k">Upcoming</div><div class="v">'+regs.filter(function(g){return (g.status||'')==='upcoming'||(g.status||'')==='positioning';}).length+'</div><div class="s">demand-creating</div></div>'+
     '<div class="card"><div class="k">In force</div><div class="v">'+regs.filter(function(g){return (g.status||'')==='in-force';}).length+'</div><div class="s">live now</div></div>'+
     '<div class="card"><div class="k">Highest</div><div class="v">€35M/7%</div><div class="s">Art 5 / Art 101 GPAI</div></div></div>'+
+    '<div class="panel"><h2>Live official documents (provably current)</h2><div id="livereg" style="font-family:var(--mono);font-size:.72rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
     '<div class="panel"><h2>Live cross-reference (official, change-detected)</h2><div class="desc"><code>GET /api/live-regulation?live=1</code> — real Federal Register documents, each SHA-256 content-hashed so a change to an official doc is a detectable event, never a silent edit. Measurement, never a determination.</div></div>'+
     '<div class="panel"><h2>Deadline calendar (all regions)</h2><div class="desc">Every obligation + date + penalty — the product hook, deadlines force demand.</div><table><tr><th>date</th><th>obligation</th><th>status</th><th>penalty</th></tr>'+rows+'</table></div>'+
     '<div class="panel" style="border-color:var(--accent)"><h2>Scaffold a compliance package (manager)</h2><div class="desc">Drop a company/scope in → we scaffold its obligation checklist from the live calendar + fines. A manager, not a guess — the pre-contact exposure finder.</div>'+
@@ -955,6 +975,13 @@ function renderEnforcement(el){
     var v=document.querySelector('#ffcard .v'); if(v&&typeof d.first_fine!=='undefined'){ v.textContent=(d.first_fine||'').split(' — ')[0]; }
     var s=document.querySelector('#ffcard .s'); if(s){ var f=(d.facts||[]).find(function(x){return x.amount==='€0';}); if(f) s.textContent='EU AI Act fines collected · enforcement live·honest €0 (see /api/first-fine · verify: content_id '+String(d.content_id||'').slice(0,10)+'…)'; }
   }).catch(function(e){});
+  // Live official documents — provably-current dates from the official source
+  fetch('/api/live-regulation?live=1&per_page=4').then(function(r){return r.json();}).then(function(d){
+    var o=document.getElementById('livereg'); if(!o)return;
+    var lines=['source: '+((d.source||{}).name)+'  \u00b7 fetched: '+String((d.source||{}).fetchedAt||'').slice(0,16)+'  \u00b7 '+d.count+' official docs',''];
+    (d.documents||[]).forEach(function(x){ lines.push('\u2022 '+x.publication_date+'  '+x.document_number); lines.push('    '+(x.title||'').slice(0,82)); });
+    o.textContent=lines.join('\n');
+  }).catch(function(e){ var o=document.getElementById('livereg'); if(o)o.textContent='live feed unavailable'; });
   var g=$('scafgo'); if(g) g.onclick=function(){ var scope=$('scaf').value.trim()||'EU genAI'; var regs=(sd('regulation')||{}).regulations||[]; var up=regs.filter(function(r){return (r.status||'')==='upcoming'||(r.status||'')==='positioning';}); var o=$('scafout'); if(o) o.textContent='SCOPE: '+scope+'\nOBLIGATIONS ('+up.length+' upcoming, live from the signed feed):\n'+up.slice(0,5).map(function(r){return '• '+r.title+' ('+r.date+') — '+r.penalty_exposure;}).join('\n')+'\n→ scaffolded. Regulators free (R8); commercial rail for data.'; };
   el.querySelectorAll('[data-j]').forEach(function(b){ b.onclick=function(){ show(b.dataset.j); }; });
 }
@@ -1539,6 +1566,7 @@ var PAGES = [
   { id:'receipts', label:'Receipts' },
   { id:'methodology', label:'Methodology' },
   { id:'products', label:'Products' },
+  { id:'press', label:'Press' },
   { id:'training', label:'Training' },
   { id:'dispute', label:'Dispute' },
   { id:'models',   label:'Models' },
