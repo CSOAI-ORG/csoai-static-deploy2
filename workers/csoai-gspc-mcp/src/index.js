@@ -59,7 +59,7 @@ export default {
       return respond({
         protocolVersion: params?.protocolVersion || "2025-03-26",
         capabilities: { tools: {} },
-        serverInfo: { name: "csoai-gspc-mcp", version: "1.0.0" },
+        serverInfo: { name: "csoai-gspc-mcp", version: "1.0.3" },
       });
     }
     if (method === "notifications/initialized") {
