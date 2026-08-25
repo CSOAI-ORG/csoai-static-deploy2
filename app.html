@@ -888,6 +888,11 @@ function renderEnforcement(el){
       '<div class="cinput"><input id="scaf" placeholder="e.g. EU genAI recommender / UK fintech / US insurance" style="font-family:var(--mono);font-size:.76rem"><button id="scafgo">Scaffold</button></div>'+
       '<div id="scafout" style="margin-top:.6rem;font-family:var(--mono);font-size:.7rem;white-space:pre-wrap;color:var(--muted)"></div>'+
       '<div style="margin-top:.5rem"><button class="chip" data-j="reghub">Open in Regulator hub →</button></div></div>';
+  // First-Fine Watch: render from the signed /api/first-fine feed (stranger-verifiable data, not static copy)
+  fetch('/api/first-fine').then(function(r){return r.json();}).then(function(d){
+    var v=document.querySelector('#ffcard .v'); if(v&&typeof d.first_fine!=='undefined'){ v.textContent=(d.first_fine||'').split(' — ')[0]; }
+    var s=document.querySelector('#ffcard .s'); if(s){ var f=(d.facts||[]).find(function(x){return x.amount==='€0';}); if(f) s.textContent='EU AI Act fines collected · enforcement live·honest €0 (see /api/first-fine · verify: content_id '+String(d.content_id||'').slice(0,10)+'…)'; }
+  }).catch(function(e){});
   var g=$('scafgo'); if(g) g.onclick=function(){ var scope=$('scaf').value.trim()||'EU genAI'; var regs=(sd('regulation')||{}).regulations||[]; var up=regs.filter(function(r){return (r.status||'')==='upcoming'||(r.status||'')==='positioning';}); var o=$('scafout'); if(o) o.textContent='SCOPE: '+scope+'\nOBLIGATIONS ('+up.length+' upcoming, live from the signed feed):\n'+up.slice(0,5).map(function(r){return '• '+r.title+' ('+r.date+') — '+r.penalty_exposure;}).join('\n')+'\n→ scaffolded. Regulators free (R8); commercial rail for data.'; };
   el.querySelectorAll('[data-j]').forEach(function(b){ b.onclick=function(){ show(b.dataset.j); }; });
 }

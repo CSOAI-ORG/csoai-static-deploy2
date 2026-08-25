@@ -62,6 +62,7 @@ export const csoai = {
   deadline: () => GET('/api/regulation'),
   chain: (head, n = 10) => GET('/api/chain' + (head ? '?head=' + head + '&n=' + n : '?n=' + n)),
   measureAxis: (axis = 'gov') => GET('/api/measure-axis?axis=' + encodeURIComponent(axis)),
+  firstFine: () => GET('/api/first-fine'),
 
   // ---- write/measure (signed cards) ----
   attest: (obj) => POST('/api/attest', obj),
