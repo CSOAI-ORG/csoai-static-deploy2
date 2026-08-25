@@ -963,6 +963,19 @@ function registerCards(regs){
   }).join('');
   return '<div class="doctrine">Signed registers · Ed25519 · measured-current-state, never certified.</div><div class="grid">'+cards+'</div>';
 }
+
+// ---------- RECEIPTS (signed agent-payment settlements — AXIS-27 / INT-14) ----------
+function renderReceipts(el){
+  stamp('agent-payment receipts · signed settlements on the machine rail · '+TODAY);
+  el.innerHTML='<div class="doctrine">Trade receipts — signed agent-payment settlement events (x402/Base). <b>Honest framing:</b> a receipt asserts what settled, with whom, and when — a stranger verifies the Ed25519 signature. It is <b>never a revenue claim</b>: the receiver is a counter-party wallet, not CSOAI income. We measure + sign the rail; the authority/insurer decides what it means.</div>'+
+    '<div class="panel"><h2>Settlement receipts</h2><div id="recout" style="font-family:var(--mono);font-size:.76rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
+    '<div class="panel"><h2>The honest rule</h2><div class="desc">R8: regulators + anything ranked get signed streams free forever, never a 402. The commercial rail (insurers/bond desks/vendors buying DATA) is where a receipt moves value. <code>GET /api/receipts</code> · <code>GET /api/receipts/latest</code> (honest UNPUBLISHED until a real receipt) · <code>GET /api/first-fine</code>.</div></div>';
+  fetch('/api/receipts').then(r=>r.json()).then(function(d){
+    var o=$('recout'); if(!o)return; var lines=[];
+    (d.receipts||[]).forEach(function(r){ lines.push(String.fromCharCode(8226)+' '+r.card_id+'  '+r.amount_units+' '+r.asset+'  fee '+r.fee_bps+'bps  on '+r.network+'  ['+r.verify+']'); lines.push('    receiver '+r.receiver); lines.push('    '+r.reading); });
+    o.textContent=(d.honest_note||'')+'\n\n'+(lines.join('\n')||'\n[no signed receipts yet — honest]')+'\n\ncontent_id: '+d.content_id+' · key_id: '+d.key_id;
+  }).catch(function(e){ var o=$('recout'); if(o)o.textContent='error: '+e; });
+}
 function renderRegistersData(el, regs){ el.innerHTML = registerCards(regs); }
 
 function renderArenaData(el, d){
