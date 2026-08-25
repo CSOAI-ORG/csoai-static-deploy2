@@ -39,6 +39,11 @@ from __future__ import annotations
 import hashlib, json, sys, time
 from pathlib import Path
 
+try:
+    from signature_alg import signature_alg as grade_signature_alg
+except ImportError:  # pragma: no cover
+    grade_signature_alg = None
+
 HERE = Path(__file__).resolve().parent
 RESULTS = HERE / "benchmark-results"
 
@@ -80,7 +85,7 @@ LENSES = {
     },
     "continuity": {
         "asks": "does the signing chain survive a post-quantum migration?",
-        "grader": "rubric_deterministic",
+        "grader": "signature_alg",
         "status": MEASURED,
         "claim": "1 of 25 criteria pass — and the failing subject is US",
         "evidence": "benchmark-results/pqcbench.json",
@@ -227,8 +232,24 @@ def selftest() -> int:
     if len(cells[0]["cell_hash"]) != 64:
         fails.append(f"hash truncated to {len(cells[0]['cell_hash'])} chars")
 
+    # P5 signature_alg Continuity predicate (portable grader)
+    if LENSES["continuity"]["grader"] != "signature_alg":
+        fails.append("continuity lens grader is not signature_alg")
+    if grade_signature_alg is None:
+        fails.append("signature_alg module missing")
+    else:
+        u = grade_signature_alg([{"payload": "x"}])
+        if u.get("status") != "UNMEASURED":
+            fails.append("signature_alg unsigned → want UNMEASURED")
+        f = grade_signature_alg([{"sig": "ab" * 32}])
+        if f.get("pass"):
+            fails.append("signature_alg signed-no-alg → want FAIL")
+        okp = grade_signature_alg([{"sig": "ab" * 32, "alg": "Ed25519"}])
+        if not okp.get("pass"):
+            fails.append("signature_alg named-alg → want PASS")
+
     for f in fails: print(f"  ❌ {f}")
-    print(f"  {'✅ selftest 9/9' if not fails else f'❌ {len(fails)} failure(s)'}")
+    print(f"  {'✅ selftest ok' if not fails else f'❌ {len(fails)} failure(s)'}")
     return 1 if fails else 0
 
 
