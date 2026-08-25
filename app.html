@@ -470,9 +470,15 @@ function renderEcosystem(el){
 '      └──────────────┬───────────────────┘\n'+
 '                     ▼\n'+
 '┌─────────────────────────────────────────────┐\n'+
-'│ SMART CONTRACT (tokenized bond + cash leg)   │\n'+
+'│ SMART CONTRACT (settles an EXISTING bond +   │\n'+
+'│  cash leg — atomic DvP, both or neither)     │\n'+
 '│  • Lock bond  • Lock cash  • Verify both     │\n'+
 '│  • Release both OR neither  (atomic DvP)     │\n'+
+'│  • Our attestation rides ALONGSIDE this      │\n'+
+'│    settlement. It does NOT create the bond,  │\n'+
+'│    tokenize anything, or confer ownership.   │\n'+
+'│    It is an independent, verifiable          │\n'+
+'│    MEASUREMENT of the record, never a claim. │\n'+
 '└─────────────────────┬───────────────────────┘\n'+
 '                      ▼\n'+
 '┌─────────────────────────────────────────────┐\n'+
@@ -483,7 +489,8 @@ function renderEcosystem(el){
     '</div>'+
       '<div style="display:flex;flex-wrap:wrap;gap:.4rem">'+['eunomia://a2a/batch-job','eunomia://a2a/audit-log','eunomia://a2a/rbac','eunomia://a2a/reg-reporting','eunomia://a2a/data-entry'].map(function(u){ return '<button class="chip" data-u="'+u+'">'+u+'</button>'; }).join('')+'</div>'+
     '</div>'+
-    '<div class="panel"><h2>Markets &amp; legacy bridge</h2><div class="desc">The Layer-0 legacy/financial-infrastructure bridge (cobolbridge.ai · CICS · ISO 20022 / SWIFT) — and the unclaimed layer above it: settlement rails (x402, ERC-8004, AP2) with <b>no risk oracle</b>. That is the friction we remove with the engine axis.</div>'+
+    '<div class="panel"><h2>The boundary we never cross</h2><div class="desc">An attestation is an independent, cryptographically verifiable <b>opinion/measurement</b> about an asset — <b>it never tokenizes that asset, never confers ownership or claim rights, and is not itself a token</b>. It rides alongside an instrument and only states an independently-checkable fact about a record. Creating an ownership token requires the actual legal issuer/owner to mint it under securities law. We are the measurement layer, never the issuer.</div></div>'+
+    '<div class="panel"><h2>Markets &amp; legacy bridge</h2><div class="desc">The Layer-0 legacy/financial-infrastructure bridge (cobolbridge.ai · CICS · ISO 20022 / SWIFT) — and the unclaimed layer above it: settlement rails (x402, ERC-8004, AP2) with <b>no risk oracle</b>. That is the friction we remove with the engine axis. <i>Settlement is measured + signed; we do not mint or tokenize the instruments being settled.</i></div>'+
       '<div style="display:flex;flex-wrap:wrap;gap:.4rem">'+['eunomia://bridge/cobol','eunomia://bridge/cics','eunomia://bridge/iso20022','eunomia://risk-oracle/x402','eunomia://risk-oracle/erc8004'].map(function(u){ return '<button class="chip" data-u="'+u+'">'+u+'</button>'; }).join('')+'</div>'+
     '</div>'+
     '<div class="panel"><h2>Engine-axis attestation (any sector)</h2><div class="desc">One measured + signed layer for banks · insurance · AI agents · COBOL · bond · index · stock · east-to-east. Pick a sector is auto-tagged; route the object through and it is signed + verifiable. Measurement, not certification.</div>'+
@@ -590,7 +597,7 @@ function renderInsurerPack(el){
     var rows = (r.cells||[]).slice(0,5).map(function(c){ return '<div class="xwrow"><span>'+esc(c.axis)+' <span class="unm">n='+c.n+'</span></span><span class="acc"><b>'+c.value+'</b></span></div>'; }).join('') || '<span class="unm">no quotable cells</span>';
     return '<div class="panel"><div class="mhead"><div class="mname">'+esc(r.agent)+'</div><span class="mbadge">'+esc(r.role||'')+'</span></div><div class="desc">'+esc(r.headline||'')+'</div>'+rows+'</div>';
   }).join('');
-  el.innerHTML = '<div class="doctrine">Insurer pack. Signed per-agent evidence, never underwriting, never a premium. Underwriters don\u2019t buy a platform — they buy a <b>URL that still verifies in 5 years</b>. Measurement, not certification.</div>'+
+  el.innerHTML = '<div class="doctrine">Insurer pack. Signed per-agent evidence, never underwriting, never a premium. Underwriters don\u2019t buy a platform — they buy a <b>URL that still verifies in 5 years</b>. Measurement, not certification. <b>Boundary:</b> a signed attestation is an opinion/measurement about risk posture — never an underwriting decision, never a premium, never a token or an ownership right.</div>'+
     '<div class="grid"><div class="card lead"><div class="k">Board leader</div><div class="v">'+esc(best||'?')+'</div><div class="s">'+bestAvg.toFixed(3)+' avg · '+TODAY+'</div></div>'+
     '<div class="card"><div class="k">Evidence reports</div><div class="v">'+reports.length+'</div><div class="s">signed per-agent</div></div>'+
     '<div class="card"><div class="k">Honesty register</div><div class="v">'+open+'</div><div class="s">open corrections · published, never hidden</div></div>'+
@@ -864,7 +871,7 @@ function renderIntegrate(el){
     ['Embed widget (any website)','<scr'+'ipt src="'+B+'/widget.js" data-axis="care"></scr'+'ipt>\n<!-- solves the compliance/measurement problem on YOUR site -->'],
     ['CLI','npx csoai measure qwen2.5:7b\nnpx csoai route eunomia://bridge/iso20022'],
   ];
-  el.innerHTML='<div class="doctrine">Drop the Council OS into your stack. MCP · A2A · API · SDK · embed · CLI — a clean AG-UI OS every end party (regulator, insurer, bond, COBOL, AI company) can add to their website or wherever, and it solves the compliance/measurement problem. Whitelabel available. Measurement, not certification.</div>'+
+  el.innerHTML='<div class="doctrine">Drop the Council OS into your stack. MCP · A2A · API · SDK · embed · CLI — a clean AG-UI OS every end party (regulator, insurer, bond, COBOL, AI company) can add to their website or wherever, and it solves the compliance/measurement problem. Whitelabel available (licence the engine + the signed-verdict layer, powered-by). Measurement, not certification. We licence attestation/measurement infra white-label; we never mint or tokenize your assets.</div>'+
     '<div class="panel">'+items.map(function(it){ return '<div style="margin-bottom:.7rem"><div style="font-size:.72rem;color:var(--muted);margin-bottom:.25rem">'+it[0]+'</div><div style="display:flex;gap:.4rem;align-items:flex-start"><button class="chip" data-copy="'+esc(it[1])+'">copy</button><pre style="flex:1;margin:0;overflow-x:auto;background:#0e141a;border:1px solid var(--line);border-radius:8px;padding:.45rem .6rem;font-family:var(--mono);font-size:.64rem">'+esc(it[1])+'</pre></div></div>'; }).join('')+'</div>'+
     '<div class="panel"><h2>Embeddable OS (drop-in)</h2><div class="desc">Add one script tag to any website — your team gets the measured-governance OS, whitelabelled to your brand. Works online (live API) + offline (embedded data).</div><div style="display:flex;gap:.4rem;flex-wrap:wrap"><button class="chip" id="wl2">Whitelabel the OS</button><button class="chip" id="dl">Download CLI</button></div><div id="intout" style="margin-top:.5rem;font-size:.72rem;color:var(--muted)"></div></div>';
   el.querySelectorAll('[data-copy]').forEach(function(b){ b.onclick=function(){ try{ if(navigator.clipboard) navigator.clipboard.writeText(b.dataset.copy); b.textContent='copied'; setTimeout(function(){b.textContent='copy';},1100); }catch(e){} }; });

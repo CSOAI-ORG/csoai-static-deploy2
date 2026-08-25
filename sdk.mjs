@@ -9,6 +9,12 @@
  *   const board = await csoai.board();
  *   const card  = await csoai.attest({ sector:'bond', subject:'UK Gilt' });
  *   const ok    = await csoai.isValid(card);   // recompute + Ed25519, no trust
+ *
+ * BOUNDARY (doctrine): an attestation is an independent, verifiable OPINION/MEASUREMENT
+ * about an asset. It NEVER tokenizes that asset, NEVER confers ownership or claim
+ * rights, and is NOT itself a token. It rides alongside an instrument. We are the
+ * measurement layer, never the issuer. We licence attestation infra white-label;
+ * we never mint or tokenize anyone's assets.
  */
 const H = 'https://csoai-gspc.pages.dev';
 const GET = async (u) => {
