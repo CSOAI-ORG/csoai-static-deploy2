@@ -1,0 +1,152 @@
+{
+  "schema": "csoai.coordination-ledger/0.1",
+  "title": "COORDINATION LEDGER \u2014 the living single-source-of-truth for outward work",
+  "purpose": "One structured file the whole team (JEEVES / Claude / Cursor / K3 / fleet) reads + appends to, so outreach, connections, accounts (metadata only, NEVER secrets), moves, and status are mapped and tracked in the SAME place \u2014 no duplication, no orphaned work.",
+  "rules": {
+    "dedup_key": "every entry has a stable `key` = slug of {type}:{target}. Never create a duplicate; update the existing entry.",
+    "never_store": "passwords, API keys, private keys, or any secret. Accounts list fields/status only, never credentials.",
+    "append_only": "correct in place, but history is preserved in the `history` array \u2014 never silently delete an outreach.",
+    "status_enum": [
+      "planned",
+      "drafted",
+      "ready_to_send",
+      "sent",
+      "awaiting_reply",
+      "connected",
+      "declined",
+      "gated_owner",
+      "done"
+    ],
+    "owner_enum": [
+      "JEEVES",
+      "Claude",
+      "Cursor",
+      "K3",
+      "FLEET",
+      "OWNER_nick"
+    ],
+    "grammar": "measurement not certification (JI.4). Wall: an attestation is an opinion/measurement, never a token, never ownership, never a claim. R8 regulators free forever."
+  },
+  "accounts": [
+    {
+      "key": "account:aws-kms-custody",
+      "type": "AWS KMS",
+      "status": "gated_owner",
+      "owner": "OWNER_nick",
+      "purpose": "sign Ed25519(XRPL)+secp256k1(EVM) for real-asset attestations",
+      "frames": "needs an AWS account + real keys; CSOAI_KEY_CUSTODY=hsm",
+      "linked_move": "NEXT_300 move #1"
+    },
+    {
+      "key": "account:rwa-xyz-api",
+      "type": "RWA.xyz v4 API",
+      "status": "gated_owner",
+      "owner": "OWNER_nick",
+      "purpose": "issuer/token metadata for the 10 unconfirmed adapters",
+      "frames": "self-serve key; startup discount available",
+      "linked_move": "NEXT_300 move #16"
+    },
+    {
+      "key": "account:sovos-chain-kv",
+      "type": "Cloudflare KV binding",
+      "status": "gated_owner",
+      "owner": "OWNER_nick",
+      "purpose": "persist the attestation chain (chained:false\u2192true)",
+      "frames": "dashboard-only attach; namespace b4eb1252766040d68bf6b10e6470ab57",
+      "linked_move": "NEXT_300 move #26"
+    },
+    {
+      "key": "account:did-web-csoai-org",
+      "type": "estate DID merge",
+      "status": "gated_owner",
+      "owner": "OWNER_nick",
+      "purpose": "P0-1 trust root on the csoai.org domain",
+      "frames": "the estate did.json is theirs; merge my did:web:csoai-gspc + pin"
+    }
+  ],
+  "connections": [
+    {
+      "key": "connection:mcp-registry",
+      "type": "MCP",
+      "target": "io.github.CSOAI-ORG/gspc",
+      "status": "connected",
+      "owner": "JEEVES",
+      "note": "LIVE handshake executed; signed model-side conformance card"
+    },
+    {
+      "key": "connection:a2a-agent-card",
+      "type": "A2A",
+      "target": "did:web:csoai-gspc.pages.dev#gspc",
+      "status": "done",
+      "owner": "JEEVES",
+      "note": "signed agent-card.json + did.json live; stranger-verifiable"
+    },
+    {
+      "key": "connection:layer0-exec",
+      "type": "Layer-0",
+      "target": "eunomia:// resolver",
+      "status": "connected",
+      "owner": "JEEVES",
+      "note": "routable URIs + real bridge fleet"
+    },
+    {
+      "key": "connection:x402-prospect",
+      "type": "x402",
+      "target": "chipzen/x402 buyer",
+      "status": "gated_owner",
+      "owner": "OWNER_nick",
+      "note": "commercial rail receipt; needs owner to send the draft"
+    }
+  ],
+  "outreach": [
+    {
+      "key": "outreach:chipzen-x402",
+      "type": "outreach",
+      "target": "chipzen/x402 data buyer",
+      "status": "ready_to_send",
+      "owner": "OWNER_nick",
+      "linked_move": "#25",
+      "frames": "drafted in csoai-static-deploy2/SOVOS; owner sends (one-to-one, no spam)",
+      "note": "drafted (SOVOS); owner sends one-to-one. Never marked sent unless actually sent."
+    }
+  ],
+  "moves_done": [
+    {
+      "key": "move:did-web-pin",
+      "status": "done",
+      "owner": "JEEVES",
+      "commit": "03950a84",
+      "note": "pinned did:web:csoai-gspc.pages.dev#gspc"
+    },
+    {
+      "key": "move:all-signers-pinned",
+      "status": "done",
+      "owner": "JEEVES",
+      "commit": "b9736a1d",
+      "note": "every signed endpoint on the pinned key"
+    },
+    {
+      "key": "move:register-receipts-methodology",
+      "status": "done",
+      "owner": "JEEVES",
+      "commit": "481b9605/330973a2",
+      "note": "registers, receipts, methodology, first-fine, mcnemar, live-regulation, products"
+    },
+    {
+      "key": "move:jail-gate",
+      "status": "done",
+      "owner": "JEEVES",
+      "commit": "bac4e902",
+      "note": "honest '12 measured of 13 \u00b7 jail UNTESTED' at feed+frontend"
+    },
+    {
+      "key": "move:frontend-completeness",
+      "status": "done",
+      "owner": "JEEVES",
+      "commit": "e9bb4c0f",
+      "note": "all 35 sections reachable, 3 dead-ends fixed"
+    }
+  ],
+  "generated": "2026-08-25",
+  "owner_notes": "Rotate the shared password (was exposed). Provide real credentials at execution time, never in chat. Cursor/Claude/K3: append to this file with a stable key; never duplicate."
+}
