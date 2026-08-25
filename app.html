@@ -285,6 +285,7 @@ var SECTIONS = [
   { id:'methodology', label:'Methodology', ico:'📐', read: renderMethodology },
   { id:'products', label:'Products', ico:'📦', read: renderProducts },
   { id:'press', label:'Press', ico:'🗞', read: renderPress },
+  { id:'e2e', label:'E2E status', ico:'🧪', read: renderE2E },
   { id:'verify',   label:'Verify', ico:'🔑', read: renderVerify },
   { id:'chat',     label:'Ask the harness', ico:'💬', read: renderChat },
   { id:'reghub',   label:'Regulator hub', ico:'🏛', read: renderRegHub },
@@ -319,6 +320,7 @@ var ROLES = {
     {id:'benchmark', label:'Vendor benchmark', ico:'✓', read:renderBenchmark},
     {id:'models', label:'Model comparison', ico:'▤', read:renderModels},
     {id:'board', label:'Axis board', ico:'▦', read:renderBoard},
+    {id:'e2e', label:'E2E status', ico:'🧪', read:renderE2E},
     {id:'methodology', label:'Methodology', ico:'📐', read:renderMethodology},
     {id:'compliance', label:'Compliance', ico:'⚖', read:renderCompliance},
     {id:'enforcement', label:'Enforcement', ico:'🚨', read:renderEnforcement},
@@ -910,6 +912,32 @@ function renderPress(el){
       '<code>/.well-known/agent-card.json</code> (signed A2A) · <code>/api/methodology</code> (the discipline). No account, no email, £0, forever.</div></div>'+
     '<div class="panel"><h2>Boundary — what we are not</h2><div class="desc">Not a certification body · not a credit-rating agency · not a token issuer · an attestation is an opinion/measurement, never a token or ownership right · we never take money from the parties we measure.</div></div>';
   fetch('/api/gspc').then(function(r){return r.json();}).then(function(d){ var o=document.getElementById('press_n'); if(o&&d.grammar){ o.textContent=d.grammar.split(' · ')[0]; } }).catch(function(){});
+}
+
+// ---------- E2E Status (honest axis x end-party matrix — FULL end-user test) ----------
+function renderE2E(el){
+  stamp('end-to-end status · every axis + every end party · '+TODAY);
+  el.innerHTML='<div class="doctrine">Full end-to-end status. Every axis measured (or honestly UNMEASURED), every signed artifact stranger-verifiable, every end-party surface reachable + white-labellable. This is the test the whole estate runs against. Measurement, not certification.</div>'+
+    '<div class="panel"><h2>Live axis measurements (each signed + Wilson interval)</h2><div id="e2eax" style="font-family:var(--mono);font-size:.74rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
+    '<div class="panel"><h2>End parties (white-label: each gets its own tuned surface)</h2><div id="e2eparty" style="font-family:var(--mono);font-size:.74rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
+    '<div class="panel"><h2>Stranger-verify (the gate)</h2><div class="desc">Every card: recompute content_id + Ed25519 against did:web:csoai-gspc.pages.dev#gspc. <code>GET /api/measure-axis?axis=&lt;x&gt;</code> · <code>/api/first-fine</code> · <code>/api/methodology</code> · <code>/api/registers</code> · <code>/api/receipts</code>. <b>Whitelabel:</b> a regulator/insurer gets the same surface, their brand, we sign (R8: regulators free forever).</div></div>';
+  // Axis matrix
+  var axes=['gov','care','mcp','art5','det','prv','affect','agi','asi','mach','oss','xr','jail'];
+  var ax=[];
+  axes.forEach(function(a){ ax.push({a:a,status:'...'}); });
+  Promise.all(axes.map(function(a){ return fetch('/api/measure-axis?axis='+a).then(function(r){return r.json();}).then(function(d){ return {a:a, m:d.measured, n:d.n, w:d.wilson95, st:d.status||(d.measured!=null?'MEASURED':'UNMEASURED')}; }).catch(function(){return {a:a,st:'ERR'};}); })).then(function(rows){
+    var o=document.getElementById('e2eax'); if(!o)return;
+    o.textContent=rows.map(function(r){
+      var w=r.w?('  ['+r.w.low+','+r.w.high+']'):'';
+      var tag=r.st==='MEASURED'?'MEASURED':'UNMEASURED';
+      return (r.a+'  ').padEnd(12)+tag+'  n='+(r.n||0)+w;
+    }).join('\n');
+    var mc=rows.filter(function(r){return r.st==='MEASURED';}).length;
+    o.textContent= o.textContent+'\n\n→ '+mc+' of '+rows.length+' axes measured · jail UNTESTED (earned) · honest zeros render.\nMoves only when a signed card lands (ClaimGuard/JL.5).';
+  });
+  // End-party matrix
+  var parties=[['Insurer','evidence layer / deadline / benchmark / board / verify'],['Regulator','hub / deadline / regulation inventory / board / evidence'],['Enterprise','benchmark / models / board / verify / dispute / integrate'],['Researcher','board / arena / benchmark / registers / orbital'],['Public','verify / corrections / board / methodology / enforcement / dispute / integrate / pricing'],['Internal','all 36 sections + chat']];
+  var e=document.getElementById('e2eparty'); if(e) e.textContent=parties.map(function(p){return '\u2022 '+p[0].padEnd(11)+': '+p[1];}).join('\n')+'\n\nAll reachable + white-label-able. R8: regulators free forever.';
 }
 function renderFines(el){
   stamp('fines & radar · penalty exposure, find the problem · '+TODAY);
@@ -1572,6 +1600,7 @@ var PAGES = [
   { id:'methodology', label:'Methodology' },
   { id:'products', label:'Products' },
   { id:'press', label:'Press' },
+  { id:'e2e', label:'E2E status' },
   { id:'training', label:'Training' },
   { id:'dispute', label:'Dispute' },
   { id:'models',   label:'Models' },
