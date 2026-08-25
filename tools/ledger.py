@@ -52,7 +52,7 @@ def main():
     elif sys.argv[1]=='list':
         d=load(); t=sys.argv[2] if len(sys.argv)>2 else None
         for sec in ('accounts','connections','outreach','moves_done'):
-            if t and t!=sec: continue
+            if t and t not in (sec, sec[:-1]): continue
             for e in d.get(sec, []):
                 print(f"  [{sec[:-1]}] {e['key']} -> {e.get('status')} ({e.get('owner')})")
 main()

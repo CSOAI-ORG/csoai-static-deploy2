@@ -108,6 +108,38 @@
       "linked_move": "#25",
       "frames": "drafted in csoai-static-deploy2/SOVOS; owner sends (one-to-one, no spam)",
       "note": "drafted (SOVOS); owner sends one-to-one. Never marked sent unless actually sent."
+    },
+    {
+      "key": "outreach:cohort-insurer",
+      "type": "outreach",
+      "target": "insurers cohort (evidence layer)",
+      "status": "ready_to_send",
+      "owner": "OWNER_nick",
+      "frames": "owner sends one-to-one; draft in outreach/COHORT_OUTREACH_2026-08-25.md"
+    },
+    {
+      "key": "outreach:cohort-regulator",
+      "type": "outreach",
+      "target": "regulator cohort (whitelabel, free forever R8)",
+      "status": "ready_to_send",
+      "owner": "OWNER_nick",
+      "frames": "owner sends; R8 regulators free forever"
+    },
+    {
+      "key": "outreach:cohort-ailab",
+      "type": "outreach",
+      "target": "AI lab cohort (MCP measure)",
+      "status": "ready_to_send",
+      "owner": "OWNER_nick",
+      "frames": "owner sends; unsolicited+permissionless"
+    },
+    {
+      "key": "outreach:cohort-bond",
+      "type": "outreach",
+      "target": "bond/legacy cohort (COBOL->signed A2A)",
+      "status": "ready_to_send",
+      "owner": "OWNER_nick",
+      "frames": "owner sends"
     }
   ],
   "moves_done": [
@@ -145,6 +177,14 @@
       "owner": "JEEVES",
       "commit": "e9bb4c0f",
       "note": "all 35 sections reachable, 3 dead-ends fixed"
+    },
+    {
+      "key": "move:fines-dedup",
+      "type": "move",
+      "target": "fines distinct penalty radar",
+      "status": "done",
+      "owner": "JEEVES",
+      "note": "compliance+fines were the same fn; fines now a focused penalty-exposure view"
     }
   ],
   "generated": "2026-08-25",

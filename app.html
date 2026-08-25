@@ -662,6 +662,7 @@ function renderManifesto(el){
   stamp('the category · 291 rules, one sign · '+TODAY);
   el.innerHTML = '<div class="doctrine">⚖ EUNOMIA — the routing table for AI governance. Measurement, not certification. Verification free forever.</div>'+
     '<div class="panel" style="text-align:center;padding:2rem 1.5rem"><h2 style="font-size:1.5rem;margin-bottom:.6rem">OpenRouter routes models.<br>EUNOMIA routes governance.</h2>'+
+    '<p style="max-width:62ch;margin:.6rem auto 0;color:var(--muted);font-size:.86rem">We never ask the measured party. Unsolicited + permissionless: every card is signed and <i>you</i> can verify it — no trust in us, no issuer opt-in, no issuer payment.</p>'+
     '<div class="desc" style="font-size:.9rem;max-width:62ch;margin:0 auto">291 rules, one sign. Every framework, regulation, benchmark, bridge and model is a signed, crosswalked node. This is not another GRC portal — it is the interface every agent and every team already curls.</div></div>'+
     '<div class="grid">'+
       '<div class="card lead"><div class="k">The category</div><div class="v">routing</div><div class="s">not certification</div></div>'+
@@ -672,13 +673,13 @@ function renderManifesto(el){
     '<div class="panel"><h2>What we are / are not</h2>'+
     '<div class="xwrow"><span><b>We are</b> — the routing table for the governance ecosystem</span><span class="badge">protocol</span></div>'+
     '<div class="xwrow"><span><b>We measure</b> — deterministic, signed, no vendor self-report</span><span class="badge">measurement</span></div>'+
-    '<div class="xwrow"><span><b>We are not</b> — a certification, a GRC portal, a roadmap</span><span class="badge">not certification</span></div>'+
+    '<div class="xwrow"><span><b>We are not</b> — a certification, a GRC portal, a roadmap, and never a rating or investment advice</span><span class="badge">not certification</span></div>'+
     '<div class="xwrow"><span><b>We publish</b> — empty cells today, never roadmap theater</span><span class="badge">honesty</span></div>'+
     '</div>'+
     '<div class="panel"><h2>Route to it</h2><div class="desc">The routing table is live and agent-discoverable. Point at it.</div>'+
       '<div style="display:flex;gap:.4rem;flex-wrap:wrap">'+['/api/instruments','/api/route?uri=eunomia://regulation/REG-001','/api/gspc','eunomia://bridge/iso20022'].map(function(u){return '<button class="chip" data-u="'+esc(u)+'">'+esc(u)+'</button>';}).join('')+'</div>'+
     '</div>'+
-    '<div class="panel"><div class="desc" style="font-size:.95rem">GRC vendors — the field is now defined on a URI scheme. <code>eunomia://</code>. Argue there.</div></div>';
+    '<div class="panel"><div class="desc" style="font-size:.95rem">GRC vendors — the field is now defined on a URI scheme. <code>eunomia://</code>. Argue there. <b>Unsolicited + permissionless:</b> we never take money from the parties we measure, and never re-score for payment — independence is the asset.</div></div>';
   el.querySelectorAll('[data-u]').forEach(function(b){ b.onclick=function(){ var u=b.dataset.u; var target = u.indexOf('/api')===0 ? 'https://csoai-gspc.pages.dev'+u : (u.indexOf('eunomia://')===0? 'https://csoai-gspc.pages.dev/api/route?uri='+encodeURIComponent(u):u); try{ window.open(target,'_blank'); }catch(e){} }; });
 }
 
@@ -1222,7 +1223,7 @@ function renderOverview(el){
     var modelList = modelsEmb.models || [];
     if (modelList.length) { lead = modelList[0].name; leadAvg = modelList[0].avg_measured_score; }
     var arenaLead = (arenaEmb.leaderboard||[])[0];
-    el.innerHTML = '<div class="doctrine">'+esc(emb.doctrine||'')+' · measurement, not certification · verification free forever.</div>'+
+    el.innerHTML = '<div class="doctrine">'+esc(emb.doctrine||'')+' · <b>unsolicited + permissionless</b>: we measure + sign without asking the measured party, and a stranger can verify it. <b>Verification free forever.</b> Measurement, not certification.</div>'+
       '<div class="tabs">'+[['Models','models'],['Leaderboard','board'],['Arena','arena'],['Regulators','reghub'],['Insurers','insurers'],['Compare','compare'],['Axes','axes'],['Runbook','runbook'],['Status','dashboard']].map(function(q){return '<button class="tab" data-j="'+q[1]+'">'+q[0]+'</button>';}).join('')+'</div>'+
       '<div class="grid">' +
       '<div class="card lead"><div class="k">Estate board</div><div class="v">'+Object.keys(emb.cells).length+' models</div><div class="s">'+Object.keys(best).length+' axes quotable</div></div>' +
