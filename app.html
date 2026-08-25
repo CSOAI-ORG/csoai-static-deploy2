@@ -269,7 +269,7 @@ var SECTIONS = [
   { id:'axes', label:'Axes', ico:'⚙', read: renderAxes },
   { id:'dashboard', label:'Status', ico:'📊', read: renderDashboard },
   { id:'compliance', label:'Compliance', ico:'⚖', read: renderCompliance },
-  { id:'fines', label:'Fines & radar', ico:'💸', read: renderCompliance },
+  { id:'fines', label:'Fines & radar', ico:'💸', read: renderFines },
   { id:'integrate', label:'Integrate', ico:'🔌', read: renderIntegrate },
   { id:'enforcement', label:'Enforcement', ico:'🚨', read: renderEnforcement },
   { id:'training', label:'Training', ico:'🎓', read: renderTraining },
@@ -884,6 +884,18 @@ function frameworksHtml(){
 }
 
 // ---------- COMPLIANCE RADAR (find every problem + fines; regulator whitelabel pivot) ----------
+
+// ---------- FINES RADAR (focused penalty-exposure view — distinct from full Compliance) ----------
+function renderFines(el){
+  stamp('fines & radar · penalty exposure, find the problem · '+TODAY);
+  var regs=(sd('regulation')||{}).regulations||[];
+  var rows=regs.slice().sort(function(a,b){ return (String(a.penalty_exposure||'')).localeCompare(String(b.penalty_exposure||'')); }).reverse().map(function(g){
+    return '<tr><td><b>'+esc(g.title||'')+'</b></td><td style="font-family:var(--mono)">'+esc(g.date||'')+'</td><td class="'+((g.status||'')==='in-force'?'acc':'gold')+'">'+esc(g.status||'')+'</td><td style="font-size:.7rem;color:#e8b34c">'+esc(g.penalty_exposure||'')+'</td></tr>'; }).join('');
+  el.innerHTML='<div class="doctrine">💸 Fines &amp; radar — the penalty-exposure map. Sorted highest-exposure first, so the biggest fine you might be exposed to is on top. Every figure is a statutory tier from the signed regulation feed. <b>This is the &#39;find exposure before they contact us&#39; view.</b> Measurement, not certification. Regulators free forever (R8).</div>'+
+    '<div class="panel"><h2>Penalty exposure (highest first)</h2><table><tr><th>regime</th><th>date</th><th>status</th><th>max penalty</th></tr>'+rows+'</table></div>'+
+    '<div class="panel"><h2>Why this matters</h2><div class="desc">A deadline + a fine tier = the forced demand a company must answer. The radar turns that into a pre-contact exposure finder: scope a company in, see which obligations + penalties it faces. Broad Compliance view: <button class="chip" data-j="compliance">Compliance</button>.</div></div>';
+  el.querySelectorAll('[data-j]').forEach(function(b){ b.onclick=function(e){ e.preventDefault(); show(b.dataset.j); }; });
+}
 function renderCompliance(el){
   stamp('compliance radar · every obligation + fine tier · regulator whitelabel · '+TODAY);
   var regs=(sd('regulation')||{}).regulations||[];
