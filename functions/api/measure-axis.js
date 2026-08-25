@@ -88,6 +88,7 @@ export async function onRequest(context) {
       wilson95: interval,
       bank: board.banks ? board.banks[axis] || board.banks : 'frozen bank (see /api/gspc banks)',
       never: ['a quality verdict', 'a safety verdict', 'a compliance determination', 'a certification'],
+      opinion_framing: 'a statement of opinion expressed as of the witnessed_at date — not a statement of fact, not a rating, not a recommendation to buy/hold/sell, not investment advice, and it does not address suitability. Unsolicited and permissionless: attached to the public record without issuer opt-in or payment (anti-touting safe by construction: non-issuer-paid, methodology-published).',
       witnessed_at: new Date().toISOString(),
     };
     const content_id = await sha256hex(canon(claim));

@@ -7,9 +7,10 @@ async function j(u,o){ const r=await fetch(H+u,o); return r.json(); }
   try{
     if(cmd==='measure'){ console.log(JSON.stringify(await j('/api/gspc'),null,2).slice(0,600)); }
     else if(cmd==='route'){ const u=(rest[0]||'eunomia://regulation/REG-001'); console.log(JSON.stringify(await j('/api/route?uri='+encodeURIComponent(u)),null,2)); }
+    else if(cmd==='method'){ console.log(JSON.stringify(await j('/api/methodology'),null,2).slice(0,500)); }
     else if(cmd==='watch'){ console.log(JSON.stringify(await j('/api/first-fine'),null,2).slice(0,500)); }
     else if(cmd==='axis'){ const ax=(rest[0]||'gov'); console.log(JSON.stringify(await j('/api/measure-axis?axis='+encodeURIComponent(ax)),null,2).slice(0,500)); }
     else if(cmd==='sov-signal'){ console.log(JSON.stringify(await j('/api/sov-signal'),null,2).slice(0,400)); }
-    else { console.log('usage: npx csoai measure | route <eunomia://> | axis [gov] | watch | sov-signal · measurement, not certification'); }
+    else { console.log('usage: npx csoai measure | route <eunomia://> | axis [gov] | method | watch | sov-signal · measurement, not certification'); }
   }catch(e){ console.error('error:',String(e).slice(0,120)); }
 })();

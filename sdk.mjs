@@ -70,6 +70,7 @@ export const csoai = {
   measureAxis: (axis = 'gov') => GET('/api/measure-axis?axis=' + encodeURIComponent(axis)),
   firstFine: () => GET('/api/first-fine'),
   receipts: () => GET('/api/receipts'),
+  methodology: () => GET('/api/methodology'),
 
   // ---- write/measure (signed cards) ----
   attest: (obj) => POST('/api/attest', obj),

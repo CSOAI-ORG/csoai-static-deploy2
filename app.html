@@ -282,6 +282,7 @@ var SECTIONS = [
   { id:'orbital',  label:'Orbital AI', ico:'🛰', read: renderOrbital },
   { id:'registers', label:'Registers', ico:'📚', read: renderRegisters },
   { id:'receipts', label:'Receipts', ico:'🧾', read: renderReceipts },
+  { id:'methodology', label:'Methodology', ico:'📐', read: renderMethodology },
   { id:'verify',   label:'Verify', ico:'🔑', read: renderVerify },
   { id:'chat',     label:'Ask the harness', ico:'💬', read: renderChat },
   { id:'reghub',   label:'Regulator hub', ico:'🏛', read: renderRegHub },
@@ -814,8 +815,8 @@ function badgesHtml(){
     '<div style="margin-top:.5rem"><span style="font-size:.58rem;color:var(--faint);text-transform:uppercase;letter-spacing:.08em">in-flight applications</span> '+inflight.map(function(x){return '<a class="badge-chip '+x[1]+'" href="'+x[2]+'" target="_blank" rel="noopener">'+x[0]+'</a>';}).join('')+'</div>';
 }
 function renderAbout(el){
-  stamp('about · an independent measurement body · '+TODAY);
-  el.innerHTML='<div class="doctrine">An independent measurement body for AI behaviour. We measure, sign, and re-attest — everyone can check. Measurement, not certification. Verification free forever. Nobody ranked pays.</div>'+
+  stamp('about · unsolicited + permissionless measurement · '+TODAY);
+  el.innerHTML='<div class="doctrine">An <b>unsolicited + permissionless</b> measurement body for AI behaviour. We measure, sign, and re-attest <i>without asking the measured party — no issuer opt-in, no issuer payment</i>. Everyone can check. Measurement, not certification. Verification free forever. Nobody ranked pays. Every number is a signed, stranger-verifiable opinion — never a rating, never investment advice.</div>'+
     '<div class="panel"><h2>Who we are</h2><div class="desc">CSOAI runs open-weight models through a deterministic governance-axes battery and signs every result (Ed25519, SCITT / RFC 9943-aligned COSE receipt). We publish an honest register — UNMEASURED reported, never hidden. Independence is the asset: we never take money from the parties we measure, never re-score for payment.</div></div>'+
     '<div class="panel"><h2>Membership & standards participation</h2>'+badgesHtml()+'</div>'+
     '<div class="panel"><h2>What we are not</h2><div class="desc">Not a certification body · not a notified body · no money either way with anything we rank · we never grade a model with another model.</div></div>';
@@ -983,6 +984,21 @@ function renderReceipts(el){
     o.textContent=(d.honest_note||'')+'\n\n'+(lines.join('\n')||'\n[no signed receipts yet — honest]')+'\n\ncontent_id: '+d.content_id+' · key_id: '+d.key_id;
   }).catch(function(e){ var o=$('recout'); if(o)o.textContent='error: '+e; });
 }
+
+// ---------- METHODOLOGY (the published statistical + governance discipline) ----------
+function renderMethodology(el){
+  stamp('methodology · published discipline, not a hidden function · '+TODAY);
+  el.innerHTML='<div class="doctrine">The statistical + governance methodology behind every measured card, published as a <b>signed stranger-verifiable artifact</b> — so the discipline is auditable, not hidden. No incumbent on-chain attester publishes confidence-interval methodology, statistical-separation testing, or third-party audit of its scoring statistics. This is the differentiation. Measurement, not certification.</div>'+
+    '<div class="panel"><h2>The discipline</h2><div id="methout" style="font-family:var(--mono);font-size:.74rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
+    '<div class="panel"><h2>Independence (the moat)</h2><div class="desc">UNSOLICITED + PERMISSIONLESS — every number is attached to the public record without issuer opt-in and without issuer payment. Non-issuer-paid by construction + methodology published (anti-touting safe). A pure signed-opinion model (no token issuance, no custody, no synthetic exposure) sits outside the SEC Jan-2026 tokenized-securities taxonomy.</div></div>';
+  fetch('/api/methodology').then(r=>r.json()).then(function(d){
+    var o=$('methout'); if(!o)return; var m=d.methodology||{};
+    o.textContent='confidence interval: '+(m.confidence_interval?.method||'')+'\n  why: '+(m.confidence_interval?.why||'')+'\n  reference: '+(m.confidence_interval?.reference||'')+'\n'+
+      '\nseparation rule: '+(m.separation_rule?.rule||'')+'\n  deliberate_conservatism: '+(m.separation_rule?.deliberate_conservatism||'')+'\n  why: '+(m.separation_rule?.why||'')+'\n'+
+      '\nnever: '+(m.never||[]).join(', ')+'\n'+
+      '\ncontent_id: '+d.content_id+'\nkey_id: '+d.key_id;
+  }).catch(function(e){ var o=$('methout'); if(o)o.textContent='error: '+e; });
+}
 function renderRegistersData(el, regs){ el.innerHTML = registerCards(regs); }
 
 function renderArenaData(el, d){
@@ -1090,7 +1106,7 @@ function show(id){
 // ---------- OVERVIEW ----------
 var SUBTITLES = {
   overview:'One dashboard. Every measured surface. Deterministic, signed, never certified.',
-  about:'An independent measurement body — measure, sign, re-attest.',
+  about:'Unsolicited + permissionless — measure, sign, re-attest (no issuer opt-in, no issuer payment).',
   partners:'Members of the bodies writing the rules + the ecosystem we build with.',
   board:'Deterministic exact-label grading · n=30 · UNMEASURED reported, never hidden.',
   models:'Open-weight models, measured on our own fleet. Never vendor self-report.',
@@ -1110,6 +1126,7 @@ var SUBTITLES = {
   training:'Frozen → fluid — live gamified compliance training, signed measurement.',
   dispute:'Dispute a measurement — the measured subject’s redress door (disagreement is a row).',
   receipts:'Agent-payment settlement receipts — signed + stranger-verifiable, never a revenue claim.',
+  methodology:'The published statistical + governance discipline (Wilson CI + conservative separation rule) — signed.',
   reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
   runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
   insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
@@ -1451,6 +1468,7 @@ var PAGES = [
   { id:'enforcement', label:'Enforcement' },
   { id:'registers', label:'Registers' },
   { id:'receipts', label:'Receipts' },
+  { id:'methodology', label:'Methodology' },
   { id:'training', label:'Training' },
   { id:'dispute', label:'Dispute' },
   { id:'models',   label:'Models' },
