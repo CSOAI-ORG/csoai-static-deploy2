@@ -23,7 +23,7 @@ All secrets live in the macOS keychain (service `meok-keystone`) or on designate
 
 ## The canon (CI reverts violations)
 
-- Public count: **"13 measured of 14 GSPC axes"** (14th = containment, gated; swarm gated at 3-item bank).
+- Public count: cite live **`totals.public_count`** on GET https://councilof.ai/api/gspc (currently **14 measured of 14 quotable**). Quotable board = **14**. Do not invent 22 axes.
 - DOI spine: **10.5281/zenodo.21991104** (concept; see CANONICAL-DOIS.md).
 - Issuer: Council of AI (CSOAI LTD, UK #16939677). Register: **measurement, not certification**.
 - Kill-list in display copy: sovereign/SOV*/SOVOS/CEASAI/DEFONEOS/byzantine/BFT/33-agent · certification-as-product · SaaS pricing · "neutral referee".
