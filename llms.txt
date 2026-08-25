@@ -10,25 +10,19 @@
 - [Signed scoreboard](https://councilof.ai/gspc-scoreboard)
 - [Verify](https://councilof.ai/verify): free, loginless, client-side
 - [Arena](https://csoai.org/arenas): measured AI-vs-AI spectator
-- [GSPC API](https://councilof.ai/api/gspc): live axis register (13 measured of 14)
-- [Latest signed receipt](https://csoai.org/api/receipts/latest): one full signed artifact + offline verification steps
-- [Arena evidence feed](https://csoai.org/api/arena/rounds.jsonl): live measured rounds (NDJSON)
+- [GSPC API](https://councilof.ai/api/gspc): live axis register (cite totals.public_count — currently 14 measured of 14 quotable)
+- [Latest signed receipt](https://csoai.org/api/receipts/latest): one full signed receipt + offline verify steps
+- [DID](https://csoai.org/.well-known/did.json): the trust root (Ed25519)
+- [Agent card](https://councilof.ai/.well-known/agent-card.json): A2A card
+- [MCP registry](https://registry.modelcontextprotocol.io): io.github.CSOAI-ORG/gspc 1.0.3+
 
-## Machine identity
-- DID: did:web:csoai.org → https://csoai.org/.well-known/did.json
-- Agent card (A2A): https://csoai.org/.well-known/agent-card.json
-- API catalog (RFC 9727): https://csoai.org/.well-known/api-catalog
-- MCP manifest: https://csoai.org/.well-known/mcp.json
-- Verification schema: https://csoai.org/verification.schema.json
-- Sealed bank manifest: https://csoai.org/banks-manifest.json
-- Canonical citations: https://csoai.org/CANONICAL-DOIS.md
+## How to verify (no login)
+1. Fetch a signed artifact (receipt / board / card).
+2. Recreate the content_id (RFC 8785 canonical JSON → SHA-256).
+3. Verify Ed25519 against the public key in did:web:csoai.org.
 
-## What we are not
-- Not a certification body
-- Not a notified body
-- No money in either direction with anything we rank
-- Legacy internal codenames are not public chrome; historical counts in old caches are superseded by the signed manifest
-
-## Citing us
-Templeman, N. (2026). Council of AI — signed AI measurement. CSOAI LTD.
-https://doi.org/10.5281/zenodo.21991104 (method) · https://doi.org/10.5281/zenodo.21973002 (evidence)
+## Honesty rules
+- Measurement, not certification. Never a conformity mark.
+- Quotable board = **14** axes. Do not invent 22.
+- Cite live `totals.public_count` — never freeze axis counts in this file.
+- Legacy internal codenames are not public chrome; historical counts in old caches are superseded by the signed manifest.
