@@ -283,6 +283,7 @@ var SECTIONS = [
   { id:'registers', label:'Registers', ico:'📚', read: renderRegisters },
   { id:'receipts', label:'Receipts', ico:'🧾', read: renderReceipts },
   { id:'methodology', label:'Methodology', ico:'📐', read: renderMethodology },
+  { id:'products', label:'Products', ico:'📦', read: renderProducts },
   { id:'verify',   label:'Verify', ico:'🔑', read: renderVerify },
   { id:'chat',     label:'Ask the harness', ico:'💬', read: renderChat },
   { id:'reghub',   label:'Regulator hub', ico:'🏛', read: renderRegHub },
@@ -930,6 +931,7 @@ function renderEnforcement(el){
     '<div class="card"><div class="k">Upcoming</div><div class="v">'+regs.filter(function(g){return (g.status||'')==='upcoming'||(g.status||'')==='positioning';}).length+'</div><div class="s">demand-creating</div></div>'+
     '<div class="card"><div class="k">In force</div><div class="v">'+regs.filter(function(g){return (g.status||'')==='in-force';}).length+'</div><div class="s">live now</div></div>'+
     '<div class="card"><div class="k">Highest</div><div class="v">€35M/7%</div><div class="s">Art 5 / Art 101 GPAI</div></div></div>'+
+    '<div class="panel"><h2>Live cross-reference (official, change-detected)</h2><div class="desc"><code>GET /api/live-regulation?live=1</code> — real Federal Register documents, each SHA-256 content-hashed so a change to an official doc is a detectable event, never a silent edit. Measurement, never a determination.</div></div>'+
     '<div class="panel"><h2>Deadline calendar (all regions)</h2><div class="desc">Every obligation + date + penalty — the product hook, deadlines force demand.</div><table><tr><th>date</th><th>obligation</th><th>status</th><th>penalty</th></tr>'+rows+'</table></div>'+
     '<div class="panel" style="border-color:var(--accent)"><h2>Scaffold a compliance package (manager)</h2><div class="desc">Drop a company/scope in → we scaffold its obligation checklist from the live calendar + fines. A manager, not a guess — the pre-contact exposure finder.</div>'+
       '<div class="cinput"><input id="scaf" placeholder="e.g. EU genAI recommender / UK fintech / US insurance" style="font-family:var(--mono);font-size:.76rem"><button id="scafgo">Scaffold</button></div>'+
@@ -1036,6 +1038,22 @@ function renderMethodology(el){
       '\nnever: '+(m.never||[]).join(', ')+'\n'+
       '\ncontent_id: '+d.content_id+'\nkey_id: '+d.key_id;
   }).catch(function(e){ var o=$('methout'); if(o)o.textContent='error: '+e; });
+}
+
+// ---------- PRODUCTS (catalog + signed surface links) ----------
+function renderProducts(el){
+  stamp('products · the catalog, each linked + signed · '+TODAY);
+  el.innerHTML='<div class="doctrine">The catalog. Every product is a signed, stranger-verifiable surface — measurement, never certification. Drop each in with the SDK/CLI (Integrate).</div>'+
+    '<div class="panel"><h2>The catalog</h2><div id="prodout" style="font-family:var(--mono);font-size:.76rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
+    '<div class="panel"><h2>Signed surfaces you can drop in</h2><div class="desc">'+
+      '<code>/api/gspc</code> board · <code>/api/measure-axis?axis=gov</code> measured card · '+
+      '<code>/api/methodology</code> the discipline · <code>/api/registers</code> signed rollup · '+
+      '<code>/api/first-fine</code> enforcement watch · <code>/.well-known/agent-card.json</code> A2A · '+
+      '<code>/sdk.mjs</code> · <code>/csoai-cli.mjs</code> · <code>/widget.js</code>. All Ed25519-signed, did:web-resolvable.</div></div>';
+  fetch('/api/skus').then(r=>r.json()).then(function(d){
+    var o=$('prodout'); if(!o)return;
+    o.textContent=(d.skus||[]).map(function(s){ return '\u2022 '+s.name+'  ['+(s.price===0?'FREE':(s.price?('\u00a3'+s.price):s.status||'on request'))+'] '+s.unit; }).join('\n');
+  }).catch(function(e){ var o=$('prodout'); if(o)o.textContent='error: '+e; });
 }
 function renderRegistersData(el, regs){ el.innerHTML = registerCards(regs); }
 
@@ -1507,6 +1525,7 @@ var PAGES = [
   { id:'registers', label:'Registers' },
   { id:'receipts', label:'Receipts' },
   { id:'methodology', label:'Methodology' },
+  { id:'products', label:'Products' },
   { id:'training', label:'Training' },
   { id:'dispute', label:'Dispute' },
   { id:'models',   label:'Models' },
