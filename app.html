@@ -611,7 +611,12 @@ function renderRunbook(el){
     ['8. Crosswalk an East signal → West output', "curl -sS -X POST '"+base+"/api/crosswalk' -H 'content-type: application/json' -d '{\"signal\":\"tc260-registry\"}'"],
     ['9. Agent wallet: stake / slash / reputation', "curl -sS -X POST '"+base+"/api/agent' -H 'content-type: application/json' -d '{\"agent\":\"dragon\",\"fund\":1000,\"stake\":200,\"trade_fairness\":0.95}'"],
     ['10. Data DAO: register / buy a dataset', "curl -sS -X POST '"+base+"/api/dataset' -H 'content-type: application/json' -d '{\"action\":\"buy\",\"name\":\"compliance-incidents\",\"price_eun\":50,\"balance\":100}'"],
-    ['11. Verify a signed card', "curl -sS -X POST '"+base+"/api/verify' -H 'content-type: application/json' -d '{\"content_id\":\"...\",\"signature\":\"...\",\"pubkey\":\"...\"}'"],
+    ['11. Verify a signed card', "curl -sS -X POST '"+base+"/api/verify' -H 'content-type: application/json' -d '{\"content_id\":\"...\",\"signature\":\"...\",\"pubkey\":\"...\"}'"],    ['12. Measure one axis (signed Wilson-interval card)', "curl -sS '"+base+"/api/measure-axis?axis=gov'"],
+    ['13. The methodology (published discipline, signed)', "curl -sS '"+base+"/api/methodology'"],
+    ['14. First-Fine Watch (enforcement, signed + live)', "curl -sS '"+base+"/api/first-fine'"],
+    ['15. Register rollup (signed N-artifact counts)', "curl -sS '"+base+"/api/registers'"],
+    ['16. Settlement receipts (signed, never a revenue claim)', "curl -sS '"+base+"/api/receipts'"],
+
   ];
   el.innerHTML = '<div class="doctrine">⚖ Agent Runbook. <b>291 MCP · 15 hive · 13 axes.</b> Discover the routing table in seconds — no auth wall, no sales call. Agents find the Council OS in days; enterprises in quarters. Measurement, not certification.</div>'+
     '<div class="panel">'+cmds.map(function(c){ return '<div style="margin-bottom:.8rem"><div style="font-size:.72rem;color:var(--muted);margin-bottom:.3rem">'+c[0]+'</div><div style="display:flex;gap:.4rem;align-items:flex-start"><button class="chip" data-copy="'+esc(c[1])+'">copy</button><pre style="flex:1;margin:0;overflow-x:auto;background:#0e141a;border:1px solid var(--line);border-radius:8px;padding:.5rem .7rem;font-family:var(--mono);font-size:.66rem">'+esc(c[1])+'</pre></div></div>'; }).join('')+'</div>'+
@@ -992,16 +997,16 @@ function renderTraining(el){
   stamp('frozen → fluid · live gamified compliance training · '+TODAY);
   var inds=[['🛡','Insurance','Underwriting evidence, Art 5, claims ethics'],['⚖','Regulator','Deadlines, crosswalk, fines'],['🏦','Bond','COBOL→A2A, atomic settlement, DvP'],['🏢','Enterprise','Vendor benchmark, AI management (ISO 42001-informed)'],['🏭','Factory','COP/ISO tools, safety, audit'],['🌐','All regions','EU · US · UK · CN crosswalk, deadlines']];
   var cards=inds.map(function(i){ return '<div class="card"><div class="k">'+i[0]+' '+i[1]+'</div><div class="s" style="font-size:.72rem">'+esc(i[2])+'</div></div>'; }).join('');
-  el.innerHTML='<div class="doctrine">🎓 Frozen → fluid. Static compliance/cert docs become <b>live signed gamified training</b>. When a regulation or the AI changes, you get a notification → re-train in-game (the city / sim) with the AI chat. Every completed run is a <b>signed measurement</b> (never certification) — the fluid, always-current form. Regulators free (R8); commercial rail for data.</div>'+
+  el.innerHTML='<div class="doctrine">🎓 Frozen → fluid. Static compliance/cert docs become <b>live signed gamified training</b>. When a regulation or the AI changes, you get a notification → re-train in-game (the city / sim) with the AI chat. Every completed run produces a <b>verified training-outcome record</b> — a signed measurement (never certification, never a credential of qualification). The fluid, always-current form. Regulators free (R8); commercial rail for data.</div>'+
     '<div class="grid">'+cards+'</div>'+
     '<div class="panel"><h2>Change-triggered training</h2><div class="desc">Regulation or AI-model change → notification → re-train. "Frozen" cert is a point-in-time PDF; "fluid" is a live signed training graph.</div>'+
       '<div style="display:flex;gap:.4rem;flex-wrap:wrap"><button class="chip" id="warn">What changed?</button><button class="chip" id="rein">Re-train me</button></div>'+
       '<div id="trout" style="margin-top:.6rem;font-family:var(--mono);font-size:.7rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
-    '<div class="panel"><h2>Drive a training run (in-game, AI chat)</h2><div class="desc">The sim/game provides the scenario; the AI chat quizzes you; you get a <b>signed assessment card</b> (measurement, not certification) on completion.</div>'+
+    '<div class="panel"><h2>Drive a training run (in-game, AI chat)</h2><div class="desc">The sim/game provides the scenario; the AI chat quizzes you; you get a <b>signed assessment card</b> — a verified training-outcome record (measurement, never a certification or a qualification credential) on completion.</div>'+
       '<div class="cinput"><input id="trq" placeholder="e.g. walk me through this change: EU AI Act Art 50 grace ends 2 Dec" style="font-family:var(--mono);font-size:.74rem"><button id="trgo">Train</button></div>'+
       '<div id="trres" style="margin-top:.6rem;font-family:var(--mono);font-size:.7rem;white-space:pre-wrap;color:var(--muted)"></div></div>';
   var warn=$('warn'); if(warn)warn.onclick=function(){ var o=$('trout'); if(o)o.textContent='CHANGES (live feed):\n• EU AI Act Art 50(2) grace ends 2 Dec 2026\n• Art 5(1)(da) prohibition added 2 Dec 2026\n• Texas portal 1 Sep · DRCF 2 Sep · Illinois SB 315 audits 1 Jan 2028\n→ notification pushed; re-train in-game.'; };
-  var rein=$('rein'); if(rein)rein.onclick=function(){ var o=$('trout'); if(o)o.textContent='Re-training started — pick an industry, do the in-game scenario with the AI chat, get a signed measurement card. (measurement, not certification)'; };
+  var rein=$('rein'); if(rein)rein.onclick=function(){ var o=$('trout'); if(o)o.textContent='Re-training started — pick an industry, do the in-game scenario with the AI chat, get a verified training-outcome record (signed measurement, never a certification).'; };
   if(TRAIN_REG){ var _o=$('trres'); if(_o)_o.textContent=trainingScenario(); }
   var go=$('trgo'); if(go)go.onclick=function(){ TRAIN_REG=TRAIN_REG||null; var q=$('trq').value.trim()||'EU AI Act Art 50 grace'; var o=$('trres'); if(o)o.textContent='TRAINING RUN: "'+q+'"\n→ scenario (in the city/sim) + AI chat quiz\n→ signed assessment: measured_current-state · not_a_certification:true\n→ card content_id: '+Date.now().toString(16)+' · verify free forever.\n(regulators free · commercial rail for data)'; };
 }
