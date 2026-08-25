@@ -29,7 +29,13 @@ const METHODOLOGY = {
     rule: 'we declare a leader only when that axis leader\'s Wilson interval does NOT overlap the fleet mean interval',
     deliberate_conservatism: 'true',
     why: 'overlapping confidence intervals do NOT by themselves prove non-significance; this rule errs toward NOT overclaiming, and is deliberately conservative + audit-friendly',
-    gateway_note: 'head-to-head leader-vs-runner-up claims are reserved for a paired/McNemar test (not yet published) — this is an explicit open item, never a hidden one',
+    paired_test: {
+      method: 'McNemar chi^2 (df=1, continuity-corrected) on the frozen paired bank, p=erfc(sqrt(chi/2))',
+      why: 'closes the one methodological criticism of CI-overlap: two estimates can have overlapping CIs yet differ significantly under a paired test. A head-to-head leader-vs-runner-up claim requires this paired test, not interval overlap alone.',
+      example: { aOnly: 30, bOnly: 10, chi: 9.025, p: 0.0027, significant: true },
+      refuse_when: 'no discordant pairs (b+c=0) — the test is not run and the caller is told so, not given a fake number',
+    },
+    gateway_note: 'head-to-head leader-vs-runner-up claims require the McNemar paired test (implemented); interval overlap alone is deliberately treated as NOT establishing a difference.',
   },
   governance_anchor: {
     framework: 'NIST AI RMF MEASURE function — "rigorous software testing and performance evaluation procedures with accompanying measurements of uncertainty, comparisons to performance benchmarks, and structured reporting"',
