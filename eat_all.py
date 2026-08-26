@@ -32,11 +32,10 @@ import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path.home() / "clawd" / "csoai-static-deploy2"
-# The deploy-phase build/wizard scripts live in kimi-regen (source-of-truth),
-# NOT csoai-static-deploy2 (build output). Resolve them explicitly so
-# PHASE_8_DEPLOY stops failing with "No such file or directory".
-SCRIPT_DIR = Path.home() / "clawd" / "kimi-regen"
+# The canonical estate root is kimi-regen (sov_kb.json, forest/, benchmark-results/
+# all live here). csoai-static-deploy2 is the static/deploy output, NOT the data root.
+ROOT = Path.home() / "clawd" / "kimi-regen"
+SCRIPT_DIR = ROOT
 sys.path.insert(0, str(ROOT))
 
 # Try to import sov_route for proper signing
