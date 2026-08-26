@@ -1,10 +1,25 @@
-/.well-known/did.json
-  Content-Type: application/did+ld+json
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
 
-/.well-known/mcp.json
-  Content-Type: application/json
+/
+  Cache-Control: public, max-age=300, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=300, must-revalidate
 
 /api/*
-  Content-Type: application/json
+  Cache-Control: public, max-age=60
+
 /.well-known/*
-  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+/sdk.mjs
+  Cache-Control: public, max-age=3600
+
+/widget.js
+  Cache-Control: public, max-age=3600
+
+/csoai-cli.mjs
+  Cache-Control: public, max-age=3600
