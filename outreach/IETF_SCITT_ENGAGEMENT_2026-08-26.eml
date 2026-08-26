@@ -1,0 +1,53 @@
+From: Council of AI (CSOAI Ltd) <nicholas@csoai.org>
+To: scitt@ietf.org
+Cc: agent2agent@ietf.org, agentproto@ietf.org
+Subject: Deployed SCITT-compatible signed measurement estate — references for SCRAPI / AUDIT discussions
+
+Dear SCITT WG,
+
+The Council of AI (CSOAI Ltd, UK, company 16939677) operates a public, deployed
+estate of Ed25519-signed, append-only measurement records that map directly onto
+the SCITT statement model (RFC 9943). Sharing it as a reference implementation for
+the SCRAPI and AUDIT discussions: content-agnostic, deterministic-predicate
+evidence, registered under a did:web trust anchor. No solicitation — a pointer to
+something already live and verifiable by anyone.
+
+What is deployed (all live, verifiable by anyone):
+1. Measurement board — https://councilof.ai/api/gspc
+   Ed25519-signed snapshot of a 14-slot behavioural-measurement board (13 measured
+   of 14), deterministic grader (no LLM judge), quorum-gated publication (n>=30 +
+   Wilson interval), positive-control doctrine.
+2. Regulation-deadline feed — https://councilof.ai/api/regulation
+   Signed, cited, quarterly re-verified; 20 live deadlines incl. EU AI Act,
+   CAITA/SB 942, Texas TRAIGA; penalty exposure per record.
+3. Corrections ledger — https://councilof.ai/api/corrections
+   The estate's own errors, append-only, signed; serve-time staleness guard flags a
+   stale signature visibly (never silently).
+4. Measurement cards — 3KB Ed25519-chained capsules, MANIFEST-indexed,
+   stranger-verifiable against did:web:csoai.org (4 published keys).
+5. SCITT profile — https://councilof.ai/.well-known/scitt.json
+   Machine-readable mapping: statement types, issuer keys, canonical forms.
+
+SCITT mapping (per RFC 9943):
+- Statement payload: canonical JSON (JCS-style; the estate's canonical form is
+  documented and byte-verifiable).
+- Protected header: Ed25519, issuer did:web:csoai.org#<key>.
+- Signatures: existing — registration to a transparency service adds a receipt,
+  does not re-sign.
+- Registration policy: append-only; corrections appended, never edited.
+
+What we'd welcome:
+- Review of the canonical-payload-binding approach against
+  draft-mih-sokolov-scitt-payload-binding.
+- Discussion with the AUDIT pre-charter effort (Kuehlewind/Birkholz) on whether
+  deterministic measurement predicates + signed receipts fit the audit-data-model
+  deliverables.
+- A SCRAPI endpoint to register against once draft-ietf-scitt-scrapi is near
+  publication (DNS-anchored log candidates welcome).
+
+Firewall note: this estate measures; it never certifies. SCITT registration is
+evidence of registration — the distinction is doctrine, not nuance.
+
+Kind regards,
+Council of AI (CSOAI Ltd)
+nicholas@csoai.org
