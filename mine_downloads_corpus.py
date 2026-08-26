@@ -23,7 +23,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 DOWNLOADS = Path.home() / "Downloads"
-ROOT = Path.home() / "clawd" / "csoai-static-deploy2"
+ROOT = Path(__file__).resolve().parent  # canonical estate root = kimi-regen
 HONEY = ROOT / "forest" / "honey_downloads.jsonl"
 
 # Try to import sov_route

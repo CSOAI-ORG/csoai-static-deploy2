@@ -348,9 +348,9 @@ def phase_6_downloads() -> dict:
     result = {"status": "ran", "artifacts": []}
     try:
         out = subprocess.run(
-            ["python3", "mine_downloads_corpus.py"],
+            ["python3", str(SCRIPT_DIR / "mine_downloads_corpus.py")],
             capture_output=True, text=True, timeout=1800,  # 30 min
-            cwd=str(ROOT)
+            cwd=str(SCRIPT_DIR)
         )
         result["exit_code"] = out.returncode
         result["status"] = "ran" if out.returncode == 0 else "failed"
