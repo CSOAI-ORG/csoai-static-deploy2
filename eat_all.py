@@ -33,6 +33,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path.home() / "clawd" / "csoai-static-deploy2"
+# The deploy-phase build/wizard scripts live in kimi-regen (source-of-truth),
+# NOT csoai-static-deploy2 (build output). Resolve them explicitly so
+# PHASE_8_DEPLOY stops failing with "No such file or directory".
+SCRIPT_DIR = Path.home() / "clawd" / "kimi-regen"
 sys.path.insert(0, str(ROOT))
 
 # Try to import sov_route for proper signing
@@ -405,17 +409,17 @@ def phase_8_deploy() -> dict:
                               cwd=cwd or ROOT, env=env)
 
     # 1. Machine-readable llm.json companions (generated, never drift from pages)
-    r = sh(["python3", str(ROOT / "make_llm_json.py")])
+    r = sh(["python3", str(SCRIPT_DIR / "make_llm_json.py")])
     if r.returncode != 0:
         result.update({"status": "failed", "error": f"make_llm_json: {r.stderr[-500:]}"})
         return result
     # 2. Allowlisted publish dir (asserts no .env / wrangler.toml / *.py / *.jsonl / runs/)
-    r = sh(["python3", str(ROOT / "build_site.py")])
+    r = sh(["python3", str(SCRIPT_DIR / "build_site.py")])
     if r.returncode != 0:
         result.update({"status": "failed", "error": f"build_site: {r.stderr[-500:]}"})
         return result
     # 3. DEFONEOS math-integrity widget (idempotent)
-    r = sh(["python3", str(ROOT / "inject_math_check.py")])
+    r = sh(["python3", str(SCRIPT_DIR / "inject_math_check.py")])
     if r.returncode != 0:
         result.update({"status": "failed", "error": f"inject_math_check: {r.stderr[-500:]}"})
         return result
