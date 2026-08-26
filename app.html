@@ -1107,8 +1107,8 @@ function renderIntegrityReport(el){
   el.innerHTML='<div class="doctrine">An annual report on the integrity of AI benchmarks — free + signed (trust engine). Sponsors fund the audit; <b>a sponsor never influences a methodology or a finding.</b> No rating, no certification, no recommendation. Measurement, not certification.</div>'+
     '<div class="panel"><h2>The report (signed)</h2><div id="irout" style="font-family:var(--mono);font-size:.74rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
     '<div class="panel"><h2>The honesty basis</h2><div class="desc">A benchmark you can trust must (a) publish its methodology, (b) publish intervals + a separation rule, and (c) keep an append-only corrections register. We score these as public facts — never a quality verdict.</div></div>'+
-    '<div class="panel"><h2>Sponsor a section</h2><div class="desc">Headline (1) · section (4) · recommended-resource (3). Sponsors do not influence a finding; the trust engine is free forever (R8: regulators free). <code>GET /api/report/benchmark-integrity</code></div></div>';
-  fetch('/api/report/benchmark-integrity').then(r=>r.json()).then(function(d){
+    '<div class="panel"><h2>Sponsor a section</h2><div class="desc">Headline (1) · section (4) · recommended-resource (3). Sponsors do not influence a finding; the trust engine is free forever (R8: regulators free). <code>GET /api/report-benchmark-integrity</code></div></div>';
+  fetch('/api/report-benchmark-integrity').then(r=>r.json()).then(function(d){
     var o=$('irout'); if(!o)return; var r=d.report||{};
     o.textContent='title: '+(r.title||'')+' · edition: '+(r.edition||'')+'\n'+
       '\nfindings (public facts):\n'+(r.findings||[]).map(function(f){return '  \u2022 '+f.measure+': '+f.observed;}).join('\n')+

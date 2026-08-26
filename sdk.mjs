@@ -71,7 +71,7 @@ export const csoai = {
   firstFine: () => GET('/api/first-fine'),
   receipts: () => GET('/api/receipts'),
   methodology: () => GET('/api/methodology'),
-  integrityReport: () => GET('/api/report/benchmark-integrity'),
+  integrityReport: () => GET('/api/report-benchmark-integrity'),
 
   // ---- write/measure (signed cards) ----
   attest: (obj) => POST('/api/attest', obj),
