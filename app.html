@@ -42,6 +42,17 @@ a { color:var(--accent2); text-decoration:none; }
 .tb-tab.active { background:#1a2830; color:var(--accent2); font-weight:600; }
 .shell { display:grid; grid-template-columns:220px 1fr; flex:1; min-height:0; }
 @media (max-width:800px){ .shell{grid-template-columns:1fr;} .side{border-right:0;border-bottom:1px solid var(--line);} .topbar{flex-wrap:wrap;} .tb-tabs{width:100%;} }
+/* mobile-first polish: cards stack cleanly, controls breathe (no-friction on a phone) */
+@media (max-width:600px){
+  .grid{grid-template-columns:1fr;}
+  .panel{padding:.85rem .8rem;}
+  .card{padding:.7rem .75rem;}
+  .cinput{flex-wrap:wrap;}
+  .cinput input{width:100%;}
+  .topbar{text-align:center;justify-content:center;}
+  .grid .card .v{font-size:1.35rem;}
+  .tab,.chip{white-space:nowrap;}
+}
 
 /* sidebar */
 .side { background:var(--panel); border-right:1px solid var(--line); padding:1rem .8rem; position:sticky; top:0; height:100vh; overflow-y:auto; }
