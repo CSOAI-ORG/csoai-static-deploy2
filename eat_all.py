@@ -324,9 +324,9 @@ def phase_5_honey() -> dict:
     result = {"status": "ran", "artifacts": []}
     try:
         out = subprocess.run(
-            ["python3", "sov_training_honey.py"],
+            ["python3", str(SCRIPT_DIR / "sov_training_honey.py")],
             capture_output=True, text=True, timeout=1800,
-            cwd=str(ROOT)
+            cwd=str(SCRIPT_DIR)
         )
         result["exit_code"] = out.returncode
         result["status"] = "ran" if out.returncode == 0 else "failed"
@@ -371,9 +371,9 @@ def phase_7_portal() -> dict:
     result = {"status": "ran", "artifacts": []}
     try:
         out = subprocess.run(
-            ["python3", "sov_portal_data.py", "--selftest"],
+            ["python3", str(SCRIPT_DIR / "sov_portal_data.py"), "--selftest"],
             capture_output=True, text=True, timeout=60,
-            cwd=str(ROOT)
+            cwd=str(SCRIPT_DIR)
         )
         result["exit_code"] = out.returncode
         result["status"] = "ran" if out.returncode == 0 else "failed"

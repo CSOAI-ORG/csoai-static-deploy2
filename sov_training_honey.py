@@ -28,7 +28,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path.home() / "clawd" / "csoai-static-deploy2"
+ROOT = Path(__file__).resolve().parent  # kimi-regen is the canonical estate root
 FOREST = ROOT / "forest"
 TRAINING = ROOT / "training_data"
 BENCH = ROOT / "benchmark-results"

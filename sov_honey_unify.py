@@ -23,6 +23,7 @@ honey. The blob store is fixed; the routes are what move.
 from __future__ import annotations
 
 import json
+import os
 import sys
 import time
 import urllib.request
@@ -31,7 +32,10 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-OLLAMA = "http://localhost:11434"
+# Honor the fleet tunnel: Mac is terminal-only (AGENTS.md); models live on the
+# Oracle/runpod fleet behind :11436. Fall back to local :11434 so a single-pod
+# setup still works.
+OLLAMA = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
 FOREST = HERE / "forest"
 LEDGER = HERE / "benchmark-results" / "sov_time_ledger.jsonl"
 
