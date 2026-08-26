@@ -283,6 +283,7 @@ var SECTIONS = [
   { id:'registers', label:'Registers', ico:'📚', read: renderRegisters },
   { id:'receipts', label:'Receipts', ico:'🧾', read: renderReceipts },
   { id:'methodology', label:'Methodology', ico:'📐', read: renderMethodology },
+  { id:'integrity', label:'Integrity report', ico:'📊', read: renderIntegrityReport },
   { id:'products', label:'Products', ico:'📦', read: renderProducts },
   { id:'press', label:'Press', ico:'🗞', read: renderPress },
   { id:'e2e', label:'E2E status', ico:'🧪', read: renderE2E },
@@ -1099,6 +1100,24 @@ function renderReceipts(el){
 }
 
 // ---------- METHODOLOGY (the published statistical + governance discipline) ----------
+
+// ---------- BENCHMARK INTEGRITY REPORT (revenue Play #2 — free + signed, sponsors fund) ----------
+function renderIntegrityReport(el){
+  stamp('benchmark integrity report · free + signed · '+TODAY);
+  el.innerHTML='<div class="doctrine">An annual report on the integrity of AI benchmarks — free + signed (trust engine). Sponsors fund the audit; <b>a sponsor never influences a methodology or a finding.</b> No rating, no certification, no recommendation. Measurement, not certification.</div>'+
+    '<div class="panel"><h2>The report (signed)</h2><div id="irout" style="font-family:var(--mono);font-size:.74rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
+    '<div class="panel"><h2>The honesty basis</h2><div class="desc">A benchmark you can trust must (a) publish its methodology, (b) publish intervals + a separation rule, and (c) keep an append-only corrections register. We score these as public facts — never a quality verdict.</div></div>'+
+    '<div class="panel"><h2>Sponsor a section</h2><div class="desc">Headline (1) · section (4) · recommended-resource (3). Sponsors do not influence a finding; the trust engine is free forever (R8: regulators free). <code>GET /api/report/benchmark-integrity</code></div></div>';
+  fetch('/api/report/benchmark-integrity').then(r=>r.json()).then(function(d){
+    var o=$('irout'); if(!o)return; var r=d.report||{};
+    o.textContent='title: '+(r.title||'')+' · edition: '+(r.edition||'')+'\n'+
+      '\nfindings (public facts):\n'+(r.findings||[]).map(function(f){return '  \u2022 '+f.measure+': '+f.observed;}).join('\n')+
+      '\n\nour own audit:\n  corrections register: '+(r.our_audit||{}).corrections_register_entries+' entries (append-only, never edited)'+
+      '\n\nstatistical discipline: '+(r.our_statistical_discipline||{}).intervals+' + '+(r.our_statistical_discipline||{}).separation+
+      '\n\nnever: '+((r.never||[]).join(', '))+
+      '\n\ncontent_id: '+d.content_id+' · key_id: '+d.key_id;
+  }).catch(function(e){ var o=$('irout'); if(o)o.textContent='error: '+e; });
+}
 function renderMethodology(el){
   stamp('methodology · published discipline, not a hidden function · '+TODAY);
   el.innerHTML='<div class="doctrine">The statistical + governance methodology behind every measured card, published as a <b>signed stranger-verifiable artifact</b> — so the discipline is auditable, not hidden. No incumbent on-chain attester publishes confidence-interval methodology, statistical-separation testing, or third-party audit of its scoring statistics. This is the differentiation. Measurement, not certification.</div>'+
@@ -1256,6 +1275,7 @@ var SUBTITLES = {
   dispute:'Dispute a measurement — the measured subject’s redress door (disagreement is a row).',
   receipts:'Agent-payment settlement receipts — signed + stranger-verifiable, never a revenue claim.',
   methodology:'The published statistical + governance discipline (Wilson CI + conservative separation rule) — signed.',
+  integrity:'Integrity report — free + signed; sponsors fund, never influence.',
   reghub:'Every regulator, one centre. Pick a regime → its specialist workspace.',
   runbook:'Discover the routing table in seconds. Agent-first, no auth wall.',
   insurers:'Insurer pack — signed per-agent evidence, never underwriting.',
@@ -1598,6 +1618,7 @@ var PAGES = [
   { id:'registers', label:'Registers' },
   { id:'receipts', label:'Receipts' },
   { id:'methodology', label:'Methodology' },
+  { id:'integrity', label:'Integrity report' },
   { id:'products', label:'Products' },
   { id:'press', label:'Press' },
   { id:'e2e', label:'E2E status' },
