@@ -13,6 +13,13 @@
 
 const FLEET = {
   as_of: '2026-08-21T06:20Z',
+  // Public status transparency (report item e): a trust vendor must publish a
+  // stated availability SLO + honest status. The SLO is a commitment; the live
+  // availability is the MEASURED number (from /api/health probes) — never a claim.
+  status: 'operational',
+  slo: '99.9% monthly availability (verification public-good surface + signed-card issuance)',
+  availability_measured: 'via /api/health (live probes, 5 min) — recomputed, never asserted',
+  availability_url: 'https://csoai-gspc.pages.dev/api/health',
   note: 'Public fleet map — sanitized. Internal names, endpoints and keys are never published. Verified 21 Aug via runpodctl: 3 RUNNING pods (~$40/day). Mine-pod A100 is IDLE (GPU 0%) and still billed $1.39/hr — owner-decides stop-when-idle.',
   workers: [
     {
