@@ -1,0 +1,39 @@
+{
+  "schema": "csoai.mcp-catalog/0.1",
+  "living_source": "https://councilof.ai/api/gspc",
+  "board": {
+    "public_count": "22 axis \u00b7 15 measured",
+    "doi": "10.5281/zenodo.21991104"
+  },
+  "servers": {
+    "gspc-council-os": {
+      "url": "https://csoai-gspc.pages.dev",
+      "streamable_http": "https://csoai-gspc.pages.dev/api/mcp",
+      "tools": [
+        "measure",
+        "verify",
+        "registers",
+        "receipts",
+        "methodology",
+        "live-regulation"
+      ],
+      "mcp_endpoint": "https://csoai-gspc.pages.dev/api/mcp"
+    },
+    "gspc-verify-offline": {
+      "url": "https://councilof.ai/signed/verify-card.mjs",
+      "mode": "offline-zero-trust",
+      "tools": [
+        "verify"
+      ]
+    }
+  },
+  "harnesses": [
+    "hermes",
+    "dsh",
+    "grok-bot",
+    "claude",
+    "cursor",
+    "vscode"
+  ],
+  "note": "One living source (councilof.ai/api/gspc) mirrored to HF datasets, this site, the MCP server, and every harness. Edit only at the monorepo source."
+}
