@@ -92,16 +92,41 @@
 /gspc-verify      https://councilof.ai/gspc-verify   308
 /gspc-verify/     https://councilof.ai/gspc-verify/  308
 
-<<<<<<< Updated upstream
 # 21 Aug 2026 — multi-dot function names never routed (rounds.jsonl.js never executed);
 # the feed was a stale static shadow. Internal rewrites map the public URLs to the real functions.
 /api/arena/rounds.jsonl     /api/arena/rounds     200
 /api/sov-arena/rounds.jsonl https://csoai.org/api/arena/rounds 308
-=======
+
 /ceasai       https://councilof.ai/           308
 /ceasai.html  https://councilof.ai/           308
 /sov-three-eyes       https://councilof.ai/gspc-arena  308
 /sov-three-eyes.html  https://councilof.ai/gspc-arena  308
 /MASTER_TAKEOVER       https://councilof.ai/  308
 /MASTER_TAKEOVER.html  https://councilof.ai/  308
->>>>>>> Stashed changes
+
+# 27 Aug 2026 — broken 404 paths (Google still indexes these; honest redirects to councilof.ai)
+/measure                            https://councilof.ai/measure             308
+/measure/                           https://councilof.ai/measure             308
+/mcp                                https://councilof.ai/mcp                 308
+/mcp/                               https://councilof.ai/mcp                 308
+/os                                 https://councilof.ai/os                  308
+/os/                                https://councilof.ai/os                  308
+/fabric/agent-incident-reporter-mcp https://councilof.ai/mcp                 308
+/ai-transparency                    https://councilof.ai/                    308
+/ai-transparency/                   https://councilof.ai/                    308
+/provenance-finding                 https://councilof.ai/gspc-verify         308
+/provenance-finding/                https://councilof.ai/gspc-verify         308
+
+# 27 Aug 2026 — stale 200 pages: redirect to councilof.ai so Google stops ranking the stale twin.
+# /.well-known/* and did.json stay on csoai.org (did:web:csoai.org is the trust root).
+/products       https://councilof.ai/products  308
+/products/      https://councilof.ai/products  308
+/products.html  https://councilof.ai/products  308
+/compare        https://councilof.ai/compare   308
+/compare/       https://councilof.ai/compare   308
+/compare.html   https://councilof.ai/compare   308
+/index.html     https://councilof.ai/          308
+
+# Homepage: path-preserving redirect to councilof.ai.
+# /.well-known/* is explicitly NOT redirected (did:web:csoai.org lives here).
+/               https://councilof.ai/          308
