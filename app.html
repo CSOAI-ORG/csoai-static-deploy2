@@ -932,12 +932,14 @@ function renderE2E(el){
   el.innerHTML='<div class="doctrine">Full end-to-end status. Every axis measured (or honestly UNMEASURED), every signed artifact stranger-verifiable, every end-party surface reachable + white-labellable. This is the test the whole estate runs against. Measurement, not certification.</div>'+
     '<div class="panel"><h2>Live axis measurements (each signed + Wilson interval)</h2><div id="e2eax" style="font-family:var(--mono);font-size:.74rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
     '<div class="panel"><h2>End parties (white-label: each gets its own tuned surface)</h2><div id="e2eparty" style="font-family:var(--mono);font-size:.74rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
+    '<div class="panel"><h2>Live board count</h2><div id="e2eboard" style="font-family:var(--mono);font-size:.78rem;white-space:pre-wrap;color:var(--muted)"></div></div>'+
     '<div class="panel"><h2>Stranger-verify (the gate)</h2><div class="desc">Every card: recompute content_id + Ed25519 against did:web:csoai-gspc.pages.dev#gspc. <code>GET /api/measure-axis?axis=&lt;x&gt;</code> · <code>/api/first-fine</code> · <code>/api/methodology</code> · <code>/api/registers</code> · <code>/api/receipts</code>. <b>Whitelabel:</b> a regulator/insurer gets the same surface, their brand, we sign (R8: regulators free forever).</div></div>';
   // Axis matrix
   var axes=['gov','care','mcp','art5','det','prv','affect','agi','asi','mach','oss','xr','jail'];
   var ax=[];
   axes.forEach(function(a){ ax.push({a:a,status:'...'}); });
-  Promise.all(axes.map(function(a){ return fetch('/api/measure-axis?axis='+a).then(function(r){return r.json();}).then(function(d){ return {a:a, m:d.measured, n:d.n, w:d.wilson95, st:d.status||(d.measured!=null?'MEASURED':'UNMEASURED')}; }).catch(function(){return {a:a,st:'ERR'};}); })).then(function(rows){
+  fetch('https://councilof.ai/api/gspc').then(r=>r.json()).then(function(d){var o=document.getElementById('e2eboard');if(o){var t=d.totals||{};o.textContent='AUTHORITATIVE: '+String(t.public_count||'?')+'\\n\\n'+String(t.count_grammar||'').slice(0,200);}}).catch(function(e){var o=document.getElementById('e2eboard');if(o)o.textContent='board unreachable';});
+    Promise.all(axes.map(function(a){ return fetch('/api/measure-axis?axis='+a).then(function(r){return r.json();}).then(function(d){ return {a:a, m:d.measured, n:d.n, w:d.wilson95, st:d.status||(d.measured!=null?'MEASURED':'UNMEASURED')}; }).catch(function(){return {a:a,st:'ERR'};}); })).then(function(rows){
     var o=document.getElementById('e2eax'); if(!o)return;
     o.textContent=rows.map(function(r){
       var w=r.w?('  ['+r.w.low+','+r.w.high+']'):'';
@@ -1315,6 +1317,7 @@ function renderOverview(el){
     if (modelList.length) { lead = modelList[0].name; leadAvg = modelList[0].avg_measured_score; }
     var arenaLead = (arenaEmb.leaderboard||[])[0];
     el.innerHTML = '<div class="doctrine">'+esc(emb.doctrine||'')+' · <b>unsolicited + permissionless</b>: we measure + sign without asking the measured party, and a stranger can verify it. <b>Verification free forever.</b> Measurement, not certification.</div>'+
+      '<div class="panel" style="background:var(--panel);border-color:var(--accent);padding:.75rem 1rem;margin-bottom:.8rem"><span style="font-weight:600;color:var(--accent)">Try it — no sign-up, no key, £0</span> <pre style="display:inline-block;background:#0e141a;border:1px solid var(--line);border-radius:8px;padding:.3rem .7rem;font-family:var(--mono);font-size:.72rem;max-width:100%;overflow-x:auto;white-space:nowrap">curl -sS '+base+'/api/measure-axis?axis=gov | python3 -m json.tool</pre> <button class="chip" data-copy="curl -sS '+base+'/api/measure-axis?axis=gov">copy</button> · <span style="font-size:.7rem;color:var(--muted)">returns a signed measurement card with a Wilson 95% interval. A stranger verifies it.</span> · <span style="font-size:.68rem;color:var(--accent);cursor:pointer" onclick="show(\'e2e\')">see all 12 axes →</span></div>'+
       '<div class="tabs">'+[['Models','models'],['Leaderboard','board'],['Arena','arena'],['Regulators','reghub'],['Insurers','insurers'],['Compare','compare'],['Axes','axes'],['Runbook','runbook'],['Status','dashboard']].map(function(q){return '<button class="tab" data-j="'+q[1]+'">'+q[0]+'</button>';}).join('')+'</div>'+
       '<div class="grid">' +
       '<div class="card lead"><div class="k">Estate board</div><div class="v">'+Object.keys(emb.cells).length+' models</div><div class="s">'+Object.keys(best).length+' axes quotable</div></div>' +
