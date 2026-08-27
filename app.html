@@ -828,13 +828,20 @@ function renderKeys(el){
 var AX_DESC = {care:'relational care ethics — dignity, welfare, vulnerability', gov:'governance — accountability, mechanism, deployer, enforcement', art5:'EU AI Act Art 5 prohibited practices', jail:'jailbreak / safety-membrane refusal (does it hold under adversarial probe)', det:'determinism — reproducible under gold labels', affect:'affect / sentiment — emotional misattribution to a system', agi:'AGI/ASI capability-adjacent (measured, never predicted)', asi:'superintelligence-adjacent (honest gate)', mach:'machinery / MCP-tool correctness', mcp:'MCP protocol governance — interoperable, not a monolith', oss:'open-source license + provenance hygiene', prv:'privacy — data minimalisation, consent, GDPR', xr:'extended-reality / embodied governance'};
 var AX_DOMAINS = [{a:'bond', t:'bond router — COBOL→A2A, atomic DvP'},{a:'insurance', t:'insurance engine — care-membrane underwriting risk probe'},{a:'equity', t:'stock market axis — market integrity, fair execution'},{a:'cross-border', t:'east-west bridge — TC260↔NIST↔EU AI Act'},{a:'sme', t:'SME fractional — micro-issuance, retail access'},{a:'agent-economy', t:'agent economy — NPC wallets, staking, slash-on-exploit'},{a:'data-dao', t:'data DAO — trace licensing, EUN marketplace'}];
 function renderAxes(el){
-  stamp('GSPC axes · 13 core + extended domains · deterministic, signed · '+TODAY);
-  var rows = AXES.map(function(a){ return '<div class="xwrow"><span><b>'+AX[a]+'</b><br><span style="color:var(--faint);font-size:.66rem">'+esc(AX_DESC[a]||'')+'</span></span><span class="badge">'+a+'</span></div>'; }).join('');
-  var doms = AX_DOMAINS.map(function(d){ return '<div class="xwrow"><span><b>'+d.t+'</b><br><span style="color:var(--faint);font-size:.66rem">domain: '+d.a+'</span></span><span class="badge" style="color:var(--gold)">extended</span></div>'; }).join('');
-  el.innerHTML='<div class="doctrine">The axes are the measurable surfaces. 13 core governance axes on the signed board + extended financial/ecosystem domains. Deterministic exact-label grading, never a model jury. UNMEASURED reported, never hidden. Measurement, not certification.</div>'+
-    '<div class="panel"><h2>13 core axes</h2>'+rows+'</div>'+
-    '<div class="panel"><h2>Extended domains (the "OpenRouter of many things")</h2>'+doms+'</div>'+
+  stamp('GSPC axes · signed, deterministic · '+TODAY);
+  el.innerHTML='<div class="doctrine">The axes are the measurable surfaces. The signed board carries 22 axes · 15 measured — the 7 declared slots (reserve-attestation, regulatory-framework, distribution-integrity, custody-disclosure, and three candidate indices) have no run behind them and are published UNMEASURED, never counted as a measurement. Deterministic exact-label grading, never a model jury. Measurement, not certification.</div>'+
+    '<div class="panel"><h2>Live per-axis measurements (signed · Wilson 95% CI · n)</h2><div id="axgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.6rem;font-family:var(--mono);font-size:.72rem"></div></div>'+
+    '<div class="panel"><h2>Extended domains (the "OpenRouter of many things")</h2><div class="xwrow"><span><b>Financial / ecosystem domains</b><br><span style="color:var(--faint);font-size:.66rem">the extended measurement axis-universe (ADR-001)</span></span><span class="badge" style="color:var(--gold)">extended</span></div></div>'+
     '<div class="panel"><div class="desc">Every axis → a routable <code>eunomia://axis/&lt;id&gt;</code> node. The same measured number carries different obligations per jurisdiction (East↔West).</div></div>';
+  var ag=$('axgrid'); if(!ag) return;
+  AXES.forEach(function(a){
+    fetch('/api/measure-axis?axis='+a).then(function(r){return r.json();}).then(function(d){
+      if(!d || !d.measured){ ag.insertAdjacentHTML('beforeend','<div class="card"><div class="k">'+esc(AX[a]||a)+'</div><div class="s">'+a+'</div><div style="margin:.3rem 0;font-size:.66rem;color:var(--faint)">UNMEASURED — no signed run</div></div>'); return; }
+      var w=d.wilson95||{};
+      ag.insertAdjacentHTML('beforeend','<div class="card"><div class="k">'+esc(AX[a]||a)+'</div><div class="v">'+d.measured.toFixed(3)+'</div><div class="s">'+esc(d.model||'?')+' · n='+d.n+' · <span style="color:var(--gold)">CI '+w.low.toFixed(3)+'–'+w.high.toFixed(3)+'</span></div></div>');
+    }).catch(function(){ ag.insertAdjacentHTML('beforeend','<div class="card"><div class="k">'+esc(AX[a]||a)+'</div><div class="s">offline</div></div>'); });
+  });
+  fetch('https://councilof.ai/api/gspc').then(function(r){return r.json();}).then(function(d){var t=d.totals||{}; if(t.public_count){ var p=document.createElement('div'); p.style.cssText='grid-column:1/-1;font-family:var(--mono);font-size:.7rem;color:var(--muted);margin-top:.3rem'; p.textContent='AUTHORITATIVE: '+t.public_count+' — '+String(t.count_grammar||'').slice(0,140); var g=$('axgrid'); if(g) g.appendChild(p); }}).catch(function(){});
 }
 
 // ---------- USER DASHBOARD (back-end view, readable: all products working) ----------
@@ -1279,7 +1286,7 @@ var SUBTITLES = {
   verify:'Free, loginless, offline-style record verification.',
   chat:'Deterministic enforced-escort brain. No model in the path.',
   ecosystem:'One router for the governance ecosystem — frameworks, regulations, law, benchmarks, models.',
-  axes:'13 core GSPC axes + extended domains — all measurable, signed, explained.',
+  axes:'22 axes · 15 measured (7 UNMEASURED declared slots) + extended domains — signed, explained.',
   dashboard:'The whole system at a glance — every product working E2E, live back-end.',
   compliance:'Compliance radar — every obligation + fine tier, the regulator whitelabel pivot.',
   integrate:'Drop the OS into your stack — MCP · A2A · API · SDK · embed · CLI.',
@@ -1331,7 +1338,7 @@ function renderOverview(el){
     '<div class="panel"><h2>Data generation (live)</h2><div class="desc">The measurement engine runs 24/7, signing every result. This is the flywheel: measure → sign → generate → cross-sync → SOV SIGNAL.</div>'+
       '<div class="grid"><div class="card"><div class="k">SOV SIGNAL</div><div class="v" id="oms_signal">…</div><div class="s">cross-synced index (signed)</div></div>'+
       '<div class="card"><div class="k">Judged records</div><div class="v">13,327</div><div class="s">deterministic exact-label</div></div>'+
-      '<div class="card"><div class="k">Axes</div><div class="v">13 core</div><div class="s">+ extended domains</div></div>'+
+      '<div class="card"><div class="k">Axes</div><div class="v">22 · 15 measured</div><div class="s">+ 7 UNMEASURED slots + extended</div></div>'+
       '<div class="card"><div class="k">Engine</div><div class="v">24/7</div><div class="s">on the A100 pod (off-Mac)</div></div></div>'+
     '</div>';
     fetch('/api/sov-signal').then(function(r){return r.json();}).then(function(d){ var o=$('oms_signal'); if(o&&d.card)o.textContent=d.card.aggregate_signal+' div '+(d.card.divergence||'?'); }).catch(function(){ var o=$('oms_signal'); if(o)o.textContent='unmeasured'; });
