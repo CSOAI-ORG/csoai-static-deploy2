@@ -1,4 +1,6 @@
-# robots.txt — https://www.csoai.org
+# robots.txt — https://csoai.org (trust-root host for did:web:csoai.org)
+# Canonical public site is https://councilof.ai — this host redirects there.
+# /.well-known/* stays here (DID, agent-card, MCP discovery).
 # AI crawlers DO NOT run JavaScript. Everything an LLM/agent needs must be
 # readable from this file, llms.txt, llms-full.txt, sitemap*.xml, .well-known/*,
 # or server-rendered HTML.
@@ -213,5 +215,7 @@ Allow: /
 
 Crawl-delay: 1
 
-Sitemap: https://www.csoai.org/sitemap.xml
-Sitemap: https://www.csoai.org/sitemap-ai.xml
+# Canonical site is councilof.ai — point crawlers there.
+# csoai.org sitemap lists only /.well-known/* trust-root files.
+Sitemap: https://councilof.ai/sitemap.xml
+Sitemap: https://csoai.org/sitemap.xml

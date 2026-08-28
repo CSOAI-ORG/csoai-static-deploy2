@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- sitemap.xml — canonical site is councilof.ai
+     csoai.org is the trust-root host (did:web:csoai.org) and holds /.well-known/*
+     but all public-facing content lives at councilof.ai.
+     Updated 27 Aug 2026: point crawlers at the canonical site. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://csoai.org/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/arenas</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/verify</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/status</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/methodology</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/CANONICAL-DOIS.md</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/blog-state-of-measurement-2026-08</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/.well-known/agent.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/.well-known/agent-card.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/.well-known/did.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/.well-known/api-catalog</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/.well-known/mcp.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/.well-known/security.txt</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/api/receipts/latest</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/api/arena/rounds.jsonl</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/api/leaderboard</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/api/health</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/badge/axes.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/banks-manifest.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/verification.schema.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/llms.txt</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/openapi.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/mcp.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/proof-anchors/anchor-2026-08-18.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/proof-anchors/commitment-2026-08-18.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/corrections/correction-schema.json</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://csoai.org/corrections/COR-20260818-01.json</loc><changefreq>weekly</changefreq></url>
+  <!-- councilof.ai — the canonical public site -->
   <url><loc>https://councilof.ai/</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://councilof.ai/verify</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://councilof.ai/measure</loc><changefreq>weekly</changefreq></url>
   <url><loc>https://councilof.ai/gspc-verify</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://councilof.ai/honesty</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://councilof.ai/gspc-arena</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://councilof.ai/gspc-scoreboard</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://councilof.ai/pricing</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://councilof.ai/products</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://councilof.ai/compare</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://councilof.ai/mcp</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://councilof.ai/os</loc><changefreq>weekly</changefreq></url>
   <url><loc>https://councilof.ai/methodology</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://councilof.ai/honesty</loc><changefreq>weekly</changefreq></url>
   <url><loc>https://councilof.ai/firewall-charter</loc><changefreq>weekly</changefreq></url>
   <url><loc>https://councilof.ai/insurers</loc><changefreq>weekly</changefreq></url>
-  <url><loc>https://councilof.ai/gspc-scoreboard</loc><changefreq>weekly</changefreq></url>
+
+  <!-- csoai.org — trust-root files only (did:web:csoai.org, well-known discovery) -->
+  <url><loc>https://csoai.org/.well-known/did.json</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://csoai.org/.well-known/agent.json</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://csoai.org/.well-known/agent-card.json</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://csoai.org/.well-known/mcp.json</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://csoai.org/.well-known/api-catalog</loc><changefreq>monthly</changefreq></url>
+  <url><loc>https://csoai.org/.well-known/security.txt</loc><changefreq>monthly</changefreq></url>
 </urlset>

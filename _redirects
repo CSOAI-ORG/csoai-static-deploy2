@@ -37,71 +37,116 @@
 # (301 → .html → 308 back → 301). Removed 2026-08-08.
 
 # 17 Aug 2026 — one public desk. Do not keep a second price table.
-/pricing   https://councilof.ai/pricing   308
-/pricing/  https://councilof.ai/pricing/  308
+# 27 Aug 2026 — added ! to force redirect even when pricing.html exists.
+/pricing   https://councilof.ai/pricing   308!
+/pricing/  https://councilof.ai/pricing/  308!
 
 # 17 Aug 2026 — paper-district is a live research library on councilof.ai, not here.
-/paper-district       https://councilof.ai/paper-district.html  308
-/paper-district.html  https://councilof.ai/paper-district.html  308
-/paper-district/      https://councilof.ai/paper-district.html  308
+/paper-district       https://councilof.ai/paper-district.html  308!
+/paper-district.html  https://councilof.ai/paper-district.html  308!
+/paper-district/      https://councilof.ai/paper-district.html  308!
 
 # 17 Aug 2026 — sov-space is an internal codename. Public destination is Council Space.
-/sov-space       https://councilof.ai/gspc-arena/  308
-/sov-space/      https://councilof.ai/gspc-arena/  308
-/sov-space.html  https://councilof.ai/gspc-arena/  308
+/sov-space       https://councilof.ai/gspc-arena/  308!
+/sov-space/      https://councilof.ai/gspc-arena/  308!
+/sov-space.html  https://councilof.ai/gspc-arena/  308!
 
 # 17 Aug 2026 — one benches desk. Kill the stale six-axis / 30-model page.
-/benchmarks   https://councilof.ai/benchmarks   308
-/benchmarks/  https://councilof.ai/benchmarks/  308
+/benchmarks   https://councilof.ai/benchmarks   308!
+/benchmarks/  https://councilof.ai/benchmarks/  308!
 
 # 17 Aug 2026 — stale 12-greenfields hub is not the live arena.
-/arena            https://councilof.ai/gspc-arena  308
-/arena/           https://councilof.ai/gspc-arena  308
-/gspc-arena       https://councilof.ai/gspc-arena  308
-/gspc-arena/      https://councilof.ai/gspc-arena  308
-/arena-hub        https://councilof.ai/gspc-arena  308
-/arena-hub.html   https://councilof.ai/gspc-arena  308
+/arena            https://councilof.ai/gspc-arena  308!
+/arena/           https://councilof.ai/gspc-arena  308!
+/gspc-arena       https://councilof.ai/gspc-arena  308!
+/gspc-arena/      https://councilof.ai/gspc-arena  308!
+/arena-hub        https://councilof.ai/gspc-arena  308!
+/arena-hub.html   https://councilof.ai/gspc-arena  308!
 
 # 17 Aug 2026 — one verify desk (loginless, client-side).
-/gspc-verify      https://councilof.ai/gspc-verify   308
-/gspc-verify/     https://councilof.ai/gspc-verify/  308
+/gspc-verify      https://councilof.ai/gspc-verify   308!
+/gspc-verify/     https://councilof.ai/gspc-verify/  308!
 
 # 17 Aug 2026 — retired/banned sov-* engine surfaces (EAT language lock) no
 # longer ship (build_site.py NEVER_HTML); their routes go to honest desks.
-/master              https://councilof.ai/           308
-/master.html         https://councilof.ai/           308
-/sov-space           https://councilof.ai/gspc-arena 308
-/sov-space/          https://councilof.ai/gspc-arena 308
-/sov-space-visual    https://councilof.ai/gspc-arena 308
-/sov_space_visual    https://councilof.ai/gspc-arena 308
-/sov_space_visual.html https://councilof.ai/gspc-arena 308
-/mcp-install         https://councilof.ai/measure     308
-/mcp-install.html    https://councilof.ai/measure     308
-/pulse               https://councilof.ai/           308
-/pulse.html          https://councilof.ai/           308
-/experiments         https://councilof.ai/           308
-/experiments.html    https://councilof.ai/           308
-/oowm-demo           https://councilof.ai/measure     308
-/oowm-demo.html      https://councilof.ai/measure     308
+# 27 Aug 2026 — added ! to force redirects even when static .html files exist.
+/master              https://councilof.ai/           308!
+/master.html         https://councilof.ai/           308!
+/sov-space           https://councilof.ai/gspc-arena 308!
+/sov-space/          https://councilof.ai/gspc-arena 308!
+/sov-space-visual    https://councilof.ai/gspc-arena 308!
+/sov_space_visual    https://councilof.ai/gspc-arena 308!
+/sov_space_visual.html https://councilof.ai/gspc-arena 308!
+/mcp-install         https://councilof.ai/measure     308!
+/mcp-install.html    https://councilof.ai/measure     308!
+/pulse               https://councilof.ai/           308!
+/pulse.html          https://councilof.ai/           308!
+/experiments         https://councilof.ai/           308!
+/experiments.html    https://councilof.ai/           308!
+/oowm-demo           https://councilof.ai/measure     308!
+/oowm-demo.html      https://councilof.ai/measure     308!
 
 # 17 Aug 2026 — SOVOS brand retired (TM conflict); estate reader renamed.
 /sovos      /council-estate.html   301
 /sovos.html /council-estate.html   301
 
-# 17 Aug 2026 — one verify desk (loginless, client-side).
-/gspc-verify      https://councilof.ai/gspc-verify   308
-/gspc-verify/     https://councilof.ai/gspc-verify/  308
+# 17 Aug 2026 — one verify desk (loginless, client-side). (duplicate removed)
 
-<<<<<<< Updated upstream
 # 21 Aug 2026 — multi-dot function names never routed (rounds.jsonl.js never executed);
 # the feed was a stale static shadow. Internal rewrites map the public URLs to the real functions.
 /api/arena/rounds.jsonl     /api/arena/rounds     200
 /api/sov-arena/rounds.jsonl https://csoai.org/api/arena/rounds 308
-=======
-/ceasai       https://councilof.ai/           308
-/ceasai.html  https://councilof.ai/           308
-/sov-three-eyes       https://councilof.ai/gspc-arena  308
-/sov-three-eyes.html  https://councilof.ai/gspc-arena  308
-/MASTER_TAKEOVER       https://councilof.ai/  308
-/MASTER_TAKEOVER.html  https://councilof.ai/  308
->>>>>>> Stashed changes
+
+/ceasai       https://councilof.ai/           308!
+/ceasai.html  https://councilof.ai/           308!
+/sov-three-eyes       https://councilof.ai/gspc-arena  308!
+/sov-three-eyes.html  https://councilof.ai/gspc-arena  308!
+/MASTER_TAKEOVER       https://councilof.ai/  308!
+/MASTER_TAKEOVER.html  https://councilof.ai/  308!
+
+# 27 Aug 2026 — broken 404 paths (Google still indexes these; honest redirects to councilof.ai)
+# ! forces redirect even when static file exists (Pages serves files before _redirects).
+/measure                            https://councilof.ai/measure             308!
+/measure/                           https://councilof.ai/measure             308!
+/mcp                                https://councilof.ai/mcp                 308!
+/mcp/                               https://councilof.ai/mcp                 308!
+/os                                 https://councilof.ai/os                  308!
+/os/                                https://councilof.ai/os                  308!
+/fabric/agent-incident-reporter-mcp https://councilof.ai/                    308!
+/ai-transparency                    https://councilof.ai/                    308!
+/ai-transparency/                   https://councilof.ai/                    308!
+/provenance-finding                 https://councilof.ai/                    308!
+/provenance-finding/                https://councilof.ai/                    308!
+
+# 28 Aug 2026 — additional stale 200 paths serving the 4543-byte OS shell (13/16-axis, MetaMask)
+# or answer-engine files with frozen counts. All 308! to councilof.ai equivalents.
+/llms.txt                           https://councilof.ai/llms.txt            308!
+/checkout                           https://councilof.ai/                    308!
+/checkout/                          https://councilof.ai/                    308!
+/arenas                             https://councilof.ai/gspc-arena          308!
+/arenas/                            https://councilof.ai/gspc-arena          308!
+/verify                             https://councilof.ai/gspc-verify         308!
+/verify/                            https://councilof.ai/gspc-verify         308!
+/status                             https://councilof.ai/                    308!
+/status/                            https://councilof.ai/                    308!
+/methodology                        https://councilof.ai/methodology         308!
+/methodology/                       https://councilof.ai/methodology         308!
+/api/receipts/latest                https://councilof.ai/api/receipts/latest 308!
+/CANONICAL-DOIS.md                  https://councilof.ai/                    308!
+/blog-state-of-measurement-2026-08  https://councilof.ai/                    308!
+
+# 27 Aug 2026 — stale 200 pages: redirect to councilof.ai so Google stops ranking the stale twin.
+# /.well-known/* and did.json stay on csoai.org (did:web:csoai.org is the trust root).
+# ! forces redirect even when static .html file exists.
+/products       https://councilof.ai/products  308!
+/products/      https://councilof.ai/products  308!
+/products.html  https://councilof.ai/products  308!
+/compare        https://councilof.ai/compare   308!
+/compare/       https://councilof.ai/compare   308!
+/compare.html   https://councilof.ai/compare   308!
+/index.html     https://councilof.ai/          308!
+
+# Homepage: redirect to councilof.ai.
+# ! forces redirect even when index.html exists (Pages serves static files first).
+# /.well-known/* is NOT redirected (did:web:csoai.org lives here).
+/               https://councilof.ai/          308!
