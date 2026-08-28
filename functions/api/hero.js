@@ -12,7 +12,7 @@
  *   ?q=who leads on X       → leader (signed corpus)
  *   ?tool=fleet             → sanitized fleet map
  *   ?tool=arena&n=5         → latest arena rounds
- *   ?tool=board             → board headline (13 measured of 14)
+ *   ?tool=board             → board headline (22 axes · 15 measured)
  *   ?tool=status            → hero status + what it can do
  *   ?tool=mcp&op=tools      → list MCP tools the chat can operate
  *   ?tool=mcp&op=measure&model=X  → operate the GSPC MCP measure tool (signed card)
@@ -121,7 +121,7 @@ export async function onRequestGet({ request }) {
         measured_cells: Object.values(cells).reduce((n, m) => n + Object.values(m).filter(c => c.status === 'MEASURED').length, 0),
         leader: leader.model ? `${leader.model} @ ${leader.avg.toFixed(3)} avg` : null,
         note: board.note,
-        framing: '13 measured of 14 quotable · deterministic exact-label grading · UNMEASURED reported',
+        framing: '22 axes · 15 measured · deterministic exact-label grading · UNMEASURED reported',
       }), { status: 200, headers });
     } catch (e) {
       return new Response(JSON.stringify({ mode: 'board', error: 'estate board unavailable', detail: String(e) }), { status: 200, headers });
@@ -137,7 +137,7 @@ export async function onRequestGet({ request }) {
         'Ask "who leads on gov" — leader from the signed corpus',
         '?tool=fleet — sanitized fleet map',
         '?tool=arena — latest arena rounds',
-        '?tool=board — board headline (13 measured of 14)',
+        '?tool=board — board headline (22 axes · 15 measured)',
       ],
       framing: lookupData.framing,
     }), { status: 200, headers });
@@ -366,7 +366,7 @@ export async function onRequestGet({ request }) {
         top: rows.slice(0, 6),
         total_models: rows.length,
         message: rows.length ? `Live estate board leader: ${rows[0].model} @ ${rows[0].avg} avg across ${rows[0].n} axes (${estateBoard.board_stamp || '19-20 Aug'}).` : 'no measured rows',
-        framing: '13 measured of 14 quotable · UNMEASURED reported, never hidden · measurement, not certification',
+        framing: '22 axes · 15 measured · UNMEASURED reported, never hidden · measurement, not certification',
       }), { status: 200, headers });
     } catch (e) {
       return new Response(JSON.stringify({ mode: 'board-lookup', error: String(e).slice(0, 120) }), { status: 200, headers });

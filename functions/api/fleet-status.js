@@ -12,7 +12,7 @@
 //   owner-gated start  — paused, only the CEO starts it
 
 const FLEET = {
-  as_of: '2026-08-21T06:20Z',
+  as_of: undefined, // filled live inside onRequestGet (never frozen at module scope)
   // Public status transparency (report item e): a trust vendor must publish a
   // stated availability SLO + honest status. The SLO is a commitment; the live
   // availability is the MEASURED number (from /api/health probes) — never a claim.
@@ -52,7 +52,8 @@ const FLEET = {
 };
 
 export async function onRequestGet() {
-  return Response.json(FLEET, {
+  const body = { ...FLEET, as_of: new Date().toISOString().replace('.000Z', 'Z') };
+  return Response.json(body, {
     headers: {
       'Content-Type': 'application/json',
       'Cache-Control': 'public, max-age=300',
