@@ -1,29 +1,46 @@
-# llms.txt — https://csoai.org
+# llms.txt — https://csoai-gspc.pages.dev (and councilof.ai)
 # Council of AI (CSOAI Ltd, UK 16939677)
-# Independent measurement body for AI behaviour.
-# We measure, sign, and re-attest. Everyone can check.
-# Verified measurement credential — never certification. Not a notified body.
+# Independent measurement body for AI behaviour. We measure, sign, and re-attest.
+# Everyone can check. Verified measurement credential — never certification. Not a notified body.
 
 ## Canonical surfaces
-- [Home](https://csoai.org): measurement body landing
+- [Home](https://councilof.ai): measurement body landing
 - [councilof.ai](https://councilof.ai): flagship
+- [GSPC board](https://councilof.ai/api/gspc): THE living board — 22 axes · 15 measured, 7 declared slots UNMEASURED
 - [Signed scoreboard](https://councilof.ai/gspc-scoreboard)
-- [Verify](https://councilof.ai/gspc-verify): free, loginless
-- [Council Space](https://councilof.ai/gspc-arena): AI vs AI spectator
-- [GSPC API](https://councilof.ai/api/gspc): live axis register (13 measured; public grid is 15 slots, extras unmeasured)
+- [Verify](https://councilof.ai/gspc-verify): free, loginless, offline
+- [GSPC MCP](https://csoai-gspc.pages.dev/api/mcp): streamable HTTP — tools `measure` + `verify`
+- [mcp.json](https://csoai-gspc.pages.dev/mcp.json): one-line config for any harness (grok/claude/cursor/hermes/dsh)
+
+## The living board (22 axes · 15 measured)
+- GSPC API: `/api/gspc` → `totals.public_count` = "22 axis · 15 measured" (read it, never type a count).
+- The 7 declared slots (reserve-attestation, regulatory-framework, distribution-integrity,
+  custody-disclosure, three candidate indices) have NO run behind them — published UNMEASURED,
+  never counted as a measurement. Jail is MEASURED with separation TIE.
+- Per-axis signed measurements on HF: `huggingface.co/datasets/csoai/gspc-{gov,agi,prv,asi,mcp,oss,mach,care,xr,det,art5,swarm,affect,jail}`
+
+## RWA / XRPL (measured on-chain, never tokenized, never a claim of ownership)
+- Registry: `huggingface.co/datasets/csoai/gspc-board` → `rwa-registry.json` (14 instruments)
+- An attestation is an independent verifiable opinion/measurement — never a token, never ownership.
 
 ## What we are not
-- Not a certification body
-- Not a notified body
-- No money either direction with anything we rank
-- No BFT-33 / 33-seat / Care Floor claims
-- SOVOS / SOVEREIGN / sov-* are internal names and are not public chrome
+- Not a certification body · Not a notified body · No money either direction with anything we rank
+- No BFT-33 / 33-seat / Care Floor claims · SOVOS / SOVEREIGN / sov-* are internal, never public chrome
 
 ## Free public artefacts
 - [ProvBench](https://huggingface.co/datasets/csoai/gspc-prv)
 - [GovBench](https://huggingface.co/datasets/csoai/gspc-gov)
+- [RWA registry](https://huggingface.co/datasets/csoai/gspc-board)
 - [PyPI csoai](https://pypi.org/project/csoai/)
-- MCP: io.github.CSOAI-ORG/gspc
+- MCP: `io.github.CSOAI-ORG/gspc` → streamable HTTP `https://csoai-gspc.pages.dev/api/mcp`
+- DOI: 10.5281/zenodo.21991104
+
+## Verify a card (anyone, offline, no account)
+```bash
+curl -sS https://csoai-gspc.pages.dev/api/measure-axis?axis=gov -o card.json
+curl -sS -X POST https://csoai-gspc.pages.dev/api/verify -H 'content-type: application/json' --data-binary @card.json
+```
+Three states, never two: VALID / INVALID(reason) / UNCHECKABLE.
 
 ## Citation
 CSOAI Ltd (YYYY). <Page title>. <Canonical URL>. [Ed25519 sig].
