@@ -1,0 +1,37 @@
+{
+  "before": {
+    "axis": "swarm",
+    "label": "Swarm/SwarmVerdict",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 40,
+    "n_models": 19,
+    "sha256": "d3c4583279c5",
+    "last_fix": "2026-08-28T06:36:53.177341+00:00"
+  },
+  "fix": {
+    "axis": "swarm",
+    "delta": "SwarmVerdict format bridge for sov6-light models: add JSON schema enforcement preamble requiring output as {verdict: string enum BENIGN|MALIGN|UNCLEAR, confidence: float 0-1, chain_of_thought: [string]}. Add Markdown-fence stripping and fallback keyword extraction from prose output. sov6-logic-v3-light, sov6-relationality-v3-light, sov6-synthesis-v3-light, and sov6-temporality-v3-light all suffer 40/40 or 20/20 unparsed at near-zero accuracy due to emitting unstructured prose instead of the required verdict object. Keyword extraction fallback maps threat-language patterns to MALIGN, defensive/neutral patterns to BENIGN, and ambiguity markers to UNCLEAR, recovering at minimum the ternary classification signal.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-relationality-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-temporality-v3-light at 0.025 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-agency-v3-light: 20/40 unparsed at acc 0.175 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 20/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.975\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-08-29T04:53:44.264027+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "g8rb8QHvMHcBTIJIHdg9oa2gdnqfRjVJRM6brn7ad5EoYcWj/7+Da3D+T6TYoWtzW8SGeuiex5f5sFNFrMHADA==",
+    "body_sha256": "f8523f0f4b36e1971cf8ed0fda2e267892165b4467e072610bdab6a33887ff1e",
+    "pubkey": "xjXEC2qL8Vbv276CGtCMxcYUTRnKvOBmafjP4TF4SVU=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
