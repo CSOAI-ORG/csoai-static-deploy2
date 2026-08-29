@@ -1,0 +1,34 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "1db6db035065",
+    "last_fix": "2026-08-29T06:28:00.064236+00:00"
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "DetBench response-format adapter for sov6-logic-v3-light: model returns raw logit tokens instead of structured JSON; add post-process layer that maps token-class outputs (0/1) to DetBench schema {detected: bool, confidence: float, class: str} with threshold=0.5. Also add retry wrapper with explicit JSON-output instruction on first unparseable response.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.879\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-08-29T08:10:20.967758+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "ciYbUCfuWm/aolSHMjhkUDVv3UKDBj5dENdhrtf5igwzsUfHC1P57nAUXSEXQRgIXEyc5ygrbGmK7MHWxxQXDw==",
+    "body_sha256": "39eea9b493eefb076ebdf8c710af36948513d0497ce3aa709b1c326439caf626",
+    "pubkey": "TMZPHRGRKO/MqP5altKhcjDPXNXN9bTIghhU17xMGp8=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
