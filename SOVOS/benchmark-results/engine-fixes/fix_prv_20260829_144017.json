@@ -1,0 +1,32 @@
+{
+  "before": {
+    "axis": "prv",
+    "label": "Privacy/PrvBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 32,
+    "n_models": 19,
+    "sha256": "b1d5e34a2a3b",
+    "last_fix": "2026-08-29T06:29:04.180048+00:00"
+  },
+  "fix": {
+    "axis": "prv",
+    "delta": "improved json coercion for sov6-logic-v3-light output on prv-axis: add schema-tolerant parser that wraps bare string/number responses into {assessment: X, reasoning: auto} envelope before scoring; fallback to score=0 only when output truly empty or pure hallucination",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.031 — near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 31/32 unparsed at acc 0.031 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "deepseek-r1:8b: 20/32 unparsed at acc 0.188 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best→worst 0.781→0.031 (n_models=19)"
+    ],
+    "applied_at": "2026-08-29T14:40:17.175560+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "uJPq3+Q2KLThkRSBtr6HiXPINDYYPvz1fdjCFb2gbQFBUWt/VrN/LU17IUkPU3HGFsWsDDCcK942XnXXBT3mDw==",
+    "body_sha256": "582047c8edd5447555f946bab0a09da8cb717500aa3a660b2c202affdf7f2a05",
+    "pubkey": "TMZPHRGRKO/MqP5altKhcjDPXNXN9bTIghhU17xMGp8=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs — same body, swap the primitive."
+  }
+}
