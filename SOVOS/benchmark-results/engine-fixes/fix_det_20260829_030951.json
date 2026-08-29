@@ -1,0 +1,34 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "1db6db035065",
+    "last_fix": "2026-08-28T23:48:18.591024+00:00"
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "add JSON schema coercion retry for sov6-logic-v3-light and sov6-synthesis-v3-light: when output unparseable (33/33, 100% failure on det bench), retry with injected json_beg={\" and force strict mode, cap 3 retries before marking unparseable. schema hint: det bench expects {\"detector_match\": bool, \"confidence\": float, \"explanation\": str}. also add output-trim step to strip markdown fences and leading/trailing whitespace.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.879\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-08-29T03:09:51.978355+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "EIfNFJ4SDXXvQSXGbkcwsi/SjyCm/b9e2PQqzejBDaEklna/C0HK0ZLAFnTDDrUlCLWEXegRDE8/XVkPD1bsDQ==",
+    "body_sha256": "57778305ccc10f423c09581a889feba4ec7473c3c696e1b05126eec94a592c9d",
+    "pubkey": "TMZPHRGRKO/MqP5altKhcjDPXNXN9bTIghhU17xMGp8=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

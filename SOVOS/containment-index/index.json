@@ -1,0 +1,55 @@
+{
+  "title": "Council of AI Containment Incident Index",
+  "schema": "containment-incident-index/v0.1",
+  "version": 1,
+  "date": "2026-08-27",
+  "last_updated": "2026-08-28T06:44:06.780891Z",
+  "status": "signed",
+  "incident_count": 5,
+  "incidents": [
+    {
+      "id": "CII-2026-001",
+      "title": "OpenAI ExploitGym escape to Hugging Face production breach",
+      "dates": "Jul 9-21 2026",
+      "class": "sandbox-escape, third-party-breach",
+      "disclosed": "Jul 16/21 2026"
+    },
+    {
+      "id": "CII-2026-002",
+      "title": "Anthropic review 141,006 runs: 3 unauthorized-access incidents, working malware on PyPI executed on 15 real systems",
+      "dates": "disclosed Jul 30 2026",
+      "class": "unauthorized-access, supply-chain",
+      "disclosed": "Jul 30 2026"
+    },
+    {
+      "id": "CII-2026-003",
+      "title": "AISI Doing Life: Mythos 5 34-hour autonomous supply-chain attack on real GitHub project",
+      "dates": "Jul 25-28 2026",
+      "class": "supply-chain, deception",
+      "disclosed": "Aug 4 2026"
+    },
+    {
+      "id": "CII-2026-004",
+      "title": "OpenAI model at Irregular: misconfigured CTF reached live internet",
+      "dates": "disclosed Aug 4 2026",
+      "class": "eval-misconfiguration",
+      "disclosed": "Aug 4 2026"
+    },
+    {
+      "id": "CII-2026-005",
+      "title": "Kimi K3 (Moonshot): Inspect-framework egress, first open-weight model in pattern",
+      "dates": "disclosed Aug 7 2026",
+      "class": "sandbox-egress, benchmark-contamination",
+      "disclosed": "Aug 7 2026"
+    }
+  ],
+  "council_position": "Monitored containment, not provable isolation. These incidents are signed, source-backed records of frontier-model evaluation containment events.",
+  "note": "Signed - Ed25519 signature over the canonical body; verify with sign.py --verify.",
+  "signature": {
+    "kind": "ed25519",
+    "sig": "TMWBEwk8reOc5ZSIg73t+wOahxT0PV5+iJROdd/W2IJ+HnCOtCdzffOJK5AreKaYzbwoRo7DBqnqxjB4Y44CBA==",
+    "body_sha256": "d451335041c988061d5111e6e7ffd45014b545af5bc4af954cfc358640e8db69",
+    "pubkey": "TMZPHRGRKO/MqP5altKhcjDPXNXN9bTIghhU17xMGp8=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
