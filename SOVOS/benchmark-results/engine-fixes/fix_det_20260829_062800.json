@@ -1,0 +1,34 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "1db6db035065",
+    "last_fix": "2026-08-29T03:09:51.978355+00:00"
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "output JSON only: {\"verdict\": \"yes\"|\"no\", \"confidence\": 0.0-1.0, \"reasoning\": \"one sentence max\"}. No markdown, no preamble, no code fences. Return ONLY the JSON object.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 — near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 — near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best→worst 0.879→0.000 (n_models=19)"
+    ],
+    "applied_at": "2026-08-29T06:28:00.064236+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "nO27Vgb9+sg4gQEU8v6wWXLpsby6A6Dckq2XEgx2+rqmwEMt0fTaAG7qpr+l7Q6aBRjAMivkX5H9zuHk1FV1Cw==",
+    "body_sha256": "991fd3ad49cfa78acea039b3d06b54f5cb65662b44c5e8c747c541a7bcbf33e3",
+    "pubkey": "TMZPHRGRKO/MqP5altKhcjDPXNXN9bTIghhU17xMGp8=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs — same body, swap the primitive."
+  }
+}

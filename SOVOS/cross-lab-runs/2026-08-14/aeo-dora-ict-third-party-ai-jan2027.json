@@ -1,0 +1,38 @@
+{
+  "aeo_seed": {
+    "title": "DORA ICT Third-Party Risk for AI Providers — January 2027 Deadline",
+    "slug": "dora-ict-third-party-ai-jan2027",
+    "type": "answer-first",
+    "date_hook": "2026-08-29",
+    "jurisdiction": "EU",
+    "regulatory_family": "DORA (Regulation (EU) 2022/2554)",
+    "target_query": "What does DORA require for AI providers managing ICT third-party risk by January 2027?",
+    "answer_short": "From 17 January 2027, all EU financial entities and their critical ICT third-party providers — including AI-as-a-service vendors — must maintain a full register of ICT subcontracting chains, conduct annual concentration risk assessments, and demonstrate operational resilience testing that covers AI model dependencies. The European Supervisory Authorities (ESAs) gain direct oversight powers over critical third-party AI providers, including on-site inspections and the power to impose periodic penalty payments of up to 1% of average daily worldwide turnover.",
+    "key_deadlines": [
+      "17 January 2025: DORA entered into application",
+      "17 January 2027: Critical ICT third-party provider oversight regime goes live (ESA direct powers)",
+      "30 April 2027: First annual oversight report from ESAs on critical third-party arrangements"
+    ],
+    "ai_specific_provisions": [
+      "ICT concentration risk assessments must include AI model dependency chains (Article 29)",
+      "Subcontracting registers must disclose AI sub-processors down to the model-inference layer (Article 30)",
+      "Threat-led penetration testing (TLPT) must cover AI decision pathways where they materially affect financial operations (Article 26)"
+    ],
+    "impact_for_ai_marketplace": "DORA reclassifies critical AI infrastructure the same way it treats cloud hyperscalers. AI providers selling into EU financial services must prepare for direct ESA audit access, mandatory subcontracting transparency, and resilience testing that includes model rollback and failover.",
+    "cross_references": [
+      "EU AI Act Article 15 (accuracy, robustness, cybersecurity)",
+      "NIS2 Directive Article 21 (cybersecurity risk-management measures)",
+      "EBA Guidelines on ICT and security risk management (EBA/GL/2019/04)"
+    ],
+    "council_city_tags": ["governance", "procurement", "financial-services", "third-party-risk"],
+    "language_lock_checked": true,
+    "codename_audit": "No SOVOS/SOV/sov6 in public copy. Public names used: Council City, Council Signal, verified measurement credential."
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "m+RaQMbTGmKMDSrI6lfccwyLggwProFLcGbPSqFcmPzZ//L/gdvsXGP6DgwtF0ln7wCV8EWNurPcem/e7tXEAQ==",
+    "body_sha256": "3d9502e5f841b709ed6d2cf87a9bcd7eb69a5412ff2e20d013224014e93c917b",
+    "pubkey": "TMZPHRGRKO/MqP5altKhcjDPXNXN9bTIghhU17xMGp8=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs — same body, swap the primitive."
+  }
+}
