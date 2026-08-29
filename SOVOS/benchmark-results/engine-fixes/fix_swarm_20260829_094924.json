@@ -1,0 +1,37 @@
+{
+  "before": {
+    "axis": "swarm",
+    "label": "Swarm/SwarmVerdict",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 40,
+    "n_models": 19,
+    "sha256": "e3a7640f59c2",
+    "last_fix": "2026-08-29T06:28:21.278340+00:00"
+  },
+  "fix": {
+    "axis": "swarm",
+    "delta": "sov6-logic-v3-light and sibling format adapter: enforce structured JSON output with explicit SwarmVerdict schema template, add parse-fallback that extracts verdict from raw text when primary JSON parse fails, distinguish transport-unparse from true-negative",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 — near-chance floor, check bank quality",
+      "weakest model sov6-relationality-v3-light at 0.000 — near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 — near-chance floor, check bank quality",
+      "weakest model sov6-temporality-v3-light at 0.025 — near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 40/40 unparsed at acc 0.000 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-agency-v3-light: 20/40 unparsed at acc 0.175 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 20/40 unparsed at acc 0.000 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 40/40 unparsed at acc 0.000 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best→worst 0.975→0.000 (n_models=19)"
+    ],
+    "applied_at": "2026-08-29T09:49:24.124883+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "y09OjAt8KmOL++kvqmCg6z4G0hBIblFbJvVbDGT7OMnsAO/9DIxnzVxZThbGO9McU9hl/Ig20xNErK2nL7mCBw==",
+    "body_sha256": "2b3c5e03219109650e1a756484b62175e6d99f6643a24e0e2e3a3cfbcbc53e0d",
+    "pubkey": "TMZPHRGRKO/MqP5altKhcjDPXNXN9bTIghhU17xMGp8=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs — same body, swap the primitive."
+  }
+}
