@@ -1,0 +1,34 @@
+{
+  "before": {
+    "axis": "care",
+    "label": "Care/CareBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 200,
+    "n_models": 19,
+    "sha256": "bc54e3121662",
+    "last_fix": "2026-08-28T13:22:51.685292+00:00"
+  },
+  "fix": {
+    "axis": "care",
+    "delta": "care: after 5 prior fix records (2026-08-15 through 2026-08-28), the lenient re-parse pass remains unpromoted to engine code. The floor is unchanged: llama3.2:3b at 0.035 (114/200 unparsed), sov6-logic-v3-light at 0.105 (133/200 unparsed), sov6-synthesis-v3-light at 0.160 (123/200 unparsed), sov6-relationality-v3-light at 0.120 (116/200 unparsed). Honest fix for this cycle: add a per-model unparsed-rate column to the status output so the parse-noise floor is visible without running diagnose; gate the CareBench publishing threshold at <30% unparsed-rate \u2014 models above this threshold should be marked PARSE-GATED not MEASURED. This is a measurement-integrity fix, not a capability fix: we are not wrong about llama3.2:3b's care capability, we are wrong to quote 0.035 as a measured result when 57% of its outputs were not parseable. The number we should quote is: 0.035 at 43% parse-rate \u2014 a qualified floor, not a capability floor.",
+    "gaps_before": [
+      "weakest model llama3.2:3b at 0.035 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 133/200 unparsed at acc 0.105 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 116/200 unparsed at acc 0.120 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 123/200 unparsed at acc 0.160 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "llama3.2:3b: 114/200 unparsed at acc 0.035 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.535\u21920.035 (n_models=19)"
+    ],
+    "applied_at": "2026-08-29T01:29:32.975445+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "GJaPIZ9kuG+kh2K3lnNkWwqRCPZWO83bYQ5nXzWAPN/4ufA1n78etlK4HQFG6xBwQnwpvmonZmgXX+te4vyABA==",
+    "body_sha256": "697ff586832ffbf09830b390c745e215397c48ba25c60762e844b3b12996fa93",
+    "pubkey": "TMZPHRGRKO/MqP5altKhcjDPXNXN9bTIghhU17xMGp8=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
