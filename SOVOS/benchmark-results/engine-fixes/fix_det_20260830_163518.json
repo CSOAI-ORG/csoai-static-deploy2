@@ -1,0 +1,27 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "249590f66da6",
+    "last_fix": "2026-08-30T02:08:09.850051+00:00"
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "det-metadata-extraction: sov6-logic-v3-light and sov6-synthesis-v3-light both return 100% unparsed responses on the DetBench bank \u2014 this is a format/transport failure, not a true-zero on detection capability. The 33/33 unparsed suggests the model responses are valid JSON but the expected keys differ from what the DetBench parser expects. Fix candidate: add a DetBench format adapter that maps sovos-engine model output keys (reasoning, verdict, confidence) to DetBench expected keys (detection_result, detection_confidence, detection_rationale). Also add a pre-parse normalisation step that strips markdown code fences from model output before JSON parsing \u2014 deepseek-r1:8b has 1 unparsed out of 33, which is likely a stray backtick. This is a measurement-system fix, not a model-capability fix \u2014 the engine should not report 0.000 when the model is producing structured output in an unexpected shape.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.879\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-08-30T16:35:18.385900+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
