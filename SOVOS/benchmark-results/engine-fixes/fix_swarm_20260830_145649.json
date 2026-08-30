@@ -1,0 +1,30 @@
+{
+  "before": {
+    "axis": "swarm",
+    "label": "Swarm/SwarmVerdict",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 40,
+    "n_models": 19,
+    "sha256": "d3c4583279c5",
+    "last_fix": "2026-08-29T09:49:24.124883+00:00"
+  },
+  "fix": {
+    "axis": "swarm",
+    "delta": "swarm-synthesis dead-model rescue: enforce strict JSON output schema with `type: array` wrapper and `verdict` key mandatory; auto-remap sov6-synthesis-v3-light malformed outputs with regex fallback (capture yes/no/unknown + confidence float); add explicit markdown fence stripping before parse for mixed-format model responses; distinguish parse-noise from true-negative by logging remap rates per model",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-relationality-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-temporality-v3-light at 0.025 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-agency-v3-light: 20/40 unparsed at acc 0.175 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 20/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.975\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-08-30T14:56:49.663743+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
