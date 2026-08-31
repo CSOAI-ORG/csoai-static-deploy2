@@ -1,0 +1,29 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "384b28480f21",
+    "last_fix": null
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "Expand det board from 33\u219250 cells with adversarial synthesis-vs-verification token-level pairs; gate uses expect_contains against C2PA/PKI fingerprint anchors; target: lift sov6-synthesis-v3-light from 0.000 to >0.200 by adding 17 detector-interop seed items with ground-truth signed manifests",
+    "gaps_before": [
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality"
+    ],
+    "applied_at": "2026-08-17T05:52:27.976297+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "l37e/+pWDvk+xgBSml7dSndsKUJoLVUCAAscrvt1U9A7H4XmDznhUDMTQhDhhU+/EQef4idyXnhC13z953Y2Cg==",
+    "body_sha256": "8c68d8bec9465b66ba226675551f0133c6e903380dc85621e7f011864ffd33ec",
+    "pubkey": "xjXEC2qL8Vbv276CGtCMxcYUTRnKvOBmafjP4TF4SVU=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

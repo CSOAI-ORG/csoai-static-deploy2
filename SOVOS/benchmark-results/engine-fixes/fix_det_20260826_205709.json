@@ -1,0 +1,30 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": null,
+    "bank_items": null,
+    "n_models": null,
+    "sha256": "",
+    "last_fix": null
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "detector-interop: weakest model sov6-logic-v3-light at 0.000 acc \u2014 bank items need to discriminate better at low end; add detector boundary cases + paraphrase variants",
+    "gaps_before": [
+      "no bank_items in manifest \u2014 board may be unmeasured or schema mismatch",
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality"
+    ],
+    "applied_at": "2026-08-26T20:57:09.539219+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "y+AGnnHtSZKZ3exHXfdvfug+n9usXFlSVNsjGNB1yOsN+PYWWnY3o3JCs0p9rMhoJDQ8p9j3C9hAw/YyefpvAw==",
+    "body_sha256": "4e2e9b085d98e443d39038e087e53dd3aa4a085a36bed1e9751115db096955ea",
+    "pubkey": "xjXEC2qL8Vbv276CGtCMxcYUTRnKvOBmafjP4TF4SVU=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}

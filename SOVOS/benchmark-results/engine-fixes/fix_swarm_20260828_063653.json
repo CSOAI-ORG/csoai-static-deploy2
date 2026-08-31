@@ -1,0 +1,37 @@
+{
+  "before": {
+    "axis": "swarm",
+    "label": "Swarm/SwarmVerdict",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 40,
+    "n_models": 19,
+    "sha256": "e3a7640f59c2",
+    "last_fix": "2026-08-27T16:48:29.870760+00:00"
+  },
+  "fix": {
+    "axis": "swarm",
+    "delta": "swarm: sov6-logic-v3-light (40/40 unparsed) and sov6-synthesis-v3-light (40/40 unparsed) read acc 0.000, sov6-relationality-v3-light (20/40 unparsed) acc 0.000, sov6-temporality-v3-light acc 0.025 - the full sov6-*-v3-light family is format-incompatible with the SwarmVerdict parser, matching the same transport failure already logged on det/prv/care. spread 0.975->0.000 is parse-noise, not a measured capability gap. Honest fix: (1) promote a lenient re-parse pass (accept {verdict, confidence, rationale} as minimum valid schema, @context optional, warn-not-reject) OR (2) if promotion is owner-gated, exclude the four format-incompatible models from the Swarm measured set and label the floor format-incompatible-adapter-pending rather than a measured capability. Stop quoting 0.000 as swarm capability until unparsed drops below 10 percent.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-relationality-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-temporality-v3-light at 0.025 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-agency-v3-light: 20/40 unparsed at acc 0.175 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 20/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.975\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-08-28T06:36:53.177341+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "7AOahK6fk4ofpNh5BpPVQqAQvzmfV5eqOHKz8Pli10Hb1snb91Jrf0kTdFLBOB3UDyt3fMYc7qBRm1ElGPE8DQ==",
+    "body_sha256": "8e27823895fdc0e60d0014b6070d3848f06aaac339a775743a257f02dda00d45",
+    "pubkey": "TMZPHRGRKO/MqP5altKhcjDPXNXN9bTIghhU17xMGp8=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
