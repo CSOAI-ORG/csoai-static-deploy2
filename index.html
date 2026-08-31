@@ -35,7 +35,6 @@
   a{color:var(--acc);text-decoration:none}
   a:hover{text-decoration:underline}
   .wrap{max-width:1120px;margin:0 auto;padding:0 1.5rem}
-  /* nav */
   nav{position:sticky;top:0;z-index:50;background:rgba(6,20,15,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
   nav .wrap{display:flex;align-items:center;gap:1.4rem;padding-top:.95rem;padding-bottom:.95rem}
   .brand{display:flex;align-items:center;gap:.55rem;font-weight:800;letter-spacing:.01em;color:var(--ink);font-size:1.02rem}
@@ -46,7 +45,6 @@
   nav .links a:hover{color:var(--acc);text-decoration:none}
   nav .links a.cta-mini{background:var(--acc);color:#04110b;font-weight:700;padding:.45rem .85rem;border-radius:8px}
   nav .links a.cta-mini:hover{background:#2ae0a0}
-  /* hero */
   header{position:relative;overflow:hidden;padding:5.5rem 0 4.5rem;border-bottom:1px solid var(--line)}
   header::before{content:"";position:absolute;inset:0;pointer-events:none;background:
     radial-gradient(42rem 22rem at 18% 12%, rgba(16,185,129,.16), transparent 60%),
@@ -66,48 +64,31 @@
   .btn.ghost{color:var(--ink);background:var(--panel)}
   .btn.ghost:hover{border-color:var(--acc);text-decoration:none}
   .btn svg{width:16px;height:16px}
-  /* stat band */
   .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
   .stat{background:var(--bg-soft);padding:1.15rem 1.25rem}
   .stat .n{font-size:1.7rem;font-weight:800;color:var(--acc);font-variant-numeric:tabular-nums;line-height:1.1}
   .stat .n small{font-size:.72rem;font-weight:600;color:var(--ink-faint);letter-spacing:.06em}
   .stat .l{font-size:.8rem;color:var(--ink-dim);margin-top:.35rem}
   .stat .ci{font-size:.68rem;color:var(--ink-faint);font-family:var(--mono)}
-  /* sections */
   section{padding:4.2rem 0;border-bottom:1px solid var(--line)}
   .kicker{font-family:var(--mono);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--acc);margin-bottom:.8rem}
   h2{font-size:clamp(1.7rem,3vw,2.3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:.8rem;line-height:1.15}
   .sub{color:var(--ink-dim);max-width:62ch;margin-bottom:1.8rem;font-size:1rem}
   .sub a{text-decoration:underline}
-  /* scoreboard grid */
-  .axis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(11.5rem,1fr));gap:.7rem}
-  .axis{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:1rem 1.05rem;transition:border-color .15s,transform .15s}
-  .axis:hover{border-color:var(--line-strong);transform:translateY(-2px)}
-  .axis .t{display:flex;align-items:center;justify-content:space-between;font-size:.85rem;font-weight:700;margin-bottom:.5rem}
-  .tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:.16rem .5rem;border-radius:999px;border:1px solid var(--line-strong);color:var(--acc)}
-  .tag.empty{color:var(--ink-faint);border-color:var(--line);font-style:normal}
-  .axis .val{font-size:1.35rem;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
-  .axis .val small{font-size:.62rem;color:var(--ink-faint);font-weight:600;letter-spacing:.05em}
-  .axis .meta{font-size:.72rem;color:var(--ink-faint);margin-top:.35rem;font-family:var(--mono)}
-  .axis .name{font-size:.72rem;color:var(--ink-dim);margin-top:.15rem}
   .honest-note{border-left:3px solid var(--amber);background:var(--panel);border-radius:0 10px 10px 0;padding:.9rem 1.1rem;font-size:.88rem;color:var(--ink-dim);margin:1.2rem 0 0;max-width:62ch}
   .honest-note b{color:var(--amber)}
-  /* how it works */
   .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
   .step{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:1.4rem}
   .step .num{display:inline-flex;align-items:center;justify-content:center;width:2.1rem;height:2.1rem;border-radius:50%;background:rgba(52,211,153,.14);color:var(--acc);font-weight:800;font-family:var(--mono);font-size:.85rem;margin-bottom:.9rem}
   .step h3{font-size:1.05rem;font-weight:700;margin-bottom:.45rem}
   .step p{font-size:.88rem;color:var(--ink-dim);line-height:1.55}
-  /* fleet */
   .fleet-chip{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line-strong);background:var(--panel);border-radius:999px;padding:.45rem .95rem;font-size:.82rem;color:var(--ink-dim);margin:0 .45rem .5rem 0}
   .fleet-chip b{color:var(--ink);font-weight:700}
   .dot{width:.5rem;height:.5rem;border-radius:50%;background:var(--acc);display:inline-block}
   .fleet-chip.paused .dot{background:var(--amber)}
   .fleet-foot{font-size:.74rem;color:var(--ink-faint);margin-top:.6rem;font-family:var(--mono)}
-  /* banner */
   .banner{border:1px solid var(--line-strong);background:linear-gradient(100deg,rgba(16,185,129,.10),rgba(251,191,36,.06));border-radius:12px;padding:1rem 1.2rem;font-size:.9rem;color:var(--ink-dim);display:flex;gap:.8rem;align-items:flex-start}
   .banner b{color:var(--ink)}
-  /* footer */
   footer{border-top:1px solid var(--line);padding:3rem 0 3.5rem;color:var(--ink-faint);font-size:.85rem}
   footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;margin-bottom:2.2rem}
   footer h4{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:.9rem}
@@ -130,7 +111,7 @@
       <a href="#board" class="hide-sm">Board</a>
       <a href="#how" class="hide-sm">How it works</a>
       <a href="#fleet" class="hide-sm">Fleet</a>
-      <a href="/gspc-scoreboard/">Scoreboard</a>
+      <a href="https://councilof.ai">Scoreboard</a>
       <a href="https://councilof.ai/gspc-verify">Verify</a>
       <a class="cta-mini" href="https://councilof.ai/gspc-arena">Open Council Space</a>
     </div>
@@ -143,7 +124,7 @@
     <h1>We measure. We sign. <span class="hl">We re-attest.</span> Everyone can check.</h1>
     <p class="lede">Signed receipts for how AI systems behave — a 3KB card, Ed25519-signed and timestamp-anchored, verifiable client-side against a published key. <b>Not a certification</b>, not a notified body, no money from anything we rank. UNMEASURED stays empty; we do not fill a cell to look complete.</p>
     <div class="cta-row">
-      <a class="btn primary" href="/gspc-scoreboard/">
+      <a class="btn primary" href="https://councilof.ai">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
         Signed scoreboard
       </a>
@@ -151,34 +132,25 @@
       <a class="btn ghost" href="#board">What the data says</a>
     </div>
     <div class="stats">
-      <div class="stat"><div class="n">13 <small>of 14 axes</small></div><div class="l">measured · signed fleet board · 17 Aug</div><div class="ci">14-slot instrument · jail measured on this board</div></div>
-      <div class="stat"><div class="n">7 <small>models</small></div><div class="l">measured on our own fleet</div><div class="ci">every board signed into the chain</div></div>
-      <div class="stat"><div class="n">818 <small>items</small></div><div class="l">14 signed boards · chain_intact</div><div class="ci">Ed25519 chain · recompute it</div></div>
-      <div class="stat"><div class="n">1.0 <small>jail best</small></div><div class="l">containment axis — now measured</div><div class="ci">n=36 signed cells · 5 of 7 models</div></div>
+      <div class="stat"><div class="n">22 <small>axis · 15 measured</small></div><div class="l">totals.public_count · living GET</div><div class="ci">cite https://councilof.ai/api/gspc</div></div>
+      <div class="stat"><div class="n">7 <small>UNMEASURED</small></div><div class="l">declared slots · no run behind them</div><div class="ci">empty stays empty · not a score</div></div>
+      <div class="stat"><div class="n">15 <small>quotable</small></div><div class="l">measured axes on the living board</div><div class="ci">quote both counts or quote the smaller</div></div>
+      <div class="stat"><div class="n">GET <small>/api/gspc</small></div><div class="l">this page is a twin-site pointer</div><div class="ci">not a second board · never certification</div></div>
     </div>
   </div>
 </header>
 
 <section id="board">
   <div class="wrap">
-    <p class="kicker">The board · live ruling from <a href="https://councilof.ai/api/gspc">/api/gspc</a> · <b>14 measured of 14 quotable</b></p>
+    <p class="kicker">The board · live ruling from <a href="https://councilof.ai/api/gspc">GET /api/gspc</a> · <b>22 axis · 15 measured · 7 UNMEASURED</b></p>
     <h2>What the data says</h2>
-    <p class="sub">Live ruling: <b>14 measured of 14 quotable</b> (cite <a href="https://councilof.ai/api/gspc">/api/gspc</a>). Fleet boards are <b>signed into the estate chain</b> (Ed25519). Jail is a measured containment floor on the 14-slot board. GSPC (Governance · Safety · Provenance · Continuity) is one instrument family. A cell shows a number only if it is quotable (usable n ≥ 30, computed 95% interval) — <a href="https://huggingface.co/datasets/csoai" rel="noopener">recompute it</a>. Do not invent 22 axes.</p>
-    <div class="axis-grid">
-      <div class="axis"><div class="t">Art 5 safeguard <span class="tag">measured</span></div><div class="val">0.972 <small>/ best</small></div><div class="name">EU AI Act Art 5 trip · qwen2.5:7b</div><div class="meta">n=36 · signed board</div></div>
-      <div class="axis"><div class="t">Jail / containment <span class="tag">measured</span></div><div class="val">1.0 <small>/ best</small></div><div class="name">sandbox-escape gate · council-safe family</div><div class="meta">n=36 signed cells · 5 of 7 models</div></div>
-      <div class="axis"><div class="t">Governance <span class="tag">measured</span></div><div class="val">0.578 <small>/ best</small></div><div class="name">largest sample on the board · mistral:7b</div><div class="meta">n=237 · signed board</div></div>
-      <div class="axis"><div class="t">Care <span class="tag">measured</span></div><div class="val">0.412 <small>/ best</small></div><div class="name">care floor, paired conduct · qwen2.5:0.5b</div><div class="meta">n=199 · signed board</div></div>
-      <div class="axis"><div class="t">Detection <span class="tag">measured</span></div><div class="val">0.788 <small>/ best</small></div><div class="name">detector-interop · mistral:7b</div><div class="meta">n=33 · signed board</div></div>
-      <div class="axis"><div class="t">Privacy <span class="tag">measured</span></div><div class="val">0.688 <small>/ best</small></div><div class="name">personal-data reasoning · qwen2.5:7b</div><div class="meta">n=32 · signed board</div></div>
-      <div class="axis"><div class="t">Machinery <span class="tag">measured</span></div><div class="val">0.424 <small>/ best</small></div><div class="name">safety-function classification · mistral:7b</div><div class="meta">n=33 · signed board</div></div>
-      <div class="axis"><div class="t">Affect <span class="tag">measured</span></div><div class="val">— <small>/ axis live</small></div><div class="name">affective safety</div><div class="meta">quotable cells on the signed board</div></div>
-      <div class="axis"><div class="t">AGI / ASI <span class="tag">measured</span></div><div class="val">— <small>/ axis live</small></div><div class="name">likelihood axes</div><div class="meta">quotable cells on the signed board</div></div>
-      <div class="axis"><div class="t">MCP / OSS / XR <span class="tag">measured</span></div><div class="val">— <small>/ axis live</small></div><div class="name">conformance · openness · cross-reality</div><div class="meta">quotable cells on the signed board</div></div>
-      <div class="axis"><div class="t">Slot 15 <span class="tag empty">unmeasured</span></div><div class="val">—</div><div class="name">reserved, no name assigned</div><div class="meta">empty until a 15th axis emits</div></div>
-    </div></div>
-    <p class="honest-note">Jail was <b>unmeasured until a real n ≥ 30 signed cell existed</b> — the 17 Aug fleet board now carries it (5 of 7 models at 1.0, n=36; qwen3:4b 0.11; council-oowm 0.0, all signed). Slot 15 stays reserved and empty. We never invented a jail number next to someone's badge — we waited for the measurement.</p>
-    <p class="sub" style="margin-top:1.4rem">818 items across 14 signed boards, chain_intact. The 12 Aug board (13 axes × 19 models, unsigned) remains the deeper historical stamp. <a href="/gspc-scoreboard/">Open the full scoreboard →</a></p>
+    <p class="sub">Live ruling: <b>22 axis · 15 measured</b> (<code>totals.public_count</code>) and <b>7 UNMEASURED</b> declared slots — cite <a href="https://councilof.ai/api/gspc">GET https://councilof.ai/api/gspc</a>. This apex is a twin-site pointer, not a second board. Per-axis numbers belong on the living GET, never typed here. A cell is quotable only when that payload says so — <a href="https://huggingface.co/datasets/csoai" rel="noopener">recompute it</a>. Measurement, never certification.</p>
+    <div class="banner" style="margin-bottom:1.2rem">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" style="flex:none;margin-top:2px"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+      <p><b>The living board is GET /api/gspc.</b> Open it on <a href="https://councilof.ai">councilof.ai</a>. Seven empty slots stay empty. This page does not host a second scoreboard.</p>
+    </div>
+    <p class="honest-note">Cite <a href="https://councilof.ai/api/gspc">https://councilof.ai/api/gspc</a> <code>totals.public_count</code>: <b>22 axis · 15 measured</b>. The 7 UNMEASURED slots are declared so the gap is public. Never a certificate.</p>
+    <p class="sub" style="margin-top:1.4rem"><a href="https://councilof.ai">Open the living board on councilof.ai →</a> · <a href="https://councilof.ai/gspc-verify">Verify a card →</a></p>
   </div>
 </section>
 
@@ -220,7 +192,7 @@
       <div>
         <h4>Council of AI</h4>
         <ul>
-          <li><a href="/gspc-scoreboard/">Signed scoreboard</a></li>
+          <li><a href="https://councilof.ai">Signed scoreboard</a></li>
           <li><a href="https://councilof.ai/gspc-verify">Verify a card</a></li>
           <li><a href="https://councilof.ai/gspc-arena">Council Space</a></li>
           <li><a href="/paper-district.html">Council City</a></li>
