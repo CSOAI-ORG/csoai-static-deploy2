@@ -1,0 +1,27 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "249590f66da6",
+    "last_fix": "2026-08-31T13:16:32.789385+00:00"
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "add sov6-logic-v3-light response-format adapter: wrap output in JSON {score: float, reason: str} and add post-parse fallback that retries with temperature=0 when initial response is unparseable, targeting 0.000\u21920.400 floor lift",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.879\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-08-31T16:34:47.252421+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
