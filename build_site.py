@@ -51,6 +51,9 @@ DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates",
         # 2026-08-05: /portal/ 19,235 B · /sovereign-wiki/ 4,947 B · /eu-ai-act/ 5,427 B
         # and its sub-routes /eu-ai-act/summary, /risk, /high-risk, /compliance.
         "portal", "sovereign-wiki", "eu-ai-act", "badge", "proof-anchors", "corrections",
+        # Frozen card-v0 schema + (optional) public-root leaves. Twin of
+        # councilof.ai/schema/card-v0.json — not a second board.
+        "schema", "cards", "proofs",
         # Cloudflare Pages Functions (Pages Functions = /functions/api/*.js)
         # Verified live 2026-08-05: /api/health, /api/leaderboard, /api/eat-tick,
         # /api/stats, /api/skus, /api/sov-bridge. Adding /functions means every
@@ -65,6 +68,10 @@ JSON_ALLOW = {
     "jspace_deck.json",  # J-space visual deck (Wave-3): served /jspace_deck.json
     "c_space_card.json",  # C-space fold (Wave-3): served /c_space_card.json
     "agui-knowledge.json",  # AG UI 15-axis competitor/peer learning bundle — public machine feed for the seamless AG UI
+    # Public-root twin of councilof.ai (permissionless Merkle, not GSPC).
+    # Root-level *.json is otherwise internal state; these two are named.
+    "root.json",
+    "publisher-health.json",
 }
 
 # Named public files whose extension is NOT in ROOT_EXTS (.md/.pdf). Each was
