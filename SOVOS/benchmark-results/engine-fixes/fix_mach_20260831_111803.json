@@ -1,0 +1,22 @@
+{
+  "before": {
+    "axis": "mach",
+    "label": "Machine-verif/MachBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "7a679fdf7b1d",
+    "last_fix": "2026-08-28T15:17:39.267703+00:00"
+  },
+  "fix": {
+    "axis": "mach",
+    "delta": "mach fix-2: Machine-verif/MachBench \u2014 sov6-temporality-v3-light floor at 0.121, sov6-abstraction-v3-light at 0.182. Honest fix: (a) Add explicit verif-instruction preamble: \"Output verdict as VERIFIED / UNVERIFIED / UNCERTAIN with a one-line evidence trace.\" (b) For sov6-light models, enforce short-form prompt with strict template: \"Verdict: [VERIFIED|UNVERIFIED|UNCERTAIN]. Reason: [one line max].\" (c) Add parse-rate-per-model column to status table. Re-measure the 2 floor models.",
+    "gaps_before": [
+      "spread best\u2192worst 0.545\u21920.121 (n_models=19)"
+    ],
+    "applied_at": "2026-08-31T11:18:03.462358+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
