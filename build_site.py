@@ -54,11 +54,13 @@ DIRS = ["tools", ".well-known", "assets", "images", "static", "_templates",
         # Frozen card-v0 schema + (optional) public-root leaves. Twin of
         # councilof.ai/schema/card-v0.json — not a second board.
         "schema", "cards", "proofs",
-        # Cloudflare Pages Functions (Pages Functions = /functions/api/*.js)
-        # Verified live 2026-08-05: /api/health, /api/leaderboard, /api/eat-tick,
-        # /api/stats, /api/skus, /api/sov-bridge. Adding /functions means every
-        # function under functions/api/ ships; NEVER below excludes .py, .sh etc.
-        "functions"]
+        # 2026-09-01 OWNER: one website = councilof.ai. Do NOT ship functions/.
+        # Pages Functions run ahead of _redirects, so the #55 catch-all
+        # (/* -> https://councilof.ai/:splat 308!) never fired while /api/*
+        # workers were published. Dropping functions lets _redirects win.
+        # (was: "functions")
+        ]
+
 
 # Public JSON, named one by one. Anything not listed does not ship.
 JSON_ALLOW = {
