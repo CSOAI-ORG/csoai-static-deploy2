@@ -1,0 +1,30 @@
+{
+  "before": {
+    "axis": "swarm",
+    "label": "Swarm/SwarmVerdict",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 40,
+    "n_models": 19,
+    "sha256": "d3c4583279c5",
+    "last_fix": "2026-09-01T12:34:32.188831+00:00"
+  },
+  "fix": {
+    "axis": "swarm",
+    "delta": "sov6-logic-v3-light: systematic parse-failure on SwarmVerdict (40/40 unparsed, acc 0.000). Identical root cause to DetBench: model outputs unstructured reasoning instead of JSON verdict objects. Fix candidate: apply same structured-output wrapper as DetBench fix, enforcing {verdict:str, confidence:float, justification:str} schema; retest with temp=0 on SwarmVerdict bank (40 items). Expected: parse rate >80%, acc floor moves from 0.000 to measured value. Note: three other sov6-light models also at floor (relationality 0.000, synthesis 0.000, temporality 0.025) \u2014 wrapper fix should cascade to all four.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-relationality-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-temporality-v3-light at 0.025 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-agency-v3-light: 20/40 unparsed at acc 0.175 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 20/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.975\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-09-01T14:16:43.054274+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
