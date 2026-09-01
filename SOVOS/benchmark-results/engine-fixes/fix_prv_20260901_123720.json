@@ -1,0 +1,25 @@
+{
+  "before": {
+    "axis": "prv",
+    "label": "Privacy/PrvBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 32,
+    "n_models": 19,
+    "sha256": "a32cc52ecebb",
+    "last_fix": "2026-08-29T17:58:47.675194+00:00"
+  },
+  "fix": {
+    "axis": "prv",
+    "delta": "sov6-logic-v3-light at 0.031 (31/32 unparsed) — same format/transport failure root cause as det and swarm axes. Apply JSON retry wrapper with schema-aware extraction at the harness level. Cross-axis pattern: sov6-logic, sov6-synthesis, sov6-relationality fail catastrophically across det(0.000), swarm(0.000), prv(0.031). Fix once at harness, re-measure all three.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.031 — near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 31/32 unparsed at acc 0.031 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "deepseek-r1:8b: 20/32 unparsed at acc 0.188 — format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best→worst 0.781→0.031 (n_models=19)"
+    ],
+    "applied_at": "2026-09-01T12:37:20.888028+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
