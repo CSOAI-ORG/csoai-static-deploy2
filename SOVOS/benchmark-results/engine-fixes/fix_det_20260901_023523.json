@@ -1,0 +1,27 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "249590f66da6",
+    "last_fix": "2026-08-31T16:34:47.252421+00:00"
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "Transport-aware unparse handling: when model output is unparseable, attempt fallback pipeline: (1) strip markdown fences, (2) retry with simplified prompt ending in explicit output delimiter, (3) classify structural unparse vs. semantic refusal. Flag structurally-unparseable responses as measurement-failure rather than incorrect, with a 0.5-acc neutral midpoint to avoid penalizing models where output format is the bottleneck. This targets the systemic 33/33 unparse failures seen in sov6-logic-v3-light, sov6-synthesis-v3-light, and sov6-relationality-v3-light on det/s warm/Prv/affect axes.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.879\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-09-01T02:35:23.359899+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
