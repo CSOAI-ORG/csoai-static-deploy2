@@ -1,10 +1,4 @@
-# P0 OWNER 2026-09-01 — one public website.
-# csoai.org Pages project csoai-site: 308 all public paths to councilof.ai (path-preserving).
-# Force (!) so existing static HTML (twin chrome) cannot win.
-#
-# Trust-root exception only: /.well-known/* stays on this host for did:web:csoai.org
-# (csoai-site-deploy.yml verifies live did.json kids). Do not remove without CEO NAMED.
-/.well-known/*    /.well-known/:splat    200
-
-# Everything else → flagship
-/*    https://councilof.ai/:splat    308!
+# P0 OWNER 2026-09-01 — one public website (backup; Functions middleware is primary).
+# Keep did:web trust root on this host.
+/.well-known/*  /.well-known/:splat  200
+/*  https://councilof.ai/:splat  308!
