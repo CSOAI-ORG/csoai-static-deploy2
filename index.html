@@ -229,12 +229,12 @@
 (function(){
   var box=document.getElementById('fleet');
   var note=document.getElementById('fleet-note');
-  var fallback=[['arena measurement worker','RTX 3090','running'],['heavy measurement worker','A100','running'],['merge / weld worker','A100','paused']];
+  var fallback=[['arena measurement worker','RTX 3090','running'],['heavy measurement worker','A100','dark'],['merge / weld worker','A100','dark']];
   function render(workers){
     box.innerHTML='';
     (workers||fallback).forEach(function(w){
       var d=document.createElement('span');
-      d.className='fleet-chip'+(w.status==='paused'||w.status==='stopped'?' paused':'');
+      d.className='fleet-chip'+(w.status==='paused'||w.status==='stopped'||w.status==='dark'?' paused':'');
       d.innerHTML='<span class="dot"></span><b>'+w.gpu+'</b> · '+w.role+' · '+(w.status||'—');
       box.appendChild(d);
     });
