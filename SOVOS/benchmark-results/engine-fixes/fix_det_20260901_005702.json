@@ -1,0 +1,27 @@
+{
+    "before": {
+        "axis": "det",
+        "label": "Detector-interop/DetBench",
+        "board_status": "MEASURED",
+        "gate": "MEASURED",
+        "bank_items": 33,
+        "n_models": 19,
+        "sha256": "1db6db035065",
+        "last_fix": "2026-08-31T21:37:43.731078+00:00"
+    },
+    "fix": {
+        "axis": "det",
+        "delta": "detector-interop bank: sov6-logic-v3-light and sov6-synthesis-v3-light both return 100% unparseable output (33/33 each) — format transport failure. These light models lack the structured-detection JSON output capability needed for the DetBench schema. Proposed fix: exclude light models below 7B params from detector-interop measurement until a prompt-engineering bridge layer can adapt their output format to the DetBench JSON schema. This is a measurement validity fix, not a model capability fix.",
+        "gaps_before": [
+            "weakest model sov6-logic-v3-light at 0.000 — near-chance floor, check bank quality",
+            "weakest model sov6-synthesis-v3-light at 0.000 — near-chance floor, check bank quality",
+            "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 — format/transport failure dominates, distinguish true-negative from parse-noise",
+            "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 — format/transport failure dominates, distinguish true-negative from parse-noise",
+            "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 — format/transport failure dominates, distinguish true-negative from parse-noise",
+            "spread best→worst 0.879→0.000 (n_models=19)"
+        ],
+        "applied_at": "2026-09-01T00:57:02.153065+00:00",
+        "promoted": null,
+        "reverted": null
+    }
+}
