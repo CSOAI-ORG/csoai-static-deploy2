@@ -1,0 +1,34 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "1db6db035065",
+    "last_fix": "2026-09-01T07:27:58.180555+00:00"
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "DetBench parser: handle sov6-light model output where JSON is wrapped in markdown fences or missing required fields. Add fallback extraction for inline JSON blocks, strip markdown fences before parse, and default missing verdict fields to NOT_DETECTED rather than rejecting the entire response as unparsed. This targets the 33/33 unparsed rate on sov6-logic-v3-light and sov6-synthesis-v3-light which both score 0.000 due to format mismatch.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.879\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-09-01T10:53:28.963688+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "SFFMdmmV0LDURctxJzALp52ggpizEbyINj/90bE3XmKCwLsGFwZ8L6MWKf1UrVRDKqquqTCyFWlozH80PbN7Cw==",
+    "body_sha256": "fc7d5d256947a122877b365a5aec60ca5833a8241f52401fe1249db979aa4470",
+    "pubkey": "cUesqk6vOOIHaFcHafflL2tHQC+Q/RBYjKyPvIk8saY=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
