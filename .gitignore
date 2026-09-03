@@ -113,3 +113,9 @@ _site/
 
 # corrupt benchmark snapshots - too large for GitHub (>100MB)
 benchmark-results/*.CORRUPT_*
+
+# Python build output — never track these. A tracked .pyc is rewritten by the
+# runtime and turns an ordinary `git pull` into a non-fast-forward failure.
+__pycache__/
+*.py[cod]
+*.egg-info/
