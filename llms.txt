@@ -6,17 +6,17 @@
 ## Canonical surfaces
 - [Home](https://councilof.ai): measurement body landing
 - [councilof.ai](https://councilof.ai): flagship
-- [GSPC board](https://councilof.ai/api/gspc): THE living board — 22 axes · 15 measured, 7 declared slots UNMEASURED
+- [GSPC board](https://councilof.ai/api/gspc): THE living board — 22 slots · 22 measured · 0 UNMEASURED (live)
 - [Signed scoreboard](https://councilof.ai/gspc-scoreboard)
 - [Verify](https://councilof.ai/gspc-verify): free, loginless, offline
 - [GSPC MCP](https://csoai-gspc.pages.dev/api/mcp): streamable HTTP — tools `measure` + `verify`
 - [mcp.json](https://csoai-gspc.pages.dev/mcp.json): one-line config for any harness (grok/claude/cursor/hermes/dsh)
 
-## The living board (22 axes · 15 measured)
-- GSPC API: `/api/gspc` → `totals.public_count` = "22 axis · 15 measured" (read it, never type a count).
-- The 7 declared slots (reserve-attestation, regulatory-framework, distribution-integrity,
-  custody-disclosure, three candidate indices) have NO run behind them — published UNMEASURED,
-  never counted as a measurement. Jail is MEASURED with separation TIE.
+## The living board (22 slots · 22 measured)
+- GSPC API: `/api/gspc` → `totals.public_count` = "22 axis · 22 measured" (read it, never type a count).
+- 22 slots, 22 MEASURED, 0 unmeasured (live). Jail is its own 7-model fleet — never conflated
+  with the 19-model board fleet. Never print an accuracy without first reading `status` (a signed
+  card can be UNMEASURED).
 - Per-axis signed measurements on HF: `huggingface.co/datasets/csoai/gspc-{gov,agi,prv,asi,mcp,oss,mach,care,xr,det,art5,swarm,affect,jail}`
 
 ## RWA / XRPL (measured on-chain, never tokenized, never a claim of ownership)
