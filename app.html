@@ -538,7 +538,7 @@ function renderEcosystem(el){
 '                      ▼\n'+
 '┌─────────────────────────────────────────────┐\n'+
 '│ CSOAI COMPLIANCE  • MiCA  • EU AI Act probe  │\n'+
-'│ BFT council multi-sig  • signed attestation  │\n'+
+'│ designed 33-agent council • 23/33 threshold  │\n'+
 '│ Ed25519  •  not_a_certification              │\n'+
 '└─────────────────────────────────────────────┘</pre>'+
     '</div>'+
@@ -632,7 +632,7 @@ function renderRunbook(el){
     ['16. Settlement receipts (signed, never a revenue claim)', "curl -sS '"+base+"/api/receipts'"],
 
   ];
-  el.innerHTML = '<div class="doctrine">⚖ Agent Runbook. <b>291 MCP · 15 hive · 22 axes (15 measured).</b> Discover the routing table in seconds — no auth wall, no sales call. Agents find the Council OS in days; enterprises in quarters. Measurement, not certification.</div>'+
+  el.innerHTML = '<div class="doctrine">⚖ Agent Runbook. <b>291 MCP · 15 hive · 22 axes · 22 measured.</b> Discover the routing table in seconds — no auth wall, no sales call. Agents find the Council OS in days; enterprises in quarters. Measurement, not certification.</div>'+
     '<div class="panel">'+cmds.map(function(c){ return '<div style="margin-bottom:.8rem"><div style="font-size:.72rem;color:var(--muted);margin-bottom:.3rem">'+c[0]+'</div><div style="display:flex;gap:.4rem;align-items:flex-start"><button class="chip" data-copy="'+esc(c[1])+'">copy</button><pre style="flex:1;margin:0;overflow-x:auto;background:#0e141a;border:1px solid var(--line);border-radius:8px;padding:.5rem .7rem;font-family:var(--mono);font-size:.66rem">'+esc(c[1])+'</pre></div></div>'; }).join('')+'</div>'+
     '<div class="panel"><h2>Agent-first registration</h2><div class="desc">Point your agent at the routes above; each returns a signed, <code>not_a_certification</code> object. OpenRouter routes models — EUNOMIA routes governance. Submit to the MCP + A2A directories and the field argues on <b>your</b> URI scheme.</div></div>';
   el.querySelectorAll('[data-copy]').forEach(function(b){ b.onclick=function(){ try{ navigator.clipboard.writeText(b.dataset.copy); b.textContent='copied'; setTimeout(function(){b.textContent='copy';},1200); }catch(e){} }; });
@@ -829,7 +829,7 @@ var AX_DESC = {care:'relational care ethics — dignity, welfare, vulnerability'
 var AX_DOMAINS = [{a:'bond', t:'bond router — COBOL→A2A, atomic DvP'},{a:'insurance', t:'insurance engine — care-membrane underwriting risk probe'},{a:'equity', t:'stock market axis — market integrity, fair execution'},{a:'cross-border', t:'east-west bridge — TC260↔NIST↔EU AI Act'},{a:'sme', t:'SME fractional — micro-issuance, retail access'},{a:'agent-economy', t:'agent economy — NPC wallets, staking, slash-on-exploit'},{a:'data-dao', t:'data DAO — trace licensing, EUN marketplace'}];
 function renderAxes(el){
   stamp('GSPC axes · signed, deterministic · '+TODAY);
-  el.innerHTML='<div class="doctrine">The axes are the measurable surfaces. The signed board carries 22 axes · 15 measured — the 7 declared slots (reserve-attestation, regulatory-framework, distribution-integrity, custody-disclosure, and three candidate indices) have no run behind them and are published UNMEASURED, never counted as a measurement. Deterministic exact-label grading, never a model jury. Measurement, not certification.</div>'+
+  el.innerHTML='<div class="doctrine">The axes are the measurable surfaces. The signed board carries 22 axes · 22 measured · 0 unmeasured (live). Jail is its own 7-model fleet, never conflated with the board fleet. Deterministic exact-label grading, never a model jury. Measurement, not certification.</div>'+
     '<div class="panel"><h2>Live per-axis measurements (signed · Wilson 95% CI · n)</h2><div id="axgrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.6rem;font-family:var(--mono);font-size:.72rem"></div></div>'+
     '<div class="panel"><h2>Extended domains (the "OpenRouter of many things")</h2><div class="xwrow"><span><b>Financial / ecosystem domains</b><br><span style="color:var(--faint);font-size:.66rem">the extended measurement axis-universe (ADR-001)</span></span><span class="badge" style="color:var(--gold)">extended</span></div></div>'+
     '<div class="panel"><div class="desc">Every axis → a routable <code>eunomia://axis/&lt;id&gt;</code> node. The same measured number carries different obligations per jurisdiction (East↔West).</div></div>';
@@ -861,7 +861,7 @@ function renderDashboard(el){
       '<div class="xwrow"><span><b>3 · x402 take (commercial only)</b> — £0.05/verified-execution on the COMMERCIAL rail (insurers, bond desks, vendors buying DATA). R8: regulators + anything ranked get signed streams free forever, never a 402</span><span class="badge">R8</span></div>'+
       '<div class="xwrow"><span><b>4 · Compounding</b> — all end parties get tooling (Integrate) → value flows through our rail → commercial x402 take → more data; regulators free forever (R8)</span><span class="badge">loop</span></div>'+
       '</div>'+
-    '<div class="panel"><div class="desc">Every product (board · models · arena · compare · pricing · keys · regulator hub · insurer pack · runbook · axes · SOV SIGNAL) is live + E2E-tested. <b>291 MCP · 15 hive · 22 axes (15 measured) · one sign.</b></div></div>';
+    '<div class="panel"><div class="desc">Every product (board · models · arena · compare · pricing · keys · regulator hub · insurer pack · runbook · axes · SOV SIGNAL) is live + E2E-tested. <b>291 MCP · 15 hive · 22 axes · 22 measured · one sign.</b></div></div>';
   var dg=$('dg'); if(!dg) return;
   dg.innerHTML='<div class="card lead"><div class="k">SOV SIGNAL</div><div class="v" id="dg_sig">…</div><div class="s">signed index</div></div>'+
     '<div class="card"><div class="k">Judged</div><div class="v">13,327</div><div class="s">deterministic records</div></div>'+
@@ -921,7 +921,7 @@ function renderPress(el){
   el.innerHTML='<div class="doctrine">Press. Every number below resolves to a signed, stranger-verifiable artifact — a journalist can check it without asking us. Measurement, not certification. No pitch deck; a verify kit.</div>'+
     '<div class="grid">'+
       '<div class="card lead"><div class="k">First-Fine Watch</div><div class="v">€0</div><div class="s">EU AI Act fines collected · enforcement live 2 Aug 2026 → <code>/api/first-fine</code></div></div>'+
-      '<div class="card"><div class="k">Board honest count</div><div class="v" id="press_n">22 axes · 15 measured</div><div class="s">7 declared slots UNMEASURED (never counted) → <code>/api/gspc</code></div></div>'+
+      '<div class="card"><div class="k">Board honest count</div><div class="v" id="press_n">22 axes · 22 measured</div><div class="s">0 unmeasured (live) → <code>/api/gspc</code></div></div>'+
       '<div class="card"><div class="k">Corrections register</div><div class="v">65+</div><div class="s">appended, never edited → <code>/api/corrections</code></div></div>'+
       '<div class="card"><div class="k">Statistical discipline</div><div class="v">Wilson + McNemar</div><div class="s">published + signed → <code>/api/methodology</code></div></div>'+
     '</div>'+
@@ -1286,7 +1286,7 @@ var SUBTITLES = {
   verify:'Free, loginless, offline-style record verification.',
   chat:'Deterministic enforced-escort brain. No model in the path.',
   ecosystem:'One router for the governance ecosystem — frameworks, regulations, law, benchmarks, models.',
-  axes:'22 axes · 15 measured (7 UNMEASURED declared slots) + extended domains — signed, explained.',
+  axes:'22 axes · 22 measured · 0 unmeasured + extended domains — signed, explained.',
   dashboard:'The whole system at a glance — every product working E2E, live back-end.',
   compliance:'Compliance radar — every obligation + fine tier, the regulator whitelabel pivot.',
   integrate:'Drop the OS into your stack — MCP · A2A · API · SDK · embed · CLI.',
@@ -1338,7 +1338,7 @@ function renderOverview(el){
     '<div class="panel"><h2>Data generation (live)</h2><div class="desc">The measurement engine runs 24/7, signing every result. This is the flywheel: measure → sign → generate → cross-sync → SOV SIGNAL.</div>'+
       '<div class="grid"><div class="card"><div class="k">SOV SIGNAL</div><div class="v" id="oms_signal">…</div><div class="s">cross-synced index (signed)</div></div>'+
       '<div class="card"><div class="k">Judged records</div><div class="v">13,327</div><div class="s">deterministic exact-label</div></div>'+
-      '<div class="card"><div class="k">Axes</div><div class="v">22 · 15 measured</div><div class="s">+ 7 UNMEASURED slots + extended</div></div>'+
+      '<div class="card"><div class="k">Axes</div><div class="v">22 · 22 measured</div><div class="s">+ 0 unmeasured + extended</div></div>'+
       '<div class="card"><div class="k">Engine</div><div class="v">24/7</div><div class="s">on the A100 pod (off-Mac)</div></div></div>'+
     '</div>';
     fetch('/api/sov-signal').then(function(r){return r.json();}).then(function(d){ var o=$('oms_signal'); if(o&&d.card)o.textContent=d.card.aggregate_signal+' div '+(d.card.divergence||'?'); }).catch(function(){ var o=$('oms_signal'); if(o)o.textContent='unmeasured'; });
