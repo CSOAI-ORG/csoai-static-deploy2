@@ -9,7 +9,7 @@
 - [GSPC board](https://councilof.ai/api/gspc): THE living board — 22 slots · 22 measured · 0 UNMEASURED (live)
 - [Signed scoreboard](https://councilof.ai/gspc-scoreboard)
 - [Verify](https://councilof.ai/gspc-verify): free, loginless, offline
-- [GSPC MCP](https://csoai-gspc.pages.dev/api/mcp): streamable HTTP — tools `measure` + `verify`
+- [GSPC MCP](https://csoai-gspc.pages.dev/api/mcp): streamable HTTP — this mirror exposes `measure` + `verify` (2 tools); the canonical estate `/mcp` exposes 11.
 - [mcp.json](https://csoai-gspc.pages.dev/mcp.json): one-line config for any harness (grok/claude/cursor/hermes/dsh)
 
 ## The living board (22 slots · 22 measured)
@@ -32,8 +32,9 @@
 - [GovBench](https://huggingface.co/datasets/csoai/gspc-gov)
 - [RWA registry](https://huggingface.co/datasets/csoai/gspc-board)
 - [PyPI csoai](https://pypi.org/project/csoai/)
-- MCP (live): streamable HTTP `https://csoai-gspc.pages.dev/api/mcp` (tools: measure, verify)
+- MCP (live, this mirror): `https://csoai-gspc.pages.dev/api/mcp` (2 tools: measure, verify). Canonical estate MCP: `https://councilof.ai/mcp` (11 tools).
 - MCP registry: `io.github.CSOAI-ORG/gspc` — listing-pending (the registry ID does not yet resolve; we won't claim it until it does)
+- MCP scale (measured 2026-09-05): **330 servers** in the official MCP registry · **372 MCP-named repos** · **142 built unpublished**. A NAME is not a server — the registry + dependency scan is the instrument.
 - DOI: 10.5281/zenodo.21991104
 
 ## Verify a card (anyone, offline, no account)
