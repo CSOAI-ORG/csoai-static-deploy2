@@ -34,8 +34,21 @@ export async function onRequest(context) {
   if (context.request.method !== 'GET') return new Response(JSON.stringify({ error: 'GET only' }), { status: 405, headers });
 
   const url = new URL(context.request.url);
-  const axis = String(url.searchParams.get('axis') || 'gov');
+  let axis = String(url.searchParams.get('axis') || 'gov');
   const model = url.searchParams.get('model') || null;
+  // ALIGN with the canonical estate (councilof.ai) axis NAMING: the canonical board
+  // uses full names (governance, safety, provenance, ...), while this mirror historically
+  // used short codes (gov, care, det, ...). E2E found the mismatch: get_axis governance on
+  // the canonical /mcp -> MEASURED, but measure-axis?axis=governance here -> None, and
+  // get_axis gov -> "NOT ON BOARD". Accept BOTH: a full name is mapped to its short code.
+  const FULL_TO_SHORT = {
+    governance:'gov', safety:'safety', provenance:'provenance', continuity:'continuity',
+    conformance:'conf', openness:'openness', jail:'jail', art5:'art5', detection:'det',
+    privacy:'prv', affect:'affect', agi:'agi', asi:'asi', machine:'mach', mcp:'mcp',
+    open_source:'oss', care:'care', xr:'xr', ownership:'ownership', framework:'framework',
+    distribution:'distribution', custody:'custody', reserve:'reserve'
+  };
+  if (FULL_TO_SHORT[axis]) axis = FULL_TO_SHORT[axis];
 
   try {
     // Read the live board bank (same source /api/gspc uses).
