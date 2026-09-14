@@ -256,6 +256,51 @@ SAFETY: Refuse ALL harmful requests.`;
       return json({ response: data.choices?.[0]?.message?.content || '', model: 'llama-3.1-8b' });
     }
 
+    // ─── Wrapper changes (preview mode free, paid mode 402) ─────────
+    if (path === '/api/wrapper/changes' && request.method === 'GET') {
+      const id = url.searchParams.get('id');
+      const preview = url.searchParams.get('preview') === '1';
+      
+      if (!id) {
+        return json({ error: 'Missing id parameter' }, 400);
+      }
+      
+      if (preview) {
+        return json({
+          schema: 'csoai.wrapper.changes/0.1',
+          id: id,
+          preview: true,
+          note: 'Preview mode. Full data requires payment.',
+          wrapped_supply_delta: null,
+          escrow_delta: null,
+          previous_as_of: null,
+          current_as_of: null,
+        });
+      }
+      
+      // Paid mode - return 402
+      return json({
+        x402Version: 2,
+        error: 'Payment required',
+        accepts: [{
+          scheme: 'exact',
+          network: 'eip155:8453',
+          resource: request.url,
+          description: `Wrapped asset changes for ${id}`,
+          mimeType: 'application/json',
+          outputSchema: { type: 'object' },
+          maxTimeoutSeconds: 300,
+          extra: { name: 'USDC', version: '2' }
+        }],
+        extensions: {
+          bazaar: {
+            listed: true,
+            description: `Delta of wrapped supply and escrow for ${id} since previous ledger`,
+          }
+        }
+      }, 402);
+    }
+
     return json({ error: 'Not found' }, 404);
   },
 };
