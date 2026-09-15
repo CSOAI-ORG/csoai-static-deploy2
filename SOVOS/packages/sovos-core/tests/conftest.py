@@ -1,4 +1,0 @@
-"""Conftest that puts ../src on sys.path so sovos_core is importable."""
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))

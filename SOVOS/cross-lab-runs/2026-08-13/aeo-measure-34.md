@@ -1,6 +1,0 @@
-# What is watermark-detection interoperability (EU Code of Practice Measure 3.4)?
-
-Answer-first (AEO) seed — Council of AI. 2026-08-14T06:27:57.851027+00:00 UTC.
-
-Verified measurement credential. Monitored containment, not provable isolation.
-This is a seed page; canonical data sourced from the signed boards (see manifests).

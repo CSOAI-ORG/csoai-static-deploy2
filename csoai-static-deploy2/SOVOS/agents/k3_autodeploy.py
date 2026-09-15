@@ -8,7 +8,7 @@ import json, os, subprocess, sys, time
 KEY_PATH = os.path.expanduser("~/.runpod/api_key")
 API = "https://api.runpod.io/graphql"
 IMG = "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
-VOL_ID = "b0h5gma2fy"
+VOL_ID = "b0h5gma2fy"  # sov-models 2TB in CA-MTL-3
 MARKER = "/tmp/k3_pod_created.json"
 
 def gql(query):
@@ -28,7 +28,7 @@ def already_done():
 
 def deploy():
     q = (f'mutation {{ podFindAndDeployOnDemand(input: {{name: "k3-a100-2tb", '
-         f'gpuTypeId: "NVIDIA A100 80GB PCIe", gpuCount: 1, containerDiskInGb: 50, '
+         f'gpuTypeId: "NVIDIA A100-SXM4-80GB", gpuCount: 1, containerDiskInGb: 50, '
          f'networkVolumeId: "{VOL_ID}", cloudType: COMMUNITY, '
          f'imageName: "{IMG}", startSsh: true}}) '
          f'{{ id name desiredStatus runtime {{ uptimeInSeconds }} }} }}')
