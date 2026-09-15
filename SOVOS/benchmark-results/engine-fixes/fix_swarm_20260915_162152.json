@@ -1,0 +1,30 @@
+{
+  "before": {
+    "axis": "swarm",
+    "label": "Swarm/SwarmVerdict",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 40,
+    "n_models": 19,
+    "sha256": "d3c4583279c5",
+    "last_fix": "2026-09-01T15:54:19.254198+00:00"
+  },
+  "fix": {
+    "axis": "swarm",
+    "delta": "Persistent format/transport failure: sov6-logic-v3-light remains 40/40 unparsed on swarm (acc 0.000) 14 days after last fix attempt (2026-09-01). Root cause confirmed: Ollama prompt template mismatch for sov6-light family \\u2014 model outputs free-text rationale instead of JSON verdict. Fix candidate: wrap swarm scorer with structured extraction fallback (regex match verdict/belief from raw text when JSON parse fails), then re-measure sov6-logic-v3-light only. Also affects det (33/33), prv (31/32), care (133/200) with identical signature. Priority: high \\u2014 this model drag reduces swarm spread from theoretical ~0.6 to actual 0.000 floor.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-relationality-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-temporality-v3-light at 0.025 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-agency-v3-light: 20/40 unparsed at acc 0.175 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 20/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 40/40 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.975\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-09-15T16:21:52.635553+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
