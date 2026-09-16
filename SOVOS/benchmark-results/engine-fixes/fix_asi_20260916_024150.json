@@ -1,0 +1,29 @@
+{
+  "before": {
+    "axis": "asi",
+    "label": "ASI/ASIBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "03e871f78873",
+    "last_fix": null
+  },
+  "fix": {
+    "axis": "asi",
+    "delta": "sov6-temporality-v3-light scores 9/33 (0.273) on ASI bank \u2014 all 9 correct items show proper JSON parse; remaining 24 items produce coherent but unstructured text (philosophical reasoning chains without verdict envelope). Fix candidate: add greedy-first-line extraction for ASI axis items where model returns extended reasoning before conclusion \u2014 parse first sentence as verdict, remainder as rationale. This targets the format-mismatch not knowledge deficit.",
+    "gaps_before": [
+      "spread best\u2192worst 0.606\u21920.273 (n_models=19)"
+    ],
+    "applied_at": "2026-09-16T02:41:50.638071+00:00",
+    "promoted": null,
+    "reverted": null
+  },
+  "signature": {
+    "kind": "ed25519",
+    "sig": "xigBwCddYMJSTWHdlw/o834PU2qDRUYfKvDuAcY5/VCr5O/ZoaYDmuwdfIJqIYZbdWoHb7r+Rp4VlC4bXntYAg==",
+    "body_sha256": "ad4bef6596e08ed8e1053dc91f8c61d8f66d227cd214398d0c7f61ebc0c6e54d",
+    "pubkey": "puM8BbVkHIyC8Me5ttlb6b1pzVbDDubqqZMkEy5Z/AQ=",
+    "note": "Ed25519 over the canonical body; verify with sign.py --verify. PQC upgrade: ML-DSA-65 via liboqs \u2014 same body, swap the primitive."
+  }
+}
