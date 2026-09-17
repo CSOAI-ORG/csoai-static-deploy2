@@ -1,0 +1,27 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "249590f66da6",
+    "last_fix": "2026-09-15T23:18:13.141359+00:00"
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "det axis: sov6-logic-v3-light and sov6-synthesis-v3-light sit at 0.000 with 33/33 unparsed on DetBench; sov6-relationality-v3-light is 31/33 unparsed at 0.061. This is a scoring-pipe format/transport failure, not a detector-capability floor. Honest candidate: add a JSON-schema repair step (label + score + rationale) after decode and before scoring, so unparsed rows are tagged parse-noise instead of being collapsed to 0.000 accuracy. Distinguishes monitored containment of the measurement pipe from any claim of provable isolation or model skill.",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.879\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-09-16T15:07:59.878234+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
