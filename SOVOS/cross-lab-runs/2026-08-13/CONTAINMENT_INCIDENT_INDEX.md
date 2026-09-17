@@ -1,6 +1,6 @@
 # Containment Incident Index — v0.1
 
-Compiled 2026-09-16T15:12:46.313146+00:00 UTC, A100 pod. Publish gated (owner).
+Compiled 2026-09-17T10:49:26.202542+00:00 UTC, A100 pod. Publish gated (owner).
 
 | Period | Org | Event | Dated source | Class |
 |---|---|---|---|---|

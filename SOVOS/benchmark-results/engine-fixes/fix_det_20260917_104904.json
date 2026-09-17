@@ -1,0 +1,27 @@
+{
+  "before": {
+    "axis": "det",
+    "label": "Detector-interop/DetBench",
+    "board_status": "MEASURED",
+    "gate": "MEASURED",
+    "bank_items": 33,
+    "n_models": 19,
+    "sha256": "249590f66da6",
+    "last_fix": "2026-09-16T15:07:59.878234+00:00"
+  },
+  "fix": {
+    "axis": "det",
+    "delta": "parser: enforce strict JSON output {label:int, score:float, rationale:str}; strip code fences/backticks; accept synonyms (label|answer|prediction) and boolean -> int mapping; tolerate trailing whitespace/newlines; transport: set Content-Type=application/json; charset=utf-8; prompt: add \"Respond with EXACT JSON only\"; generation: temperature=0, max_tokens=64, stop=[\"\\n\\n\", \"\\nReason\"]; retry once on non-JSON; logging: emit raw+parsed for 10 samples per model to audit unparsed causes",
+    "gaps_before": [
+      "weakest model sov6-logic-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "weakest model sov6-synthesis-v3-light at 0.000 \u2014 near-chance floor, check bank quality",
+      "sov6-logic-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-relationality-v3-light: 31/33 unparsed at acc 0.061 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "sov6-synthesis-v3-light: 33/33 unparsed at acc 0.000 \u2014 format/transport failure dominates, distinguish true-negative from parse-noise",
+      "spread best\u2192worst 0.879\u21920.000 (n_models=19)"
+    ],
+    "applied_at": "2026-09-17T10:49:04.800870+00:00",
+    "promoted": null,
+    "reverted": null
+  }
+}
